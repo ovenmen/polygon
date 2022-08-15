@@ -1,7 +1,8 @@
-import { server } from '../server.js';
-import { STATUSES } from '../constants.js';
+'use strict';
 
-const getPosts = async () => server.get('/posts', async function (req, reply) {
+import { STATUSES } from '../../../constants.js';
+
+const getPosts = async (instance) => instance.get('/posts', async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
         const allPosts = await posts.find({}).toArray();

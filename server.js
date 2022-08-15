@@ -1,20 +1,39 @@
+'use strict';
+
 import Fastify from 'fastify';
 import fastifyMongodb from '@fastify/mongodb';
+import env from 'dotenv';
 
-import getPosts from './controllers/get-posts.js';
-import getPost from './controllers/get-post.js';
-import deletePost from './controllers/delete-post.js';
-import changePost from './controllers/change-post.js';
-import createPost from './controllers/create-post.js';
+import authenticate from './plugins/authenticate.js';
 
-export const server = Fastify({ logger: true });
-const port = process.env.PORT || 3000;
+// Users
+import register from './controllers/users/register/index.js';
+import sigin from './controllers/users/sigin/index.js';
 
+// Posts
+import getPosts from './controllers/posts/all/index.js';
+import getPost from './controllers/posts/one/index.js';
+import deletePost from './controllers/posts/delete/index.js';
+import changePost from './controllers/posts/change/index.js';
+import createPost from './controllers/posts/create/index.js';
+
+env.config();
+
+const server = Fastify({ logger: true });
+const port = process.env.PORT || 80;
+
+// Plugins
 server.register(fastifyMongodb, {
     forceClose: true,
-    url: 'mongodb://localhost:27017/polygon'
+    url: process.env.DB_CONNECTION_URL
 });
+server.register(authenticate);
 
+// Users
+server.register(register);
+server.register(sigin);
+
+// Posts
 server.register(createPost);
 server.register(getPosts);
 server.register(getPost);

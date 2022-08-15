@@ -1,11 +1,12 @@
-import { server } from '../server.js';
-import { STATUSES } from '../constants.js';
+'use strict';
 
-const changePost = async () => server.patch('/posts/:id', async function (req, reply) {
+import { STATUSES } from '../../../constants.js';
+
+const changePost = async (instance) => instance.patch('/posts/:id',  { onRequest: [instance.authenticate] }, async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
-        const id = this.mongo.ObjectId(req.params.id);
-        const { body } = req;
+        const id = this.mongo.ObjectId(request.params.id);
+        const { body } = request;
         const isBodyEmpty = !body || !Object.keys(body).length;
 
         if (!id) {

@@ -1,10 +1,11 @@
-import { server } from '../server.js';
-import { STATUSES } from '../constants.js';
+'use strict';
 
-const getPost = async () => server.get('/posts/:id', async function (req, reply) {
+import { STATUSES } from '../../../constants.js';
+
+const getPost = async (instance) => instance.get('/posts/:id', async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
-        const id = this.mongo.ObjectId(req.params.id);
+        const id = this.mongo.ObjectId(request.params.id);
         const post = await posts.findOne({ _id: id });
 
         if (!post) {

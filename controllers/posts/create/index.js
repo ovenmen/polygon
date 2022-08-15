@@ -1,10 +1,11 @@
-import { server } from '../server.js';
-import { STATUSES } from '../constants.js';
+'use strict';
 
-const createPost = async () => server.post('/posts', async function (req, reply) {
+import { STATUSES } from '../../../constants.js';
+
+const createPost = async (instance) => instance.post('/posts', { onRequest: [instance.authenticate] }, async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
-        const { body } = req;
+        const { body } = request;
         const isBodyEmpty = !body || !Object.keys(body).length;
 
         if (isBodyEmpty) {

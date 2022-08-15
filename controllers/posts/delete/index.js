@@ -1,10 +1,11 @@
-import { server } from '../server.js';
-import { STATUSES } from '../constants.js';
+'use strict';
 
-const deletePost = async () => server.delete('/posts/:id', async function (req, reply) {
+import { STATUSES } from '../../../constants.js';
+
+const deletePost = async (instance) => instance.delete('/posts/:id',  { onRequest: [instance.authenticate] }, async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
-        const id = this.mongo.ObjectId(req.params.id);
+        const id = this.mongo.ObjectId(request.params.id);
 
         if (!id) {
             return reply
