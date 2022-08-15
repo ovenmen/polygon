@@ -5,11 +5,11 @@ import bcrypt from 'bcrypt';
 import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
 
-const sigin = async (instance) => instance.post('/sigin', validation, async function (request, reply) {
+const sigin = async (instance) => instance.post('/users/sigin', validation, async function (request, reply) {
     try {
         const { body } = request;
         const users = this.mongo.db.collection('users');
-        const user = await users.findOne({ user: body.user });
+        const user = await users.findOne({ login: body.login });
 
         if (!user) {
             return reply
@@ -20,16 +20,15 @@ const sigin = async (instance) => instance.post('/sigin', validation, async func
                 });
         }
 
-        const validPassword = await bcrypt.compare(body.password, user.password);
-        const token = instance.jwt.sign({ ...body });
+        const isValidPassword = await bcrypt.compare(body.password, user.password);
 
-        if (validPassword) {
+        if (isValidPassword) {
             return reply
                 .code(STATUSES.OK)
                 .send({
                     success: true,
                     title: "Успешный вход",
-                    token
+                    token: instance.jwt.sign({ ...body })
                 })
                 .redirect(302, '/');
         }

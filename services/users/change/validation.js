@@ -4,9 +4,9 @@ const validation = {
     schema: {
         body: {
             type: 'object',
-            required: ['user', 'password'],
+            required: ['login', 'password'],
             properties: {
-                user: { type: 'string', minLength: 1 },
+                login: { type: 'string', minLength: 1 },
                 password: { type: 'string', minLength: 1 }
             }
         }

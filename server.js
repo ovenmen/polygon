@@ -7,15 +7,18 @@ import env from 'dotenv';
 import authenticate from './plugins/authenticate.js';
 
 // Users
-import register from './controllers/users/register/index.js';
-import sigin from './controllers/users/sigin/index.js';
+import getUsers from './services/users/all/index.js';
+import register from './services/users/register/index.js';
+import sigin from './services/users/sigin/index.js';
+import deleteUser from './services/users/delete/index.js';
+import changeUser from './services/users/change/index.js';
 
 // Posts
-import getPosts from './controllers/posts/all/index.js';
-import getPost from './controllers/posts/one/index.js';
-import deletePost from './controllers/posts/delete/index.js';
-import changePost from './controllers/posts/change/index.js';
-import createPost from './controllers/posts/create/index.js';
+import getPosts from './services/posts/all/index.js';
+import getPost from './services/posts/one/index.js';
+import deletePost from './services/posts/delete/index.js';
+import changePost from './services/posts/change/index.js';
+import createPost from './services/posts/create/index.js';
 
 env.config();
 
@@ -30,15 +33,18 @@ server.register(fastifyMongodb, {
 server.register(authenticate);
 
 // Users
+server.register(getUsers);
 server.register(register);
 server.register(sigin);
+server.register(changeUser);
+server.register(deleteUser);
 
 // Posts
 server.register(createPost);
 server.register(getPosts);
 server.register(getPost);
-server.register(deletePost);
 server.register(changePost);
+server.register(deletePost);
 
 server.listen({ port }, err => {
     if (err) {
