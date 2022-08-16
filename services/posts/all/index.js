@@ -6,18 +6,20 @@ const getPosts = async (instance) => instance.get('/posts', async function (requ
     try {
         const posts = this.mongo.db.collection('posts');
         const allPosts = await posts.find({}).toArray();
+        const isHavePosts = posts.count() !== 0;
 
-        if (!allPosts) {
+        if (isHavePosts) {
             return reply
-                .code(STATUSES.NOT_FOUND)
-                .type('application/json; charset=utf-8')
-                .send({
-                    success: false,
-                    title: "Невозможно получить посты"
-                });
+                .code(STATUSES.OK)
+                .send(allPosts);
         }
 
-        return reply.send(allPosts);
+        return reply
+            .code(STATUSES.NOT_FOUND)
+            .send({
+                success: false,
+                title: "Нет постов"
+            });
     } catch (error) {
         throw new Error(error);
     }

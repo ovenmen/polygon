@@ -28,7 +28,7 @@ const register = async (instance) => instance.post('/users/register', validation
             .code(STATUSES.CREATED)
             .send({
                 success: true,
-                title: "Пользователь успешно зарегистрирован"
+                title: "Пользователь создан"
             });
     } catch (error) {
         throw new Error(error);

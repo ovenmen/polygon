@@ -8,22 +8,22 @@ const deleteUser = async (instance) => instance.delete('/users/:id', { onRequest
         const users = this.mongo.db.collection('users');
         const user = await users.findOne({ _id: id });
         
-        if (!user) {
+        if (user) {
+            await users.findOneAndDelete({ _id: id });
+
             return reply
-                .code(STATUSES.NOT_FOUND)
+                .code(STATUSES.OK)
                 .send({
-                    success: false,
-                    title: "Пользователь не найден"
+                    success: true,
+                    title: "Пользователь удален"
                 });
         }
 
-        await users.findOneAndDelete({ _id: id });
-
         return reply
-            .code(STATUSES.OK)
+            .code(STATUSES.NOT_FOUND)
             .send({
-                success: true,
-                title: "Пользователь удален"
+                success: false,
+                title: "Пользователь не найден"
             });
     } catch (error) {
         throw new Error(error);
