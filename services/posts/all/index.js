@@ -1,17 +1,19 @@
 'use strict';
 
 import { STATUSES } from '../../../constants.js';
+import serialize from './serialize.js';
 
-const getPosts = async (instance) => instance.get('/posts', async function (request, reply) {
+const getPosts = async (instance) => instance.get('/posts', serialize, async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
+        const count = await posts.count();
         const allPosts = await posts.find({}).toArray();
-        const isHavePosts = posts.count() !== 0;
+        const isHavePosts = count !== 0;
 
         if (isHavePosts) {
             return reply
                 .code(STATUSES.OK)
-                .send(allPosts);
+                .send({ posts: allPosts, count });
         }
 
         return reply

@@ -22,7 +22,7 @@ const sigin = async (instance) => instance.post('/users/sigin', validation, asyn
                         title: "Успешный вход",
                         token: instance.jwt.sign({ ...body })
                     })
-                    .redirect(302, '/admin');
+                    .redirect('/admin');
             }
 
             return reply

@@ -4,6 +4,7 @@ import Fastify from 'fastify';
 import fastifyMongodb from '@fastify/mongodb';
 import env from 'dotenv';
 
+// Plugins
 import authenticate from './plugins/authenticate.js';
 
 // Users

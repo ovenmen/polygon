@@ -4,8 +4,9 @@ import bcrypt from 'bcrypt';
 
 import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
+import serialize from './serialize.js';
 
-const register = async (instance) => instance.post('/users/register', validation, async function (request, reply) {
+const register = async (instance) => instance.post('/users/register', { ...serialize, ...validation}, async function (request, reply) {
     try {
         const { body } = request;
         const users = this.mongo.db.collection('users');
@@ -13,7 +14,7 @@ const register = async (instance) => instance.post('/users/register', validation
 
         if (user) {
             return reply
-                .code(STATUSES.OK)
+                .code(STATUSES.BAD_REQUEST)
                 .send({
                     success: false,
                     title: "Пользователь уже существует"

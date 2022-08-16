@@ -1,9 +1,8 @@
 'use strict';
 
 import { STATUSES } from '../../../constants.js';
-import validation from './validation.js';
 
-const deletePost = async (instance) => instance.delete('/posts/:id',  { ...validation, onRequest: [instance.authenticate] }, async function (request, reply) {
+const deletePost = async (instance) => instance.delete('/posts/:id',  { onRequest: [instance.authenticate] }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
         const posts = this.mongo.db.collection('posts');

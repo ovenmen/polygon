@@ -4,8 +4,9 @@ import bcrypt from 'bcrypt';
 
 import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
+import serialize from './serialize.js';
 
-const changeUser = async (instance) => instance.patch('/users/:id', { ...validation, onRequest: [instance.authenticate] }, async function (request, reply) {
+const changeUser = async (instance) => instance.patch('/users/:id', { ...validation, ...serialize, onRequest: [instance.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
         const id = this.mongo.ObjectId(request.params.id);
