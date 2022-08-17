@@ -7,7 +7,19 @@ const getPost = async (instance) => instance.get('/posts/:id', serialize, async 
     try {
         const id = this.mongo.ObjectId(request.params.id);
         const posts = this.mongo.db.collection('posts');
-        const post = await posts.findOne({ _id: id });
+        const post = await posts.aggregate([
+            {
+                $match: { _id: id }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+        ]).toArray();
 
         if (post) {
             return reply

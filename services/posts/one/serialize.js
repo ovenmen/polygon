@@ -4,12 +4,20 @@ const serialize = {
     schema: {
         response: {
             200: {
-                type: 'object',
+                type: 'array',
                 properties: {
                     _id: { type: 'string' },
                     title: { type: 'string' },
                     content: { type: 'string' },
-                    user: { type: 'string' },
+                    user: {
+                        type: 'array',
+                        properties: {
+                            _id: { type: 'string' },
+                            login: { type: 'string' },
+                            password: { type: 'string' },
+                            role: { type: 'string' }
+                        }
+                    },
                     createdDate: { type: 'string' },
                     modifiedDate: { type: 'string' }
                 }
