@@ -1,10 +1,7 @@
 'use strict';
 
-import Fastify from 'fastify';
-import fastifyMongodb from '@fastify/mongodb';
-import env from 'dotenv';
-
 // Plugins
+import dbConnection from './plugins/db-connection.js';
 import authenticate from './plugins/authenticate.js';
 
 // Users
@@ -21,37 +18,22 @@ import deletePost from './services/posts/delete/index.js';
 import changePost from './services/posts/change/index.js';
 import createPost from './services/posts/create/index.js';
 
-env.config();
-
-const server = Fastify({ logger: true });
-const port = process.env.PORT || 80;
-
-// Plugins
-server.register(fastifyMongodb, {
-    forceClose: true,
-    url: process.env.DB_CONNECTION_URL
-});
-server.register(authenticate);
-
-// Users
-server.register(getUsers);
-server.register(register);
-server.register(sigin);
-server.register(changeUser);
-server.register(deleteUser);
-
-// Posts
-server.register(createPost);
-server.register(getPosts);
-server.register(getPost);
-server.register(changePost);
-server.register(deletePost);
-
-server.listen({ port }, err => {
-    if (err) {
-        server.log.error(err);
-        process.exit(1);
-    }
-
-    console.log(`Server started on http://localhost:${port}`);
-});
+export default async (server, opts) => {
+    // Plugins
+    server.register(dbConnection);
+    server.register(authenticate);
+    
+    // Users
+    server.register(getUsers);
+    server.register(register);
+    server.register(sigin);
+    server.register(changeUser);
+    server.register(deleteUser);
+    
+    // Posts
+    server.register(createPost);
+    server.register(getPosts);
+    server.register(getPost);
+    server.register(changePost);
+    server.register(deletePost);
+};

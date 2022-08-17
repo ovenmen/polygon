@@ -7,7 +7,16 @@ const getPosts = async (instance) => instance.get('/posts', serialize, async fun
     try {
         const posts = this.mongo.db.collection('posts');
         const count = await posts.count();
-        const allPosts = await posts.find({}).toArray();
+        const allPosts = await posts.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+        ]).toArray();
         const isHavePosts = count !== 0;
 
         if (isHavePosts) {

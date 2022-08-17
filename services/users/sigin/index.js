@@ -20,7 +20,7 @@ const sigin = async (instance) => instance.post('/users/sigin', validation, asyn
                     .send({
                         success: true,
                         title: "Успешный вход",
-                        token: instance.jwt.sign({ ...body })
+                        token: instance.jwt.sign({ ...body, id: user._id })
                     })
                     .redirect('/admin');
             }
