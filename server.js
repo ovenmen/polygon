@@ -4,6 +4,7 @@
 import dbConnection from './plugins/db-connection.js';
 import authenticate from './plugins/authenticate.js';
 import cookieSupport from './plugins/cookie-support.js';
+import corsSupport from './plugins/cors-support.js';
 
 // Users
 import getUsers from './services/users/all/index.js';
@@ -21,6 +22,7 @@ import createPost from './services/posts/create/index.js';
 
 export default async (server, opts) => {
     // Plugins
+    server.register(corsSupport);
     server.register(cookieSupport);
     server.register(dbConnection);
     server.register(authenticate);
