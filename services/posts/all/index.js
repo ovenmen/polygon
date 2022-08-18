@@ -5,7 +5,7 @@ import serialize from './serialize.js';
 
 const getPosts = async (instance) => instance.get('/posts', serialize, async function (request, reply) {
     try {
-        const posts = this.mongo.db.collection('posts');
+        const posts = this.mongo.db.collection('posts'); console.log(request.cookie)
         const count = await posts.count();
         const allPosts = await posts.aggregate([
             {
