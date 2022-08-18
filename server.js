@@ -5,6 +5,7 @@ import dbConnection from './plugins/db-connection.js';
 import authenticate from './plugins/authenticate.js';
 import cookieSupport from './plugins/cookie-support.js';
 import corsSupport from './plugins/cors-support.js';
+import helmetProtection from './plugins/helmet-protection.js';
 
 // Users
 import getUsers from './services/users/all/index.js';
@@ -26,7 +27,8 @@ export default async (server, opts) => {
     server.register(cookieSupport);
     server.register(dbConnection);
     server.register(authenticate);
-    
+    server.register(helmetProtection);
+
     // Users
     server.register(getUsers);
     server.register(register);

@@ -8,8 +8,7 @@ const cookieSupport = async (server) => {
     env.config();
 
     server.register(fastifyCookie, {
-        secret: process.env.COOKIE_SECRET,
-        parseOptions: {}
+        secret: process.env.COOKIE_SECRET
     });
 };
 

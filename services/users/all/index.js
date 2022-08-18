@@ -1,6 +1,7 @@
 'use strict';
 
 import { STATUSES } from '../../../constants.js';
+
 import serialize from './serialize.js';
 
 const getUsers = async (instance) => instance.get('/users', serialize, async function (request, reply) {
