@@ -13,7 +13,6 @@ const serialize = {
                             properties: {
                                 _id: { type: 'string' },
                                 login: { type: 'string' },
-                                password: { type: 'string' },
                                 role: { type: 'string' },
                                 createdDate: { type: 'string' },
                                 modifiedDate: { type: 'string' }

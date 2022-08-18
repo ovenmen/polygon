@@ -5,21 +5,26 @@ const serialize = {
         response: {
             200: {
                 type: 'array',
-                properties: {
-                    _id: { type: 'string' },
-                    title: { type: 'string' },
-                    content: { type: 'string' },
-                    user: {
-                        type: 'array',
-                        properties: {
-                            _id: { type: 'string' },
-                            login: { type: 'string' },
-                            password: { type: 'string' },
-                            role: { type: 'string' }
-                        }
-                    },
-                    createdDate: { type: 'string' },
-                    modifiedDate: { type: 'string' }
+                items: {
+                    type: 'object',
+                    properties: {
+                        _id: { type: 'string' },
+                        title: { type: 'string' },
+                        content: { type: 'string' },
+                        user: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    _id: { type: 'string' },
+                                    login: { type: 'string' },
+                                    role: { type: 'string' }
+                                }
+                            }
+                        },
+                        createdDate: { type: 'string' },
+                        modifiedDate: { type: 'string' }
+                    }
                 }
             },
             404: {
