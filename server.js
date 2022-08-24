@@ -23,7 +23,7 @@ import changePost from './services/posts/change/index.js';
 import createPost from './services/posts/create/index.js';
 
 // Uploads
-import uploadFile from './services/uploads/index.js';
+import uploadFile from './services/upload/index.js';
 
 export default async (server, opts) => {
     // Plugins
