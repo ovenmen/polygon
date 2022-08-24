@@ -6,6 +6,8 @@ import authenticate from './plugins/authenticate.js';
 import cookieSupport from './plugins/cookie-support.js';
 import corsSupport from './plugins/cors-support.js';
 import helmetProtection from './plugins/helmet-protection.js';
+// import multipartSupport from './plugins/multipart-support.js';
+import multerSupport from './plugins/multer-support.js';
 
 // Users
 import getUsers from './services/users/all/index.js';
@@ -21,6 +23,10 @@ import deletePost from './services/posts/delete/index.js';
 import changePost from './services/posts/change/index.js';
 import createPost from './services/posts/create/index.js';
 
+// Upload
+import uploadImage from './services/uploads/image.js';
+import uploadFile from './services/uploads/file.js';
+
 export default async (server, opts) => {
     // Plugins
     server.register(corsSupport);
@@ -28,6 +34,8 @@ export default async (server, opts) => {
     server.register(dbConnection);
     server.register(authenticate);
     server.register(helmetProtection);
+    // server.register(multipartSupport);
+    server.register(multerSupport);
 
     // Users
     server.register(getUsers);
@@ -42,4 +50,8 @@ export default async (server, opts) => {
     server.register(getPost);
     server.register(changePost);
     server.register(deletePost);
+
+    // Upload
+    server.register(uploadImage);
+    server.register(uploadFile);
 };
