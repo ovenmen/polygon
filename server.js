@@ -7,6 +7,7 @@ import cookieSupport from './plugins/cookie-support.js';
 import corsSupport from './plugins/cors-support.js';
 import helmetProtection from './plugins/helmet-protection.js';
 import multipartSupport from './plugins/multipart-support.js';
+import staticSupport from './plugins/static-support.js';
 
 // Users
 import getUsers from './services/users/all/index.js';
@@ -25,6 +26,9 @@ import createPost from './services/posts/create/index.js';
 // Uploads
 import uploadFile from './services/upload/index.js';
 
+// Public
+import publicResources from './services/public/index.js';
+
 export default async (server, opts) => {
     // Plugins
     server.register(corsSupport);
@@ -33,6 +37,7 @@ export default async (server, opts) => {
     server.register(authenticate);
     server.register(helmetProtection);
     server.register(multipartSupport);
+    server.register(staticSupport);
 
     // Users
     server.register(getUsers);
@@ -50,4 +55,7 @@ export default async (server, opts) => {
 
     // Upload
     server.register(uploadFile);
+
+    // Public
+    server.register(publicResources);
 };
