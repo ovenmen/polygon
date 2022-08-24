@@ -26,9 +26,6 @@ import createPost from './services/posts/create/index.js';
 // Uploads
 import uploadFile from './services/upload/index.js';
 
-// Public
-import publicResources from './services/public/index.js';
-
 export default async (server, opts) => {
     // Plugins
     server.register(corsSupport);
@@ -55,7 +52,4 @@ export default async (server, opts) => {
 
     // Upload
     server.register(uploadFile);
-
-    // Public
-    server.register(publicResources);
 };
