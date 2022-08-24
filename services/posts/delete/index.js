@@ -2,7 +2,7 @@
 
 import { STATUSES } from '../../../constants.js';
 
-const deletePost = async (instance) => instance.delete('/posts/:id',  { onRequest: [instance.authenticate] }, async function (request, reply) {
+export default async (server) => server.delete('/posts/:id',  { onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
         const posts = this.mongo.db.collection('posts');
@@ -29,5 +29,3 @@ const deletePost = async (instance) => instance.delete('/posts/:id',  { onReques
         throw new Error(error);
     }
 });
-
-export default deletePost;

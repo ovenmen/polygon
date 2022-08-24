@@ -3,7 +3,7 @@
 import { STATUSES } from '../../../constants.js';
 import serialize from './serialize.js';
 
-const getPosts = async (instance) => instance.get('/posts', serialize, async function (request, reply) {
+export default async (server) => server.get('/posts', serialize, async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
         const count = await posts.count();
@@ -35,5 +35,3 @@ const getPosts = async (instance) => instance.get('/posts', serialize, async fun
         throw new Error(error);
     }
 });
-
-export default getPosts;

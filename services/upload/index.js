@@ -9,7 +9,7 @@ import validation from './validation.js';
 
 const pump = util.promisify(pipeline);
 
-const uploadFile = async (instance) => instance.post('/upload/files', { ...validation, onRequest: [instance.authenticate] }, async function (request, reply) {
+export default async (server) => server.post('/upload/files', { ...validation, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const parts = request.parts();
 
@@ -31,5 +31,3 @@ const uploadFile = async (instance) => instance.post('/upload/files', { ...valid
         throw new Error(error);
     }
 });
-
-export default uploadFile;

@@ -1,55 +1,77 @@
 'use strict';
 
-// Plugins
-import dbConnection from './plugins/db-connection.js';
-import authenticate from './plugins/authenticate.js';
-import cookieSupport from './plugins/cookie-support.js';
-import corsSupport from './plugins/cors-support.js';
-import helmetProtection from './plugins/helmet-protection.js';
-import multipartSupport from './plugins/multipart-support.js';
-import staticSupport from './plugins/static-support.js';
+import {
+    dbConnection,
+    authenticate,
+    cookieSupport,
+    corsSupport,
+    helmetProtection,
+    multipartSupport,
+    staticSupport
+} from './plugins/index.js';
 
-// Users
-import getUsers from './services/users/all/index.js';
-import register from './services/users/register/index.js';
-import sigin from './services/users/sigin/index.js';
-import deleteUser from './services/users/delete/index.js';
-import changeUser from './services/users/change/index.js';
+import {
+    getUsers,
+    register,
+    sigin,
+    deleteUser,
+    changeUser,
+    getPosts,
+    getPost,
+    createPost,
+    changePost,
+    deletePost,
+    uploadFile
+} from './services/index.js';
 
-// Posts
-import getPosts from './services/posts/all/index.js';
-import getPost from './services/posts/one/index.js';
-import deletePost from './services/posts/delete/index.js';
-import changePost from './services/posts/change/index.js';
-import createPost from './services/posts/create/index.js';
+const plugins = [
+    dbConnection,
+    cookieSupport,
+    authenticate,
+    corsSupport,
+    helmetProtection,
+    multipartSupport,
+    staticSupport
+];
 
-// Uploads
-import uploadFile from './services/upload/index.js';
+const routes = {
+    users: [
+        getUsers,
+        register,
+        sigin,
+        deleteUser,
+        changeUser
+    ],
+    posts: [
+        getPosts,
+        getPost,
+        createPost,
+        changePost,
+        deletePost,
+    ],
+    upload: [
+        uploadFile
+    ]
+};
 
 export default async (server, opts) => {
     // Plugins
-    server.register(corsSupport);
-    server.register(cookieSupport);
-    server.register(dbConnection);
-    server.register(authenticate);
-    server.register(helmetProtection);
-    server.register(multipartSupport);
-    server.register(staticSupport);
-
+    plugins.forEach(plugin => {
+        server.register(plugin);
+    });
+   
     // Users
-    server.register(getUsers);
-    server.register(register);
-    server.register(sigin);
-    server.register(changeUser);
-    server.register(deleteUser);
+    routes.users.forEach(route => {
+        server.register(route);
+    });
     
     // Posts
-    server.register(createPost);
-    server.register(getPosts);
-    server.register(getPost);
-    server.register(changePost);
-    server.register(deletePost);
+    routes.posts.forEach(route => {
+        server.register(route);
+    });
 
     // Upload
-    server.register(uploadFile);
+    routes.upload.forEach(route => {
+        server.register(route);
+    });
 };

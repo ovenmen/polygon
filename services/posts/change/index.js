@@ -4,7 +4,7 @@ import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
 import serialize from './serialize.js';
 
-const changePost = async (instance) => instance.patch('/posts/:id',  { ...validation, ...serialize, onRequest: [instance.authenticate] }, async function (request, reply) {
+export default async (server) => server.patch('/posts/:id',  { ...validation, ...serialize, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
         const id = this.mongo.ObjectId(request.params.id);
@@ -31,5 +31,3 @@ const changePost = async (instance) => instance.patch('/posts/:id',  { ...valida
         throw new Error(error);
     }
 });
-
-export default changePost;

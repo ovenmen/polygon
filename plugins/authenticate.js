@@ -5,7 +5,11 @@ import jwt from '@fastify/jwt';
 
 const authenticate = async (server) => {
     server.register(jwt, {
-        secret: process.env.SECRET
+        secret: process.env.SECRET,
+        cookie: {
+            cookieName: 'token',
+            signed: true
+        }
     });
     
     return server.decorate("authenticate", async function (request, reply) {

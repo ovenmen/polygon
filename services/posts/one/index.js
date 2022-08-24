@@ -3,7 +3,7 @@
 import { STATUSES } from '../../../constants.js';
 import serialize from './serialize.js';
 
-const getPost = async (instance) => instance.get('/posts/:id', serialize, async function (request, reply) {
+export default async (server) => server.get('/posts/:id', serialize, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
         const posts = this.mongo.db.collection('posts');
@@ -37,5 +37,3 @@ const getPost = async (instance) => instance.get('/posts/:id', serialize, async 
         throw new Error(error);
     }
 });
-
-export default getPost;

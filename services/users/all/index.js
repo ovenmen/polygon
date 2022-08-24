@@ -4,7 +4,7 @@ import { STATUSES } from '../../../constants.js';
 
 import serialize from './serialize.js';
 
-const getUsers = async (instance) => instance.get('/users', serialize, async function (request, reply) {
+export default async (server) => server.get('/users', serialize, async function (request, reply) {
     try {
         const users = this.mongo.db.collection('users');
         const allUsers = await users.find({}).toArray();
@@ -27,5 +27,3 @@ const getUsers = async (instance) => instance.get('/users', serialize, async fun
         throw new Error(error);
     }
 });
-
-export default getUsers;

@@ -3,7 +3,7 @@
 import { STATUSES } from '../../../constants.js';
 import serialize from './serialize.js';
 
-const deleteUser = async (instance) => instance.delete('/users/:id', { ...serialize, onRequest: [instance.authenticate] }, async function (request, reply) {
+export default async (server) => server.delete('/users/:id', { ...serialize, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
         const users = this.mongo.db.collection('users');
@@ -30,5 +30,3 @@ const deleteUser = async (instance) => instance.delete('/users/:id', { ...serial
         throw new Error(error);
     }
 });
-
-export default deleteUser;

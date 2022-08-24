@@ -6,7 +6,7 @@ import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
 import serialize from './serialize.js';
 
-const register = async (instance) => instance.post('/users/register', { ...serialize, ...validation}, async function (request, reply) {
+export default async (server) => server.post('/users/register', { ...serialize, ...validation}, async function (request, reply) {
     try {
         const { body } = request;
         const users = this.mongo.db.collection('users');
@@ -35,5 +35,3 @@ const register = async (instance) => instance.post('/users/register', { ...seria
         throw new Error(error);
     }
 });
-
-export default register;

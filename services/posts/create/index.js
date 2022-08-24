@@ -4,7 +4,7 @@ import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
 import serialize from './serialize.js';
 
-const createPost = async (instance) => instance.post('/posts', { ...validation, ...serialize, onRequest: [instance.authenticate] }, async function (request, reply) {
+export default async (server) => server.post('/posts', { ...validation, ...serialize, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
         const posts = this.mongo.db.collection('posts');
@@ -21,5 +21,3 @@ const createPost = async (instance) => instance.post('/posts', { ...validation, 
         throw new Error(error);
     }
 });
-
-export default createPost;

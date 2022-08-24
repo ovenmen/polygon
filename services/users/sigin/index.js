@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
 
-const sigin = async (instance) => instance.post('/users/sigin', validation, async function (request, reply) {
+export default async (server) => server.post('/users/sigin', validation, async function (request, reply) {
     try {
         const { body } = request;
         const users = this.mongo.db.collection('users');
@@ -20,7 +20,7 @@ const sigin = async (instance) => instance.post('/users/sigin', validation, asyn
                     .send({
                         success: true,
                         title: "Успешный вход",
-                        token: instance.jwt.sign({ ...body, id: user._id })
+                        token: server.jwt.sign({ ...body, id: user._id })
                     })
                     .redirect('/admin');
             }
@@ -44,5 +44,3 @@ const sigin = async (instance) => instance.post('/users/sigin', validation, asyn
         throw new Error(error);
     }
 });
-
-export default sigin;

@@ -6,7 +6,7 @@ import { STATUSES } from '../../../constants.js';
 import validation from './validation.js';
 import serialize from './serialize.js';
 
-const changeUser = async (instance) => instance.patch('/users/:id', { ...validation, ...serialize, onRequest: [instance.authenticate] }, async function (request, reply) {
+export default async (server) => server.patch('/users/:id', { ...validation, ...serialize, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
         const id = this.mongo.ObjectId(request.params.id);
@@ -14,7 +14,7 @@ const changeUser = async (instance) => instance.patch('/users/:id', { ...validat
         const user = await users.findOne({ _id: id });
 
         if (user) {
-            const isLoginBusy = await users.findOne({ login: body.login }).count() !== 0;
+            const isLoginBusy = await users.findOne({ login: body.login });
 
             if (isLoginBusy) {
                 return reply
@@ -48,5 +48,3 @@ const changeUser = async (instance) => instance.patch('/users/:id', { ...validat
         throw new Error(error);
     }
 });
-
-export default changeUser;
