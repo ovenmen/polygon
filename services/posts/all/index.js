@@ -1,9 +1,9 @@
 'use strict';
 
 import { STATUSES } from '../../../constants.js';
-import serialize from './serialize.js';
+import schema from './schema.js';
 
-export default async (server) => server.get('/posts', serialize, async function (request, reply) {
+export default async (server) => server.get('/posts', { ...schema }, async function (request, reply) {
     try {
         const posts = this.mongo.db.collection('posts');
         const count = await posts.count();

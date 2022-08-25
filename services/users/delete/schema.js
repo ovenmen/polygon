@@ -1,13 +1,21 @@
 'use strict';
 
-const serialize = {
+export default {
     schema: {
+        tags: ['user'],
+        params: {
+            type: 'object',
+            required: ['id'],
+            properties: {
+                id: { type: 'string', minLength: 1 }
+            }
+        },
         response: {
             200: {
                 type: 'object',
                 properties: {
                     success: { type: 'boolean' },
-                    title: { type: 'string' },
+                    title: { type: 'string' }
                 }
             },
             404: {
@@ -20,5 +28,3 @@ const serialize = {
         }
     }
 };
-
-export default serialize;

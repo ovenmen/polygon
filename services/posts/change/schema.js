@@ -1,7 +1,15 @@
 'use strict';
 
-const serialize = {
+export default {
     schema: {
+        tags: ['post'],
+        body: {
+            type: 'object',
+            required: ['title'],
+            properties: {
+                title: { type: 'string', minLength: 1 }
+            }
+        },
         response: {
             200: {
                 type: 'object',
@@ -20,5 +28,3 @@ const serialize = {
         }
     }
 };
-
-export default serialize;

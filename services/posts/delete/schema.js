@@ -1,20 +1,14 @@
 'use strict';
 
-const serialize = {
+export default {
     schema: {
+        tags: ['post'],
         response: {
             200: {
                 type: 'object',
                 properties: {
                     success: { type: 'boolean' },
                     title: { type: 'string' },
-                }
-            },
-            302: {
-                type: 'object',
-                properties: {
-                    success: { type: 'boolean' },
-                    title: { type: 'string' }
                 }
             },
             404: {
@@ -27,5 +21,3 @@ const serialize = {
         }
     }
 };
-
-export default serialize;

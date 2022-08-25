@@ -1,10 +1,9 @@
 'use strict';
 
 import { STATUSES } from '../../../constants.js';
+import schema from './schema.js';
 
-import serialize from './serialize.js';
-
-export default async (server) => server.get('/users', serialize, async function (request, reply) {
+export default async (server) => server.get('/users', { ...schema }, async function (request, reply) {
     try {
         const users = this.mongo.db.collection('users');
         const allUsers = await users.find({}).toArray();

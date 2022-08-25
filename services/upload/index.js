@@ -5,11 +5,11 @@ import util from 'util';
 import { pipeline } from 'stream';
 
 import { STATUSES } from '../../constants.js';
-import validation from './validation.js';
+import schema from './schema.js';
 
 const pump = util.promisify(pipeline);
 
-export default async (server) => server.post('/upload/files', { ...validation, onRequest: [server.authenticate] }, async function (request, reply) {
+export default async (server) => server.post('/upload/files', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const parts = request.parts();
 

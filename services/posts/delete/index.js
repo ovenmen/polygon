@@ -1,8 +1,9 @@
 'use strict';
 
 import { STATUSES } from '../../../constants.js';
+import schema from './schema.js';
 
-export default async (server) => server.delete('/posts/:id',  { onRequest: [server.authenticate] }, async function (request, reply) {
+export default async (server) => server.delete('/posts/:id',  { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
         const posts = this.mongo.db.collection('posts');

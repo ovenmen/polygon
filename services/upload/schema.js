@@ -1,7 +1,8 @@
 'use strict';
 
-const validation = {
+export default {
     schema: {
+        tags: ['upload'],
         file: {
             type: 'object',
             properties: {
@@ -10,8 +11,15 @@ const validation = {
                 limit: { type: 'boolean' },
                 mimetype: { type: 'string' }
             }
+        },
+        response: {
+            200: {
+                type: 'object',
+                properties: {
+                    success: { type: 'boolean' },
+                    title: { type: 'string' }
+                }
+            }
         }
     }
 };
-
-export default validation;

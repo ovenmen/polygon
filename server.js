@@ -7,7 +7,8 @@ import {
     corsSupport,
     helmetProtection,
     multipartSupport,
-    staticSupport
+    staticSupport,
+    swagger
 } from './plugins/index.js';
 
 import {
@@ -31,7 +32,8 @@ const plugins = [
     corsSupport,
     helmetProtection,
     multipartSupport,
-    staticSupport
+    staticSupport,
+    swagger
 ];
 
 const routes = {
@@ -49,7 +51,7 @@ const routes = {
         changePost,
         deletePost,
     ],
-    upload: [
+    uploads: [
         uploadFile
     ]
 };
@@ -71,7 +73,7 @@ export default async (server, opts) => {
     });
 
     // Upload
-    routes.upload.forEach(route => {
+    routes.uploads.forEach(route => {
         server.register(route);
     });
 };

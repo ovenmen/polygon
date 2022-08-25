@@ -3,9 +3,9 @@
 import bcrypt from 'bcrypt';
 
 import { STATUSES } from '../../../constants.js';
-import validation from './validation.js';
+import schema from './schema.js';
 
-export default async (server) => server.post('/users/sigin', validation, async function (request, reply) {
+export default async (server) => server.post('/users/sigin', { ...schema }, async function (request, reply) {
     try {
         const { body } = request;
         const users = this.mongo.db.collection('users');

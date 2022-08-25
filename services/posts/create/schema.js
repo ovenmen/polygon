@@ -1,7 +1,8 @@
 'use strict';
 
-const validation = {
+export default {
     schema: {
+        tags: ['post'],
         body: {
             type: 'object',
             required: ['title', 'content'],
@@ -10,8 +11,15 @@ const validation = {
                 content: { type: 'string'},
                 user: { type: 'string' }
             }
+        },
+        response: {
+            201: {
+                type: 'object',
+                properties: {
+                    success: { type: 'boolean' },
+                    title: { type: 'string' }
+                }
+            }
         }
     }
 };
-
-export default validation;

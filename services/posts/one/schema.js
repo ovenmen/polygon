@@ -1,7 +1,8 @@
 'use strict';
 
-const serialize = {
+export default {
     schema: {
+        tags: ['post'],
         response: {
             200: {
                 type: 'array',
@@ -37,5 +38,3 @@ const serialize = {
         }
     }
 };
-
-export default serialize;
