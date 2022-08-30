@@ -24,10 +24,14 @@ export default async (server) => server.patch('/users/:id', { ...schema, onReque
                     });
             }
 
-            const salt = await bcrypt.genSalt(10);
-            const hasedPassword = await bcrypt.hash(body.password, salt);
+            if(body.password) {
+                const salt = await bcrypt.genSalt(10);
+                const hasedPassword = await bcrypt.hash(body.password, salt);
 
-            await users.findOneAndUpdate({ _id: id }, { $set: { ...body, password: hasedPassword, date: new Date() } });
+                await users.findOneAndUpdate({ _id: id }, { $set: { ...body, password: hasedPassword, date: new Date() } });
+            }
+
+            await users.findOneAndUpdate({ _id: id }, { $set: { ...body, date: new Date() } });
     
             return reply
                 .code(STATUSES.OK)

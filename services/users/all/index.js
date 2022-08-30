@@ -13,7 +13,11 @@ export default async (server) => server.get('/users', { ...schema }, async funct
         if (isHaveUsers) {
             return reply
                 .code(STATUSES.OK)
-                .send({ users: allUsers, count });
+                .send({
+                    success: false,
+                    users: allUsers,
+                    count
+                });
         }
 
         return reply

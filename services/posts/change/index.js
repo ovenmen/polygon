@@ -14,10 +14,12 @@ export default async (server) => server.patch('/posts/:id',  { ...schema, onRequ
         if (post) {
             await posts.findOneAndUpdate({ _id: id }, { $set: { ...body, modifiedDate } });
 
-            return reply.send({
-                success: true,
-                title: "Пост изменен"
-            });
+            return reply
+                .code(STATUSES.OK)
+                .send({
+                    success: true,
+                    title: "Пост изменен"
+                });
         }
 
         return reply

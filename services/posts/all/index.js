@@ -22,7 +22,11 @@ export default async (server) => server.get('/posts', { ...schema }, async funct
         if (isHavePosts) {
             return reply
                 .code(STATUSES.OK)
-                .send({ posts: allPosts, count });
+                .send({
+                    success: true,
+                    posts: allPosts,
+                    count
+                });
         }
 
         return reply

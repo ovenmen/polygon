@@ -24,7 +24,10 @@ export default async (server) => server.get('/posts/:id', { ...schema }, async f
         if (post) {
             return reply
                 .code(STATUSES.OK)
-                .send(post);
+                .send({
+                    success: true,
+                    post: post.at(0)
+                });
         }
 
         return reply

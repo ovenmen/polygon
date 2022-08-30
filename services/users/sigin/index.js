@@ -31,7 +31,6 @@ export default async (server) => server.post('/users/sigin', { ...schema }, asyn
                     success: false,
                     title: "Неверный логин или пароль"
                 });
-            
         }
 
         return reply

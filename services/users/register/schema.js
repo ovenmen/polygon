@@ -7,21 +7,15 @@ export default {
             type: 'object',
             required: ['login', 'password', 'role', 'name'],
             properties: {
-                login: { type: 'string', minLength: 1, format: 'email' },
-                password: { type: 'string', minLength: 1, format: 'password' },
-                role: { type: 'string', minLength: 1 },
+                login: { type: 'string', minLength: 6, format: 'email' },
+                password: { type: 'string', minLength: 8, format: 'password' },
+                role: { type: 'string', minLength: 1, pattern: 'admin|editor' },
                 name: { type: 'string', minLength: 1 },
-                about: { type: 'string' }
+                about: { type: 'string' },
+                avatar: { type: 'string', format: 'url'}
             }
         },
         response: {
-            400: {
-                type: 'object',
-                properties: {
-                    success: { type: 'boolean' },
-                    title: { type: 'string' }
-                }
-            },
             201: {
                 type: 'object',
                 properties: {

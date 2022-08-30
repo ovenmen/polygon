@@ -7,6 +7,8 @@ export default {
             200: {
                 type: 'object',
                 properties: {
+                    success: { type: 'boolean' },
+                    count: { type: 'number' },
                     posts: {
                         type: 'array',
                         items: {
@@ -21,8 +23,10 @@ export default {
                                         type: 'object',
                                         properties: {
                                             _id: { type: 'string' },
-                                            login: { type: 'string' },
-                                            role: { type: 'string' }
+                                            name: { type: 'string' },
+                                            role: { type: 'string' },
+                                            about: { type: 'string' },
+                                            avatar: { type: 'string' }
                                         }
                                     }
                                 },
@@ -30,8 +34,7 @@ export default {
                                 modifiedDate: { type: 'string' }
                             }
                         }
-                    },
-                    count: { type: 'number' }
+                    }
                 }
             },
             404: {

@@ -7,8 +7,8 @@ export default {
             type: 'object',
             required: ['login', 'password'],
             properties: {
-                login: { type: 'string', minLength: 1, format: 'email' },
-                password: { type: 'string', minLength: 1, format: 'password' }
+                login: { type: 'string', minLength: 6, format: 'email' },
+                password: { type: 'string', minLength: 8, format: 'password' }
             }
         },
         response: {
@@ -18,13 +18,6 @@ export default {
                     success: { type: 'boolean' },
                     title: { type: 'string' },
                     token:  { type: 'string' }
-                }
-            },
-            400: {
-                type: 'object',
-                properties: {
-                    success: { type: 'boolean' },
-                    title: { type: 'string' }
                 }
             },
             404: {
