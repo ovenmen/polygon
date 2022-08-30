@@ -15,7 +15,7 @@ const swagger = async (server) => {
             },
             tags: [
                 { name: 'user', description: 'Операции с пользователями' },
-                { name: 'post', description: 'Операции с постами' },
+                { name: 'article', description: 'Операции со статьями' },
                 { name: 'upload', description: 'Операции загрузки и передачи данных' },
             ],
             host: `localhost:${process.env.PORT}`,

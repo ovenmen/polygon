@@ -5,7 +5,7 @@ import schema from './schema.js';
 
 export default async (server) => server.get('/posts', { ...schema }, async function (request, reply) {
     try {
-        const posts = this.mongo.db.collection('posts');
+        const posts = this.mongo.db.collection('articles');
         const count = await posts.count();
         const allPosts = await posts.aggregate([
             {

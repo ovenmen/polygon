@@ -14,6 +14,7 @@ export default async (server) => server.patch('/users/:id', { ...schema, onReque
 
         if (user) {
             const isLoginBusy = await users.findOne({ login: body.login });
+            const modifiedDate = new Date();
 
             if (isLoginBusy) {
                 return reply
@@ -28,15 +29,16 @@ export default async (server) => server.patch('/users/:id', { ...schema, onReque
                 const salt = await bcrypt.genSalt(10);
                 const hasedPassword = await bcrypt.hash(body.password, salt);
 
-                await users.findOneAndUpdate({ _id: id }, { $set: { ...body, password: hasedPassword, date: new Date() } });
+                await users.findOneAndUpdate({ _id: id }, { $set: { ...body, password: hasedPassword, modifiedDate } });
             }
 
-            await users.findOneAndUpdate({ _id: id }, { $set: { ...body, date: new Date() } });
+            await users.findOneAndUpdate({ _id: id }, { $set: { ...body, modifiedDate } });
     
             return reply
                 .code(STATUSES.OK)
                 .send({
                     success: true,
+                    modifiedDate,
                     title: "Пользователь изменен"
                 });
         }

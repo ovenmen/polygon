@@ -7,7 +7,7 @@ export default async (server) => server.patch('/posts/:id',  { ...schema, onRequ
     try {
         const { body } = request;
         const id = this.mongo.ObjectId(request.params.id);
-        const posts = this.mongo.db.collection('posts');
+        const posts = this.mongo.db.collection('articles');
         const post = await posts.findOne({ _id: id });
         const modifiedDate = new Date();
 

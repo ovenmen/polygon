@@ -7,6 +7,7 @@ export default {
             type: 'object',
             required: ['login', 'password', 'role', 'name'],
             properties: {
+                createdDate: { type: 'string', format: 'date-time' },
                 login: { type: 'string', minLength: 6, format: 'email' },
                 password: { type: 'string', minLength: 8, format: 'password' },
                 role: { type: 'string', minLength: 1, pattern: 'admin|editor' },

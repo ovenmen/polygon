@@ -2,7 +2,7 @@
 
 export default {
     schema: {
-        tags: ['post'],
+        tags: ['article'],
         body: {
             type: 'object',
             required: ['title'],

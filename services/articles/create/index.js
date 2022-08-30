@@ -6,9 +6,9 @@ import schema from './schema.js';
 export default async (server) => server.post('/posts', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
-        const posts = this.mongo.db.collection('posts');
-        const createdDate = new Date();
-        await posts.insertOne({ ...body, user: this.mongo.ObjectId(request.user.id), createdDate });
+        const posts = this.mongo.db.collection('articles');
+
+        await posts.insertOne({ ...body, user: this.mongo.ObjectId(request.user.id), createdDate: new Date() });
     
         return reply
             .code(STATUSES.CREATED)

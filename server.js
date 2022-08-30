@@ -1,5 +1,7 @@
 'use strict';
 
+import env from 'dotenv';
+
 import {
     dbConnection,
     authenticate,
@@ -31,6 +33,8 @@ import {
 import {
     uploadMultipart
 } from './services/uploads/index.js';
+
+env.config({ path: '.config.env' });
 
 const plugins = [
     dbConnection,

@@ -2,7 +2,7 @@
 
 export default {
     schema: {
-        tags: ['post'],
+        tags: ['article'],
         response: {
             200: {
                 type: 'object',
@@ -24,14 +24,14 @@ export default {
                                         properties: {
                                             _id: { type: 'string' },
                                             name: { type: 'string' },
-                                            role: { type: 'string' },
+                                            role: { type: 'string', pattern: 'admin|editor' },
                                             about: { type: 'string' },
-                                            avatar: { type: 'string' }
+                                            avatar: { type: 'string', format: 'url' }
                                         }
                                     }
                                 },
-                                createdDate: { type: 'string' },
-                                modifiedDate: { type: 'string' }
+                                createdDate: { type: 'string', format: 'date-time' },
+                                modifiedDate: { type: 'string', format: 'date-time' }
                             }
                         }
                     }

@@ -2,7 +2,7 @@
 
 export default {
     schema: {
-        tags: ['post'],
+        tags: ['article'],
         response: {
             200: {
                 type: 'object',

@@ -6,7 +6,7 @@ import schema from './schema.js';
 export default async (server) => server.get('/posts/:id', { ...schema }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
-        const posts = this.mongo.db.collection('posts');
+        const posts = this.mongo.db.collection('articles');
         const post = await posts.aggregate([
             {
                 $match: { _id: id }
@@ -21,7 +21,7 @@ export default async (server) => server.get('/posts/:id', { ...schema }, async f
             },
         ]).toArray();
 
-        if (post) {
+        if (post.length !== 0) {
             return reply
                 .code(STATUSES.OK)
                 .send({

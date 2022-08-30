@@ -6,7 +6,7 @@ import schema from './schema.js';
 export default async (server) => server.delete('/posts/:id',  { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
-        const posts = this.mongo.db.collection('posts');
+        const posts = this.mongo.db.collection('articles');
         const post = await posts.findOne({ _id: id });
 
         if (post) {

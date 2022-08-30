@@ -17,7 +17,8 @@ export default {
                 properties: {
                     success: { type: 'boolean' },
                     title: { type: 'string' },
-                    token:  { type: 'string' }
+                    token:  { type: 'string' },
+                    signDate: { type: 'string', format: 'date-time' },
                 }
             },
             404: {
