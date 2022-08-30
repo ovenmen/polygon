@@ -1,6 +1,6 @@
 # Polygon headless CMS
 
-[![version](https://img.shields.io/npm/v/bootstrap)]()
+![GitHub package.json version](https://img.shields.io/github/package-json/v/ovenmen/polygon?style=flat)
 
 Запуск в режиме разработки: <code>npm run dev</code>
 
