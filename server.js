@@ -12,18 +12,25 @@ import {
 } from './plugins/index.js';
 
 import {
+    getArticles,
+    getArticle,
+    changeArticle,
+    deleteArticle,
+    createArticle
+} from './services/articles/index.js';
+
+import {
+    registerUser,
+    siginUser,
+    getUser,
     getUsers,
-    register,
-    sigin,
-    deleteUser,
     changeUser,
-    getPosts,
-    getPost,
-    createPost,
-    changePost,
-    deletePost,
-    uploadFile
-} from './services/index.js';
+    deleteUser
+} from './services/users/index.js';
+
+import {
+    uploadMultipart
+} from './services/uploads/index.js';
 
 const plugins = [
     dbConnection,
@@ -36,25 +43,23 @@ const plugins = [
     swagger
 ];
 
-const routes = {
-    users: [
-        getUsers,
-        register,
-        sigin,
-        deleteUser,
-        changeUser
-    ],
-    posts: [
-        getPosts,
-        getPost,
-        createPost,
-        changePost,
-        deletePost,
-    ],
-    uploads: [
-        uploadFile
-    ]
-};
+const publicRoutes = [
+    getArticles,
+    getArticle,
+    getUsers,
+    getUser,
+    registerUser,
+    siginUser
+];
+
+const protectedRoutes = [
+    changeArticle,
+    deleteArticle,
+    createArticle,
+    changeUser,
+    deleteUser,
+    uploadMultipart
+];
 
 export default async (server, opts) => {
     // Plugins
@@ -62,18 +67,13 @@ export default async (server, opts) => {
         server.register(plugin);
     });
    
-    // Users
-    routes.users.forEach(route => {
+    // Public routes
+    publicRoutes.forEach(route => {
         server.register(route);
     });
     
-    // Posts
-    routes.posts.forEach(route => {
-        server.register(route);
-    });
-
-    // Upload
-    routes.uploads.forEach(route => {
+    // Protected routes
+    protectedRoutes.forEach(route => {
         server.register(route);
     });
 };

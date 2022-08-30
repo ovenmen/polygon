@@ -4,7 +4,7 @@ import fs from 'fs';
 import util from 'util';
 import { pipeline } from 'stream';
 
-import { STATUSES } from '../../constants.js';
+import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
 const pump = util.promisify(pipeline);
