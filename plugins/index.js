@@ -6,3 +6,4 @@ export { default as helmetProtection } from './helmet-protection.js';
 export { default as multipartSupport } from './multipart-support.js';
 export { default as staticSupport } from './static-support.js';
 export { default as swagger } from './swagger.js';
+export { default as viewSupport } from './view-support.js';

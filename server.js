@@ -10,7 +10,8 @@ import {
     helmetProtection,
     multipartSupport,
     staticSupport,
-    swagger
+    swagger,
+    viewSupport
 } from './plugins/index.js';
 
 import {
@@ -31,6 +32,12 @@ import {
 } from './services/users/index.js';
 
 import {
+    adminDashboard,
+    adminSign,
+    adminUsers
+} from './services/admin/index.js';
+
+import {
     uploadMultipart
 } from './services/uploads/index.js';
 
@@ -44,7 +51,8 @@ const plugins = [
     helmetProtection,
     multipartSupport,
     staticSupport,
-    swagger
+    swagger,
+    viewSupport
 ];
 
 const publicRoutes = [
@@ -53,7 +61,8 @@ const publicRoutes = [
     getUsers,
     getUser,
     registerUser,
-    siginUser
+    siginUser,
+    adminSign
 ];
 
 const protectedRoutes = [
@@ -62,7 +71,9 @@ const protectedRoutes = [
     createArticle,
     changeUser,
     deleteUser,
-    uploadMultipart
+    uploadMultipart,
+    adminDashboard,
+    adminUsers
 ];
 
 export default async (server, opts) => {

@@ -16,6 +16,10 @@ const authenticate = async (server) => {
         try {
             await request.jwtVerify();
         } catch (err) {
+            if (request.url === '/admin') {
+                reply.redirect('/admin/sigin');
+            }
+
             reply.send(err);
         }
     });
