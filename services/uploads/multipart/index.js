@@ -15,7 +15,7 @@ export default async (server) => server.post('/upload/files', { ...schema, onReq
 
         for await (const part of parts) {
             if (part.file) {
-                await pump(part.file, fs.createWriteStream(`uploads/${part.filename}`));
+                await pump(part.file, fs.createWriteStream(`public/${part.filename}`));
             } else {
                 console.log({ field: part.fieldname, value: part.value });
             }

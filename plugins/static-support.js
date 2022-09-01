@@ -1,6 +1,6 @@
 'use strict';
 
-import fastifyPlugin from "fastify-plugin";
+import fastifyPlugin from 'fastify-plugin';
 import fastifyStatic from '@fastify/static';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 const staticSupport = async (server) => {
     server.register(fastifyStatic, {
-        root: path.join(__dirname, '../uploads'),
+        root: path.join(__dirname, '../public'),
         prefix: '/public/'
     });
 };

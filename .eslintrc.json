@@ -9,8 +9,9 @@
         "sourceType": "module"
     },
     "rules": {
-        "indent": ["error", 4],
         "semi": ["error", "always"],
+        "indent": ["error", 4],
+        "quotes": ["error", "single"],
         "eol-last": ["error", "always"]
     }
 }

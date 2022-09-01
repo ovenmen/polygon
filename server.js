@@ -32,12 +32,6 @@ import {
 } from './services/users/index.js';
 
 import {
-    adminDashboard,
-    adminSign,
-    adminUsers
-} from './services/admin/index.js';
-
-import {
     uploadMultipart
 } from './services/uploads/index.js';
 
@@ -61,8 +55,7 @@ const publicRoutes = [
     getUsers,
     getUser,
     registerUser,
-    siginUser,
-    adminSign
+    siginUser
 ];
 
 const protectedRoutes = [
@@ -71,9 +64,7 @@ const protectedRoutes = [
     createArticle,
     changeUser,
     deleteUser,
-    uploadMultipart,
-    adminDashboard,
-    adminUsers
+    uploadMultipart
 ];
 
 export default async (server, opts) => {
