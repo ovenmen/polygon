@@ -15,21 +15,22 @@ export default async (server) => server.post('/users/sigin', { ...schema }, asyn
             const isValidPassword = await bcrypt.compare(body.password, user.password);
 
             if (isValidPassword) {
+                const token = server.jwt.sign({ ...body, id: user._id }, { expiresIn: '15m' });
+
                 return reply
                     .code(STATUSES.OK)
                     .send({
                         success: true,
-                        title: "Успешный вход",
-                        token: server.jwt.sign({ ...body, id: user._id })
-                    })
-                    .redirect('/admin');
+                        title: 'Успешный вход',
+                        token
+                    });
             }
 
             return reply
                 .code(STATUSES.BAD_REQUEST)
                 .send({
                     success: false,
-                    title: "Неверный логин или пароль"
+                    error: 'Неверный логин или пароль'
                 });
         }
 
@@ -37,7 +38,7 @@ export default async (server) => server.post('/users/sigin', { ...schema }, asyn
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Пользователь не найден"
+                error: 'Пользователь не найден'
             });
     } catch (error) {
         throw new Error(error);

@@ -16,7 +16,7 @@ export default async (server) => server.delete('/users/:id', { ...schema, onRequ
                 .code(STATUSES.OK)
                 .send({
                     success: true,
-                    title: "Пользователь удален"
+                    title: 'Пользователь удален'
                 });
         }
 
@@ -24,7 +24,7 @@ export default async (server) => server.delete('/users/:id', { ...schema, onRequ
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Пользователь не найден"
+                error: 'Пользователь не найден'
             });
     } catch (error) {
         throw new Error(error);

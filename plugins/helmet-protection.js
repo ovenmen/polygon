@@ -5,8 +5,7 @@ import fastifyCookie from '@fastify/helmet';
 
 const helmetProtection = async (server) => {
     server.register(fastifyCookie, {
-        global: true,
-        contentSecurityPolicy: false
+        global: true
     });
 };
 

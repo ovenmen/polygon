@@ -1,6 +1,6 @@
 'use strict';
 
-import fastifyPlugin from "fastify-plugin";
+import fastifyPlugin from 'fastify-plugin';
 import fastifyView from '@fastify/view';
 import artTemplate from 'art-template';
 

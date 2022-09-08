@@ -21,7 +21,7 @@ export default async (server) => server.patch('/users/:id', { ...schema, onReque
                     .code(STATUSES.BAD_REQUEST)
                     .send({
                         success: false,
-                        title: "Логин уже занят"
+                        error: 'Логин уже занят'
                     });
             }
 
@@ -39,7 +39,7 @@ export default async (server) => server.patch('/users/:id', { ...schema, onReque
                 .send({
                     success: true,
                     modifiedDate,
-                    title: "Пользователь изменен"
+                    title: 'Пользователь изменен'
                 });
         }
 
@@ -47,7 +47,7 @@ export default async (server) => server.patch('/users/:id', { ...schema, onReque
             .code(STATUSES.BAD_REQUEST)
             .send({
                 success: false,
-                title: "Пользователь не существует"
+                error: 'Пользователь не существует'
             });
     } catch (error) {
         throw new Error(error);

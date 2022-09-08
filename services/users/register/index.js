@@ -17,7 +17,7 @@ export default async (server) => server.post('/users/register', { ...schema }, a
                 .code(STATUSES.BAD_REQUEST)
                 .send({
                     success: false,
-                    title: "Пользователь уже существует"
+                    error: 'Пользователь уже существует'
                 });
         }
 
@@ -31,7 +31,7 @@ export default async (server) => server.post('/users/register', { ...schema }, a
             .send({
                 success: true,
                 createdDate,
-                title: "Пользователь создан"
+                title: 'Пользователь создан'
             });
     } catch (error) {
         throw new Error(error);

@@ -24,7 +24,7 @@ export default async (server) => server.get('/users', { ...schema }, async funct
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Нет пользователей"
+                error: 'Нет пользователей'
             });
     } catch (error) {
         throw new Error(error);

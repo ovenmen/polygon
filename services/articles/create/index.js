@@ -14,7 +14,7 @@ export default async (server) => server.post('/posts', { ...schema, onRequest: [
             .code(STATUSES.CREATED)
             .send({
                 success: true,
-                title: "Пост создан"
+                title: 'Пост создан'
             });
     } catch (error) {
         throw new Error(error);

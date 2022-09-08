@@ -1,6 +1,6 @@
 'use strict';
 
-import fastifyPlugin from "fastify-plugin";
+import fastifyPlugin from 'fastify-plugin';
 import fastifyMongodb from '@fastify/mongodb';
 
 const dbConnection = async (server) => {

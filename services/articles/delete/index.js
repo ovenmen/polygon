@@ -16,7 +16,7 @@ export default async (server) => server.delete('/posts/:id',  { ...schema, onReq
                 .code(STATUSES.OK)
                 .send({
                     success: true,
-                    title: "Пост удален"
+                    title: 'Пост удален'
                 });
         }
 
@@ -24,7 +24,7 @@ export default async (server) => server.delete('/posts/:id',  { ...schema, onReq
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Пост не найден"
+                error: 'Пост не найден'
             });
     } catch (error) {
         throw new Error(error);

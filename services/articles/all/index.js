@@ -10,10 +10,10 @@ export default async (server) => server.get('/posts', { ...schema }, async funct
         const allPosts = await posts.aggregate([
             {
                 $lookup: {
-                    from: "users",
-                    localField: "user",
-                    foreignField: "_id",
-                    as: "user"
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
                 }
             },
         ]).toArray();
@@ -33,7 +33,7 @@ export default async (server) => server.get('/posts', { ...schema }, async funct
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Нет постов"
+                error: 'Нет постов'
             });
     } catch (error) {
         throw new Error(error);

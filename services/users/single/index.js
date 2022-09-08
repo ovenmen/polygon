@@ -22,7 +22,7 @@ export default async (server) => server.get('/users/:id', { ...schema, onRequest
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Пользователь не найден"
+                error: 'Пользователь не найден'
             });
     } catch (error) {
         throw new Error(error);

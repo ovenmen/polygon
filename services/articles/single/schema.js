@@ -38,7 +38,7 @@ export default {
                 type: 'object',
                 properties: {
                     success: { type: 'boolean' },
-                    title: { type: 'string' }
+                    error: { type: 'string' }
                 }
             }
         }

@@ -1,6 +1,6 @@
 'use strict';
 
-import fastifyPlugin from "fastify-plugin";
+import fastifyPlugin from 'fastify-plugin';
 import jwt from '@fastify/jwt';
 
 const authenticate = async (server) => {
@@ -9,17 +9,14 @@ const authenticate = async (server) => {
         cookie: {
             cookieName: 'token',
             signed: true
-        }
+        },
+        verify: { maxAge: '15m' }
     });
     
-    return server.decorate("authenticate", async function (request, reply) {
+    return server.decorate('authenticate', async function (request, reply) {
         try {
             await request.jwtVerify();
         } catch (err) {
-            if (request.url === '/admin') {
-                reply.redirect('/admin/sigin');
-            }
-
             reply.send(err);
         }
     });

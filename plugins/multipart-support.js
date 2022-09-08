@@ -1,6 +1,6 @@
 'use strict';
 
-import fastifyPlugin from "fastify-plugin";
+import fastifyPlugin from 'fastify-plugin';
 import fastifyMultipart from '@fastify/multipart';
 
 const multipartSupport = async (server) => {

@@ -13,10 +13,10 @@ export default async (server) => server.get('/posts/:id', { ...schema }, async f
             },
             {
                 $lookup: {
-                    from: "users",
-                    localField: "user",
-                    foreignField: "_id",
-                    as: "user"
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
                 }
             },
         ]).toArray();
@@ -34,7 +34,7 @@ export default async (server) => server.get('/posts/:id', { ...schema }, async f
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Пост не найден"
+                error: 'Пост не найден'
             });
     } catch (error) {
         throw new Error(error);

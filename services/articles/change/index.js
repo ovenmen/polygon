@@ -18,7 +18,7 @@ export default async (server) => server.patch('/posts/:id',  { ...schema, onRequ
                 .code(STATUSES.OK)
                 .send({
                     success: true,
-                    title: "Пост изменен"
+                    title: 'Пост изменен'
                 });
         }
 
@@ -26,7 +26,7 @@ export default async (server) => server.patch('/posts/:id',  { ...schema, onRequ
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                title: "Пост не найден"
+                error: 'Пост не найден'
             });
     } catch (error) {
         throw new Error(error);

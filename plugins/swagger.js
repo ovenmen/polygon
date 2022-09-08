@@ -18,7 +18,7 @@ const swagger = async (server) => {
                 { name: 'article', description: 'Операции со статьями' },
                 { name: 'upload', description: 'Операции загрузки и передачи данных' },
             ],
-            host: `localhost:${process.env.PORT}`,
+            host: 'localhost:5000',
             schemes: ['http', 'https'],
             consumes: ['application/json'],
             produces: ['application/json']
