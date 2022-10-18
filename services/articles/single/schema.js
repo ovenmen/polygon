@@ -22,6 +22,7 @@ export default {
                                         _id: { type: 'string' },
                                         login: { type: 'string', format: 'email' },
                                         role: { type: 'string', pattern: 'admin|editor' },
+                                        name: { type: 'string' },
                                         about: { type: 'string' },
                                         avatar: { type: 'string', format: 'url' }
                                     }
