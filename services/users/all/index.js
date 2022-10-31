@@ -14,7 +14,7 @@ export default async (server) => server.get('/users', { ...schema }, async funct
             return reply
                 .code(STATUSES.OK)
                 .send({
-                    success: false,
+                    success: true,
                     users: allUsers,
                     count
                 });
