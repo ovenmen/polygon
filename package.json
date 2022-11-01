@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npx fastify start -p 5000 server.js",
-    "dev": "npx fastify start -l info -P -w -V -p 5000 server.js"
+    "start:server": "npx fastify start -p 5000 server.js",
+    "dev": "npx concurrently npm:dev:*",
+    "dev:client": "npx astro dev",
+    "dev:server": "npx fastify start -l info -P -w -V -p 5000 server.js"
   },
   "keywords": [],
   "author": "",
@@ -22,11 +24,13 @@
     "@fastify/swagger": "8.1.0",
     "@fastify/view": "7.1.1",
     "art-template": "4.13.2",
+    "astro": "1.6.2",
     "fastify": "4.9.2",
     "fastify-cli": "5.5.1"
   },
   "devDependencies": {
     "bcrypt": "5.1.0",
+    "concurrently": "^7.5.0",
     "dotenv": "16.0.3",
     "eslint": "8.26.0"
   }
