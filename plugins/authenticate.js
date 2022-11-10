@@ -16,6 +16,7 @@ const authenticate = async (server) => {
     return server.decorate('authenticate', async function (request, reply) {
         try {
             await request.jwtVerify();
+            await request.jwtVerify({ onlyCookie: true });
         } catch (err) {
             reply.send(err);
         }

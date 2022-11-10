@@ -1,0 +1,1 @@
+self.__RSC_CSS_MANIFEST={"__entry_css__":{"C:\\Users\\detan\\Documents\\PROJECTS\\polygon\\app\\page":["C:\\Users\\detan\\Documents\\PROJECTS\\polygon\\app\\globals.css"]},"C:\\Users\\detan\\Documents\\PROJECTS\\polygon\\app\\layout.tsx":["C:\\Users\\detan\\Documents\\PROJECTS\\polygon\\app\\globals.css"]}
