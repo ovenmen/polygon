@@ -16,6 +16,8 @@ export default async (server) => server.post('/users/sigin', { ...schema }, asyn
 
             if (isValidPassword) {
                 const token = server.jwt.sign({ ...body, id: user._id }, { expiresIn: '15m' });
+                console.log(request.session);
+                request.session.authenticated = true;
 
                 return reply
                     .code(STATUSES.OK)

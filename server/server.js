@@ -10,8 +10,9 @@ import {
     helmetProtection,
     multipartSupport,
     staticSupport,
-    swagger
-} from '../plugins/index.js';
+    swagger,
+    sessionSupport
+} from './plugins/index.js';
 
 import {
     getArticles,
@@ -44,7 +45,8 @@ const plugins = [
     helmetProtection,
     multipartSupport,
     staticSupport,
-    swagger
+    swagger,
+    sessionSupport
 ];
 
 const publicRoutes = [

@@ -1,23 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import fetcher from '../../tools/fetcher';
 
-import LoginInput from './Login-input';
-import PasswordInput from './Password-input';
+interface IFormInputs {
+    login: string
+    password: string
+}
 
 const SiginForm = () => {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoadingData, setLoadingData] = useState(false);
-
-    const initialValues = {
-        login: '',
-        password: ''
-    };
 
     const validationSchema = Yup.object({
         login: Yup
@@ -31,7 +29,7 @@ const SiginForm = () => {
             .required('Пароль обязателен')
     });
 
-    const handleSubmit = async ({ login, password }) => {
+    const onSubmit = async ({ login, password }: IFormInputs) => {
         const { error, isLoading, data } = await fetcher('http://localhost:5000/users/sigin', { login, password }, null);
 
         if (error) {
@@ -42,27 +40,33 @@ const SiginForm = () => {
         setUser(data);
     };
 
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
+        defaultValues: {
+            login: 'det-anton@yandex.ru',
+            password: ''
+        },
+        resolver: yupResolver(validationSchema)
+    });
+
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-        >
-            {(formik) => (
-                <div className="flex justify-center items-center w-[vw] h-[100vh] bg-gradient-to-r from-purple-500 to-pink-500">
-                    <Form className="w-[400px] bg-gray-100 p-5 rounded-lg">
-                        <div>
-                            <LoginInput name="login" type="email" autoComplete="email" placeholder="Login" label="login" />
-                            <PasswordInput name="password" type="password" autoComplete="password" placeholder="Password" label="password" />
-                        </div>
-                        {errorMessage && <h3 className="text-rose-500">{errorMessage}</h3>}
-                        <div>
-                            <button type="submit" className="w-full bg-sky-600 rounded p-2 text-white mt-5 disabled:bg-sky-300" disabled={formik.isSubmitting}>Sign in</button>
-                        </div>
-                    </Form>
+        <div className="flex justify-center items-center w-[vw] h-[100vh] bg-gradient-to-r from-purple-500 to-pink-500">
+            <form className="w-[400px] bg-gray-100 p-5 rounded-lg" onSubmit={handleSubmit(onSubmit)}>
+                {errorMessage && (
+                    <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">{errorMessage}</p>
+                )}
+                <div className="mb-3">
+                    <label htmlFor="login" className="sr-only">Login</label>
+                    <input className="block border border-gray-600 w-full p-2 rounded outline-none focus:border-cyan-600" placeholder="login" {...register('login')} />
+                    <p className="text-rose-500">{errors.login?.message}</p>
                 </div>
-            )}
-        </Formik>
+                <div className="mb-3">
+                    <label htmlFor="password" className="sr-only">Password</label>
+                    <input className="block border border-gray-600 w-full p-2 rounded focus:outline-none focus:border-cyan-600" placeholder="Password" {...register('password')} />
+                    <p className="text-rose-500">{errors.password?.message}</p>
+                </div>
+                <button type="submit" className="w-full bg-sky-600 rounded p-2 text-white mt-5 disabled:bg-sky-200" disabled={isLoadingData}>Sign in</button>
+            </form>
+        </div>
     );
 };
 

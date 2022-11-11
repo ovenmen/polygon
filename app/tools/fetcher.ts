@@ -18,9 +18,13 @@ const fetcher = async (url, payload, token) => {
         const responseData = await response.json();
 
         isLoading = false;
+
+        if (!responseData.success) {
+            error = responseData.error;
+        }
         data = responseData;
     } catch (e) {
-        error = e.message;
+        throw new Error(e.message);
     }
 
     return { error, isLoading, data };
