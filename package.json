@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx concurrently npm:dev:*",
-    "dev:client": "cd client && npm run dev",
+    "dev:client": "cd client && npm start",
     "dev:server": "npx fastify start -l info -P -w -V -p 5000 server/server.js",
     "start": "npx concurrently npm:start:*",
     "start:client": "cd client && npm start",
@@ -32,11 +32,13 @@
     "fastify-cli": "5.6.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.42.1",
-    "@typescript-eslint/parser": "5.42.1",
+    "@typescript-eslint/eslint-plugin": "5.43.0",
+    "@typescript-eslint/parser": "5.43.0",
     "bcrypt": "5.1.0",
     "concurrently": "7.5.0",
     "dotenv": "16.0.3",
-    "eslint": "8.27.0"
+    "eslint": "8.27.0",
+    "typescript": "4.8.4",
+    "web-vitals": "3.0.4"
   }
 }
