@@ -1,3 +1,6 @@
 /node_modules
 .config.env
 /public/*
+client/.next
+client/.vscode
+client/node_modules

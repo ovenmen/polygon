@@ -11,7 +11,10 @@ const sessionSupport = async (server) => {
         expires: 1800000
     });
     server.addHook('preHandler', (request, reply, next) => {
-        request.session.user = {name: 'max'};
+        if (request.user) {
+            request.session.user = request.user.login;
+        }
+        
         next();
     });
 };

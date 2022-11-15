@@ -6,9 +6,9 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended"
+        // "plugin:react/recommended",
+        // "plugin:@typescript-eslint/recommended",
+        // "plugin:react-hooks/recommended"
     ],
     "overrides": [
     ],
@@ -18,8 +18,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react",
-        "react-hooks",
+        // "react",
+        // "react-hooks",
         "@typescript-eslint"
     ],
     "rules": {
