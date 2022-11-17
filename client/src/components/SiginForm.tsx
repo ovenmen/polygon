@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
 import { setToken } from '../__data__/slices/app';
 import { useDispatch } from 'react-redux';
 
@@ -12,8 +11,8 @@ interface IFormInputs {
 }
 
 const SiginForm = () => {
+    const [errorFetch, setErrorFetch] = useState('');
     const dispatch = useDispatch();
-    const navigate = useNavigate();
   
     const validationSchema = Yup.object({
         login: Yup
@@ -44,7 +43,11 @@ const SiginForm = () => {
             body: JSON.stringify({ login, password })
         });
         const data = await response.json();
-        const { token } = data;
+        const { error, token } = data;
+
+        if (error) {
+            setErrorFetch(error);
+        }
 
         if (token) {
             dispatch(setToken(token));
@@ -53,9 +56,9 @@ const SiginForm = () => {
 
     return (
         <form className="w-[400px] bg-gray-100 p-5 rounded-lg" onSubmit={handleSubmit(onSubmit)}>
-            {/* {errors.login && (
-                <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">{errors.login}</p>
-            )} */}
+            {errorFetch && (
+                <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">{errorFetch}</p>
+            )}
             <div className="mb-3">
                 <input type="text" className="block border border-gray-600 w-full p-2 rounded outline-none focus:border-cyan-600" placeholder="login" autoComplete="login" {...register('login')} />
                 <p className="text-rose-500">{errors.login?.message}</p>

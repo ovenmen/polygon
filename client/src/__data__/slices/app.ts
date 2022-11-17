@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    token: '',
+    token: localStorage.getItem('token')
 };
 
 export const appSlice = createSlice({
@@ -9,12 +9,12 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
+            localStorage.setItem('token', action.payload);
             state.token = action.payload;
         }
     }
 });
 
-// Action creators are generated for each case reducer function
 export const { setToken } = appSlice.actions;
 
 export default appSlice.reducer;

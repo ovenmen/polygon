@@ -8,7 +8,7 @@ const Navigation = () => {
             <ul className='flex m-2'>
                 <li className='m-1'><Link to="/admin/dashboard">dashboard</Link></li>
                 <li className='m-1'><Link to="/admin/articles">articles</Link></li>
-                <li className='m-1'><Link to="/admin/sigin">sigin</Link></li>
+                <li className='m-1'><Link to="/admin/profile">profile</Link></li>
             </ul>
         </nav>
     );
