@@ -6,11 +6,11 @@ interface IProps {
 }
 
 const DashboardLayout: FC<IProps> = ({ children }) => (
-    <div>
-        <section>
+    <div className="flex">
+        <section className="basis-1/6">
             <Navigation />
         </section>
-        <section className="container mx-auto">
+        <section className="w-full mx-3">
             {children}
         </section>
     </div>

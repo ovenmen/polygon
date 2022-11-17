@@ -12,6 +12,7 @@ interface IFormInputs {
 
 const SiginForm = () => {
     const [errorFetch, setErrorFetch] = useState('');
+    const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
   
     const validationSchema = Yup.object({
@@ -35,6 +36,7 @@ const SiginForm = () => {
     });
 
     const onSubmit = async ({ login, password }: IFormInputs) => {
+        setLoading(true);
         const response = await fetch('http://localhost:5000/users/sigin', {
             method: 'POST',
             headers: {
@@ -47,10 +49,12 @@ const SiginForm = () => {
 
         if (error) {
             setErrorFetch(error);
+            setLoading(false);
         }
 
         if (token) {
             dispatch(setToken(token));
+            setLoading(false);
         }
     };
 
@@ -67,7 +71,9 @@ const SiginForm = () => {
                 <input type="password" className="block border border-gray-600 w-full p-2 rounded focus:outline-none focus:border-cyan-600" placeholder="Password" autoComplete="current-password" {...register('password')} />
                 <p className="text-rose-500">{errors.password?.message}</p>
             </div>
-            <button type="submit" className="w-full bg-sky-600 rounded p-2 text-white mt-5 disabled:bg-sky-200">Sign in</button>
+            <button type="submit" className="w-full bg-sky-600 rounded p-2 text-white mt-5 disabled:bg-sky-200">
+                {isLoading ? 'Processing...' : 'Sign in'}
+            </button>
         </form>
     );
 };
