@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
-export default async (server) => server.post('/users/sigin', { ...schema }, async function (request, reply) {
+export default async (server) => server.post('/api/users/sigin', { ...schema }, async function (request, reply) {
     try {
         const { body } = request;
         const users = this.mongo.db.collection('users');

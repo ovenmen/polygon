@@ -1,44 +1,46 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import Loader from '../components/Loader';
 
-import DashboardLayout from '../layouts/MainLayout';
+import MainLayout from '../layouts/MainLayout';
+import { useGetArticlesQuery } from '../__data__/services/articles';
 
-interface IParams {
-    method: string
+interface IArticle {
+    _id: string
+    title: string
+    content: string
+    createdDate: string,
+    modifiedData: string,
+    user: [{
+        login: string
+        name: string
+        role: string
+        about: string
+    }]
 }
 
-const getData = async (url: string, params: IParams) => {
-    try {
-        const response = await fetch(url, {
-            ...params,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        return await response.json();
-    } catch (error) {
-        // throw new Error(error.message);
-    }
-};
-
-
 const ArticlesPage = () => {
-    useEffect(() => {
-        getData('http://localhost:5000/posts', { method: 'GET' })
-            .then((articles) => {
-                console.log(articles);
-            });
-    }, []);
+    const { data, error, isLoading } = useGetArticlesQuery({});
 
     return (
-        <DashboardLayout>
+        <MainLayout>
             <h1 className="text-3xl text-center mb-5 mt-5">Articles</h1>
-            <section className="columns-3 mb-3">
-                <div className="h-96 bg-slate-300 rounded-md">1</div>
-                <div className="h-96 bg-slate-300 rounded-md">2</div>
-                <div className="h-96 bg-slate-300 rounded-md">3</div>
-            </section>
-        </DashboardLayout>
+            {isLoading && (
+                <p className="w-1/2 mx-auto text-center">Загрузка постов...</p>
+            )}
+            {error && (
+                <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">Ошибка загрузки данных</p>
+            )}
+            {data && (
+                <section className="columns-3 mb-3">
+                    {data.articles.map((article: IArticle) => (
+                        <div key={article._id} className="rounded-md">
+                            <p>{article.title}</p>
+                            <p>{article.content}</p>
+                        </div>
+                    ))}
+                </section>
+            )}
+        </MainLayout>
     );
 };
 

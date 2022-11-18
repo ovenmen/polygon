@@ -3,14 +3,14 @@
 import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
-export default async (server) => server.delete('/posts/:id',  { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
+export default async (server) => server.delete('/api/articles/:id',  { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
-        const posts = this.mongo.db.collection('articles');
-        const post = await posts.findOne({ _id: id });
+        const articles = this.mongo.db.collection('articles');
+        const article = await articles.findOne({ _id: id });
 
-        if (post) {
-            await posts.findOneAndDelete({ _id: id });
+        if (article) {
+            await articles.findOneAndDelete({ _id: id });
 
             return reply
                 .code(STATUSES.OK)

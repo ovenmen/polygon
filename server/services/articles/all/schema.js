@@ -9,7 +9,7 @@ export default {
                 properties: {
                     success: { type: 'boolean' },
                     count: { type: 'number' },
-                    posts: {
+                    articles: {
                         type: 'array',
                         items: {
                             type: 'object',

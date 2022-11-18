@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
-export default async (server) => server.patch('/users/:id', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
+export default async (server) => server.patch('/api/users/:id', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
         const id = this.mongo.ObjectId(request.params.id);

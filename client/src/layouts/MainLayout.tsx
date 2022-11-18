@@ -5,7 +5,7 @@ interface IProps {
     children: ReactNode
 }
 
-const DashboardLayout: FC<IProps> = ({ children }) => (
+const MainLayout: FC<IProps> = ({ children }) => (
     <div className="flex">
         <section className="basis-1/6">
             <Navigation />
@@ -16,4 +16,4 @@ const DashboardLayout: FC<IProps> = ({ children }) => (
     </div>
 );
 
-export default DashboardLayout;
+export default MainLayout;

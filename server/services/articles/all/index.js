@@ -3,11 +3,11 @@
 import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
-export default async (server) => server.get('/posts', { ...schema }, async function (request, reply) {
+export default async (server) => server.get('/api/articles', { ...schema }, async function (request, reply) {
     try {
-        const posts = this.mongo.db.collection('articles');
-        const count = await posts.count();
-        const allPosts = await posts.aggregate([
+        const articles = this.mongo.db.collection('articles');
+        const count = await articles.count();
+        const allArticles = await articles.aggregate([
             {
                 $lookup: {
                     from: 'users',
@@ -24,7 +24,7 @@ export default async (server) => server.get('/posts', { ...schema }, async funct
                 .code(STATUSES.OK)
                 .send({
                     success: true,
-                    posts: allPosts,
+                    articles: allArticles,
                     count
                 });
         }

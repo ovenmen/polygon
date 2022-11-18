@@ -9,7 +9,7 @@ import schema from './schema.js';
 
 const pump = util.promisify(pipeline);
 
-export default async (server) => server.post('/upload/files', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
+export default async (server) => server.post('/api/upload/files', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const parts = request.parts();
 

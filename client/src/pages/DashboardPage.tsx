@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import DashboardLayout from '../layouts/MainLayout';
+import MainLayout from '../layouts/MainLayout';
 import { RootState } from '../__data__/store';
 
 const DashboardPage = () => {
@@ -16,7 +16,7 @@ const DashboardPage = () => {
     }, [navigate, token]);
 
     return (
-        <DashboardLayout>
+        <MainLayout>
             <h1 className="text-3xl text-center mb-5 mt-5">Dashboard</h1>
             <section className="columns-3 mb-3">
                 <div className="h-96 bg-slate-300 rounded-md">1</div>
@@ -30,7 +30,7 @@ const DashboardPage = () => {
                 <div className="h-96 bg-slate-300 rounded-md">4</div>
                 <div className="h-96 bg-slate-300 rounded-md">5</div>
             </section>
-        </DashboardLayout>
+        </MainLayout>
     );
 };
 

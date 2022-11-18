@@ -3,7 +3,7 @@
 import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
-export default async (server) => server.post('/posts', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
+export default async (server) => server.post('/api/articles', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const { body } = request;
         const posts = this.mongo.db.collection('articles');

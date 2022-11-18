@@ -8,7 +8,7 @@ export default {
                 type: 'object',
                 properties: {
                     success: { type: 'boolean' },
-                    post: {
+                    article: {
                         type: 'object',
                         properties: {
                             _id: { type: 'string' },

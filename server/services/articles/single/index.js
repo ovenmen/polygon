@@ -3,11 +3,11 @@
 import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
-export default async (server) => server.get('/posts/:id', { ...schema }, async function (request, reply) {
+export default async (server) => server.get('/api/articles/:id', { ...schema }, async function (request, reply) {
     try {
         const id = this.mongo.ObjectId(request.params.id);
-        const posts = this.mongo.db.collection('articles');
-        const post = await posts.aggregate([
+        const articles = this.mongo.db.collection('articles');
+        const article = await articles.aggregate([
             {
                 $match: { _id: id }
             },
@@ -21,12 +21,12 @@ export default async (server) => server.get('/posts/:id', { ...schema }, async f
             },
         ]).toArray();
 
-        if (post.length !== 0) {
+        if (article.length !== 0) {
             return reply
                 .code(STATUSES.OK)
                 .send({
                     success: true,
-                    post: post.at(0)
+                    article: article.at(0)
                 });
         }
 
