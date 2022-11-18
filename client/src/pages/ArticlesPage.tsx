@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from '../components/Loader';
+import ArticleCard from '../components/ArticleCard';
 
 import MainLayout from '../layouts/MainLayout';
 import { useGetArticlesQuery } from '../__data__/services/articles';
@@ -31,12 +31,9 @@ const ArticlesPage = () => {
                 <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">Ошибка загрузки данных</p>
             )}
             {data && (
-                <section className="columns-3 mb-3">
+                <section className="flex mb-3">
                     {data.articles.map((article: IArticle) => (
-                        <div key={article._id} className="rounded-md">
-                            <p>{article.title}</p>
-                            <p>{article.content}</p>
-                        </div>
+                        <ArticleCard key={article._id} {...article} />
                     ))}
                 </section>
             )}
