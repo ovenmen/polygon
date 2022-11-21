@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import MarkdownReact from './MarkdownReact';
 
@@ -18,7 +18,7 @@ interface IArticle {
     ]
 }
 
-const ArticleCard = ({ title, content,  }: IArticle) =>  (
+const ArticleCard: FC<IArticle> = ({ title, content }) =>  (
     <div className="article rounded-md mx-4 p-3 border-2 flex-wrap w-1/3">
         <p className="text-2xl mb-3">{title}</p>
         <MarkdownReact>{content}</MarkdownReact>

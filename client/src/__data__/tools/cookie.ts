@@ -1,12 +1,12 @@
 type CookieProps = {
     cookieName: string
-    cookieValue: string,
+    cookieValue?: string,
     secure?: boolean
     path?: string
     maxAge?: number
 }
 
-export const getCookie = (cookieName: string) => document.cookie.match(cookieName)?.input?.replace(`/${cookieName}=/`, '');
+export const getCookie = (cookieName: string) => document.cookie.match(cookieName)?.input?.replace(`${cookieName}=`, '');
 
 export const setCookie = ({
     cookieName,
@@ -15,3 +15,5 @@ export const setCookie = ({
     path,
     maxAge
 }: CookieProps) => document.cookie = `${cookieName}=${cookieValue}; ${secure && 'secure;'} path=${path}; ${maxAge && `max-age=${maxAge}`}`;
+
+export const removeCookie = (cookieName: string) => setCookie({ cookieName, maxAge: -1 });

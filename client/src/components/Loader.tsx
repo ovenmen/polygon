@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { appName } from '../__data__/slices/app';
 
-const Loader = () => {
+const Loader: FC = () => {
     const title = useSelector(appName);
 
     return (

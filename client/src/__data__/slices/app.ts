@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
-import { getCookie, setCookie } from '../tools/cookie';
+import { getCookie, removeCookie, setCookie } from '../tools/cookie';
 
 const initialState = {
     appName: 'Polygon Headless CMS',
@@ -14,14 +14,18 @@ export const appSlice = createSlice({
     reducers: {
         setToken: (state, action) => {
             setCookie({ cookieName: 'token', cookieValue: action.payload, secure: true, path: '/admin', maxAge: 900 });
-            state.token = getCookie('token');
+            state.token = action.payload;
+        },
+        logout: (state) => {
+            removeCookie('token');
+            state.token = '';
         }
     },
 });
 
-export const { setToken } = appSlice.actions;
+export const { setToken, logout } = appSlice.actions;
 
-export const token = (state: RootState) => state.app.token;
-export const appName = (state: RootState) => state.app.appName;
+export const accessToken = (state: RootState) => state.app.token || '';
+export const appName = (state: RootState) => state.app.appName || '';
 
 export default appSlice.reducer;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +20,7 @@ interface IResponseMutation {
     }
 }
 
-const SiginForm = () => {
+const SiginForm: FC = () => {
     const dispatch = useDispatch();
     const [setAuth, { isLoading, error }] = useSiginMutation();
 

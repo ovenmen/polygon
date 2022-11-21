@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Navigation = () => {
+import { logout } from '../__data__/slices/app';
+
+const Navigation: FC = () => {
+    const dispatch = useDispatch();
 
     return (
         <nav className="bg-sky-700 m-0 p-0 w-[200px] fixed top-0 bottom-0 left-0">
@@ -10,6 +14,7 @@ const Navigation = () => {
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/dashboard">dashboard</Link></li>
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/articles">articles</Link></li>
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/profile">profile</Link></li>
+                <li className="text-white hover:bg-sky-800 p-2"><button onClick={() => dispatch(logout())}>logout</button></li>
             </ul>
         </nav>
     );

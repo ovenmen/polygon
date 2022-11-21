@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import MainLayout from '../layouts/MainLayout';
-import { RootState } from '../__data__/store';
+import { accessToken } from '../__data__/slices/app';
 
-const DashboardPage = () => {
-    const token = useSelector<RootState>((state) => state.app.token);
+const DashboardPage: FC = () => {
+    const token = useSelector(accessToken);
     const navigate = useNavigate();
 
     useEffect(() => {
