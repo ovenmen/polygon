@@ -19,7 +19,7 @@ interface IArticle {
 }
 
 const ArticleCard = ({ title, content,  }: IArticle) =>  (
-    <div className="article rounded-md basis-1/5 mx-4 p-3 border-2">
+    <div className="article rounded-md mx-4 p-3 border-2 flex-wrap w-1/3">
         <p className="text-2xl mb-3">{title}</p>
         <MarkdownReact>{content}</MarkdownReact>
     </div>

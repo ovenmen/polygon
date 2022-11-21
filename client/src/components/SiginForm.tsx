@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { setToken } from '../__data__/slices/app';
 import { useDispatch } from 'react-redux';
+
+import { useSiginMutation } from '../__data__/services/auth';
+import { setToken } from '../__data__/slices/app';
 
 interface IFormInputs {
     login: string
     password: string
 }
 
+interface IResponseMutation {
+    data: {
+        success: boolean
+        title: string
+        token: string
+    }
+}
+
 const SiginForm = () => {
-    const [errorFetch, setErrorFetch] = useState('');
-    const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
-  
+    const [setAuth, { isLoading, error }] = useSiginMutation();
+
     const validationSchema = Yup.object({
         login: Yup
             .string()
@@ -36,32 +45,22 @@ const SiginForm = () => {
     });
 
     const onSubmit = async ({ login, password }: IFormInputs) => {
-        setLoading(true);
-        const response = await fetch('http://localhost:5000/users/sigin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ login, password })
-        });
-        const data = await response.json();
-        const { error, token } = data;
+        try {
+            const response = await setAuth({ login, password }) as IResponseMutation;
+            const { token } = response?.data;
 
-        if (error) {
-            setErrorFetch(error);
-            setLoading(false);
-        }
-
-        if (token) {
-            dispatch(setToken(token));
-            setLoading(false);
+            if (token) {
+                dispatch(setToken(token));
+            }
+        } catch (error) {
+            
         }
     };
 
     return (
         <form className="w-[400px] bg-gray-100 p-5 rounded-lg" onSubmit={handleSubmit(onSubmit)}>
-            {errorFetch && (
-                <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">{errorFetch}</p>
+            {error && (
+                <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">Ошибка загрузки данных</p>
             )}
             <div className="mb-3">
                 <input type="text" className="block border border-gray-600 w-full p-2 rounded outline-none focus:border-cyan-600" placeholder="login" autoComplete="login" {...register('login')} />

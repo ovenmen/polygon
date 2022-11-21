@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Navigation = () => {
 
     return (
-        <nav className="bg-sky-700 m-0 p-0">
+        <nav className="bg-sky-700 m-0 p-0 w-[200px] fixed top-0 bottom-0 left-0">
             <ul>
                 <li className="text-slate-100 bg-sky-500 font-bold p-2">Polygon CMS</li>
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/dashboard">dashboard</Link></li>

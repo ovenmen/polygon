@@ -3,7 +3,7 @@ import {
     Route,
     BrowserRouter,
     Routes,
-    Navigate,
+    Navigate
 } from 'react-router-dom';
 import ArticlesPage from './pages/ArticlesPage';
 

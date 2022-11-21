@@ -7,10 +7,10 @@ interface IProps {
 
 const MainLayout: FC<IProps> = ({ children }) => (
     <div className="flex">
-        <section className="basis-[200px]">
+        <aside className="ml-[200px]">
             <Navigation />
-        </section>
-        <section className="w-full mx-5">
+        </aside>
+        <section className="w-full">
             {children}
         </section>
     </div>

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
+import { getCookie, setCookie } from '../tools/cookie';
 
 const initialState = {
     appName: 'Polygon Headless CMS',
-    token: document.cookie.match(/token/)?.input?.replace(/token=/, '')
+    token: getCookie('token')
 };
 
 export const appSlice = createSlice({
@@ -12,10 +13,10 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
-            document.cookie = `token=${action.payload}; secure; path=/admin; max-age=54000`;
-            state.token = action.payload;
+            setCookie({ cookieName: 'token', cookieValue: action.payload, secure: true, path: '/admin', maxAge: 900 });
+            state.token = getCookie('token');
         }
-    }
+    },
 });
 
 export const { setToken } = appSlice.actions;
