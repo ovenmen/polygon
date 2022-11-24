@@ -6,6 +6,7 @@ import { decodeToken } from 'react-jwt';
 import MainLayout from '../layouts/MainLayout';
 import { accessToken } from '../__data__/slices/app';
 import { useGetUserQuery } from '../__data__/services/users';
+import Loader from '../components/Loader';
 
 interface IToken {
     id: string
@@ -26,8 +27,7 @@ const ProfilePage: FC = () => {
     const navigate = useNavigate();
     const user = decodeToken(token) as IToken;
     const { id } = user;
-    const { data, isLoading, error } = useGetUserQuery(id);
-    const { login = '', name = '', role = '', about = '' } = data.user as IUser;
+    const { data, isLoading, error } = useGetUserQuery(id);console.log(data);
 
     useEffect(() => {
         if (!token) {
@@ -38,10 +38,16 @@ const ProfilePage: FC = () => {
     return (
         <MainLayout>
             <section className="container mx-5">
-                <p>{login}</p>
-                <p>{name}</p>
-                <p>{role}</p>
-                <p>{about}</p>
+                {isLoading && <p>Загрузка профиля...</p>}
+                {error && <p>Не удалось информацию о профиле</p>}
+                {data && (
+                    <div>
+                        <p>{data.user.login}</p>
+                        <p>{data.user.name}</p>
+                        <p>{data.user.role}</p>
+                        <p>{data.user.about}</p>
+                    </div>
+                )}
             </section>
         </MainLayout>
     );

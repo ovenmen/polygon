@@ -7,7 +7,12 @@ export default {
             type: 'object',
             required: ['title'],
             properties: {
-                title: { type: 'string', minLength: 1 }
+                header: { type: 'string', minLength: 1 },
+                shortDescription: { type: 'string' },
+                fullDescription: { type: 'string' },
+                mdContent: { type: 'string' },
+                category: { type: 'string' },
+                tags: { type: 'array' }
             }
         },
         response: {

@@ -5,10 +5,16 @@ export default {
         tags: ['article'],
         body: {
             type: 'object',
-            required: ['title', 'content'],
+            required: ['header', 'shortDescription', 'category', 'mdContent'],
             properties: {
-                title: { type: 'string', minLength: 1 },
-                content: { type: 'string' },
+                header: { type: 'string', minLength: 1 },
+                shortDescription: { type: 'string' },
+                fullDescription: { type: 'string' },
+                mdContent: { type: 'string' },
+                category: { type: 'string' },
+                tags: { type: 'array' },
+                createdDate: { type: 'string', format: 'date-time' },
+                modifiedDate: { type: 'string', format: 'date-time' },
                 user: { type: 'string', format: 'url' }
             }
         },

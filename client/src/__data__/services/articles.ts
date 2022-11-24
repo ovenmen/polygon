@@ -22,9 +22,12 @@ export const articlesApi = createApi({
         getArticles: builder.query({
             query: () => 'articles',
         }),
+        getArticle: builder.query({
+            query: (id) => `articles/${id}`,
+        }),
     }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetArticlesQuery } = articlesApi;
+export const { useGetArticlesQuery, useGetArticleQuery } = articlesApi;

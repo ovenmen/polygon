@@ -10,7 +10,7 @@ export const usersApi = createApi({
         prepareHeaders: (headers, { getState }) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const token = (getState() as RootState).app.token;
-            console.log(token);
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }

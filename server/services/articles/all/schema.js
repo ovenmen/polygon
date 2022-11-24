@@ -15,8 +15,14 @@ export default {
                             type: 'object',
                             properties: {
                                 _id: { type: 'string' },
-                                title: { type: 'string' },
-                                content: { type: 'string' },
+                                header: { type: 'string' },
+                                shortDescription: { type: 'string' },
+                                fullDescription: { type: 'string' },
+                                mdContent: { type: 'string' },
+                                category: { type: 'string' },
+                                tags: { type: 'array' },
+                                createdDate: { type: 'string', format: 'date-time' },
+                                modifiedDate: { type: 'string', format: 'date-time' },
                                 user: {
                                     type: 'array',
                                     items: {
@@ -30,9 +36,7 @@ export default {
                                             avatar: { type: 'string', format: 'url' }
                                         }
                                     }
-                                },
-                                createdDate: { type: 'string', format: 'date-time' },
-                                modifiedDate: { type: 'string', format: 'date-time' }
+                                }
                             }
                         }
                     }

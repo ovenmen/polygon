@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-
-import MarkdownReact from './MarkdownReact';
+import { Link } from 'react-router-dom';
 
 interface IArticle {
     _id: string
-    title: string
-    content: string
+    header: string
+    shortDescription: string
+    mdContent: string
     createdDate: string,
     modifiedData: string,
     user: [
@@ -18,11 +18,13 @@ interface IArticle {
     ]
 }
 
-const ArticleCard: FC<IArticle> = ({ title, content }) =>  (
-    <div className="article rounded-md mx-4 p-3 border-2 flex-wrap w-1/3">
-        <p className="text-2xl mb-3">{title}</p>
-        <MarkdownReact>{content}</MarkdownReact>
-    </div>
+const ArticleCard: FC<IArticle> = ({ _id, header, shortDescription }) =>  (
+    <Link to={`/admin/articles/${_id}`} className="contents">
+        <div className="rounded-md mx-4 p-3 border-2 flex-wrap w-1/3">
+            <h1 className="text-3xl mb-3">{header}</h1>
+            <p className="text-slate-500">{shortDescription}</p>
+        </div>
+    </Link>
 );
 
 export default ArticleCard;
