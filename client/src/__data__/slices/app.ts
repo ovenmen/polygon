@@ -5,7 +5,7 @@ import { getCookie, removeCookie, setCookie } from '../tools/cookie';
 
 const initialState = {
     appName: 'Polygon Headless CMS',
-    token: getCookie('token')
+    accessToken: getCookie('accessToken') || ''
 };
 
 export const appSlice = createSlice({
@@ -13,19 +13,19 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
-            setCookie({ cookieName: 'token', cookieValue: action.payload, secure: true, path: '/admin', maxAge: 900 });
-            state.token = action.payload;
+            setCookie({ cookieName: 'accessToken', cookieValue: action.payload, secure: true, path: '/admin', maxAge: 900 });
+            state.accessToken = action.payload;
         },
         logout: (state) => {
-            removeCookie('token');
-            state.token = '';
+            removeCookie('accessToken');
+            state.accessToken = '';
         }
     },
 });
 
 export const { setToken, logout } = appSlice.actions;
 
-export const accessToken = (state: RootState) => state.app.token || '';
-export const appName = (state: RootState) => state.app.appName || '';
+export const accessToken = (state: RootState) => state.app.accessToken;
+export const appName = (state: RootState) => state.app.appName;
 
 export default appSlice.reducer;

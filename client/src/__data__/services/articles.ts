@@ -9,7 +9,7 @@ export const articlesApi = createApi({
         baseUrl: 'http://localhost:5000/api/',
         prepareHeaders: (headers, { getState }) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
-            const token = (getState() as RootState).app.token;
+            const token = (getState() as RootState).app.accessToken;
 
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);

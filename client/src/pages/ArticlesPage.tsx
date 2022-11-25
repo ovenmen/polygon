@@ -1,11 +1,8 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { FC } from 'react';
 import ArticleCard from '../components/ArticleCard';
 
 import MainLayout from '../layouts/MainLayout';
 import { useGetArticlesQuery } from '../__data__/services/articles';
-import { accessToken } from '../__data__/slices/app';
 
 interface IArticle {
     _id: string
@@ -25,15 +22,7 @@ interface IArticle {
 }
 
 const ArticlesPage: FC = () => {
-    const token = useSelector(accessToken);
-    const navigate = useNavigate();
     const { data, error, isLoading } = useGetArticlesQuery({});
-
-    useEffect(() => {
-        if (!token) {
-            navigate('/admin/sigin');
-        }
-    }, [navigate, token]);
 
     return (
         <MainLayout>

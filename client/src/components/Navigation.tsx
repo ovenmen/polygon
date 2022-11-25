@@ -14,7 +14,7 @@ const Navigation: FC = () => {
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/dashboard">dashboard</Link></li>
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/articles">articles</Link></li>
                 <li className="text-white hover:bg-sky-800 p-2"><Link to="/admin/profile">profile</Link></li>
-                <li className="text-white hover:bg-sky-800 p-2"><button onClick={() => dispatch(logout())}>logout</button></li>
+                <li className="text-white hover:bg-sky-800 p-2"><Link onClick={() => dispatch(logout())} to="/admin/logout">logout</Link></li>
             </ul>
         </nav>
     );

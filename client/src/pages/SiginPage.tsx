@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import SiginForm from '../components/SiginForm';
 import SiginLayout from '../layouts/SiginLayout';
-import { RootState } from '../__data__/store';
+import { accessToken } from '../__data__/slices/app';
 
 const SiginPage: FC = () => {
-    const token = useSelector<RootState>((state) => state.app.token);
+    const token = useSelector(accessToken);
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -22,6 +22,7 @@ export default async (server) => server.post('/api/users/sigin', { ...schema }, 
                     .send({
                         success: true,
                         title: 'Успешный вход',
+                        signDate: new Date(),
                         token
                     });
             }

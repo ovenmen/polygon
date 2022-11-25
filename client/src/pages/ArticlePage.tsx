@@ -1,23 +1,13 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import MarkdownReact from '../components/MarkdownReact';
+import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
 
+import MarkdownReact from '../components/MarkdownReact';
 import MainLayout from '../layouts/MainLayout';
 import { useGetArticleQuery } from '../__data__/services/articles';
-import { accessToken } from '../__data__/slices/app';
 
 const ArticlePage: FC = () => {
-    const token = useSelector(accessToken);
-    const navigate = useNavigate();
     const params = useParams();
     const { data, error, isLoading } = useGetArticleQuery(params.id);
-    console.log(data);
-    useEffect(() => {
-        if (!token) {
-            navigate('/admin/sigin');
-        }
-    }, [navigate, token]);
 
     return (
         <MainLayout>

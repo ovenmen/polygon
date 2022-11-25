@@ -5,26 +5,48 @@ import {
     Routes,
     Navigate
 } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { accessToken } from './__data__/slices/app';
 import ArticlePage from './pages/ArticlePage';
 import ArticlesPage from './pages/ArticlesPage';
-
 import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/Profile';
 import SiginPage from './pages/SiginPage';
+import NotFound from './pages/NotFound';
 
-const App: FC = () => (
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Navigate to="/admin" replace />} />
-            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path='/admin/dashboard' element={<DashboardPage />} />
-            <Route path='/admin/articles' element={<ArticlesPage />} />
-            <Route path='/admin/articles/:id' element={<ArticlePage />} />
-            <Route path='/admin/sigin' element={<SiginPage />} />
-            <Route path='/admin/profile' element={<ProfilePage />} />
-            <Route path="*" element={<h1>404</h1>} />
-        </Routes>
-    </BrowserRouter>
-);
+const App: FC = () => {
+    const token = useSelector(accessToken);
+
+    if (token) {
+        return (
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+                    <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+                    <Route path='/admin/dashboard' element={<DashboardPage />} />
+                    <Route path='/admin/articles' element={<ArticlesPage />} />
+                    <Route path='/admin/articles/:id' element={<ArticlePage />} />
+                    <Route path='/admin/sigin' element={<SiginPage />} />
+                    <Route path='/admin/logout' element={<SiginPage />} />
+                    <Route path='/admin/profile' element={<ProfilePage />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </BrowserRouter>
+        );
+    }
+
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Navigate to="/admin/sigin" replace />} />
+                <Route path="/admin" element={<Navigate to="/admin/sigin" replace />} />
+                <Route path='/admin/sigin' element={<SiginPage />} />
+                <Route path='/admin/logout' element={<SiginPage />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
 
 export default App;
