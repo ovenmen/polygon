@@ -20,7 +20,7 @@ interface IArticle {
 
 const ArticleCard: FC<IArticle> = ({ _id, header, shortDescription }) =>  (
     <Link to={`/admin/articles/${_id}`} className="contents">
-        <div className="rounded-md mx-4 p-3 border-2 flex-wrap w-1/3">
+        <div className="rounded-md mb-4 mx-1 p-3 border-2 sm:w-full md:w-1/2 lg:w-1/4">
             <h1 className="text-3xl mb-3">{header}</h1>
             <p className="text-slate-500">{shortDescription}</p>
         </div>

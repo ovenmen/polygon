@@ -14,6 +14,7 @@ import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/Profile';
 import SiginPage from './pages/SiginPage';
 import NotFound from './pages/NotFound';
+import EditorPage from './pages/EditorPage';
 
 const App: FC = () => {
     const token = useSelector(accessToken);
@@ -27,6 +28,7 @@ const App: FC = () => {
                     <Route path='/admin/dashboard' element={<DashboardPage />} />
                     <Route path='/admin/articles' element={<ArticlesPage />} />
                     <Route path='/admin/articles/:id' element={<ArticlePage />} />
+                    <Route path='/admin/articles/edit/:id' element={<EditorPage />} />
                     <Route path='/admin/sigin' element={<SiginPage />} />
                     <Route path='/admin/logout' element={<SiginPage />} />
                     <Route path='/admin/profile' element={<ProfilePage />} />

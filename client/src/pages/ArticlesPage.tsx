@@ -33,9 +33,9 @@ const ArticlesPage: FC = () => {
                 <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">Ошибка загрузки данных</p>
             )}
             {data && (
-                <section>
+                <section className="container">
                     <h1 className="text-3xl text-center mb-5 mt-5">Articles ({data.count})</h1>
-                    <div className="flex mb-3">
+                    <div className="flex mb-3 flex-wrap">
                         {data.articles.map((article: IArticle) => (
                             <ArticleCard key={article._id} {...article} />
                         ))}
