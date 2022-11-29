@@ -33,7 +33,7 @@ export default async (server) => server.get('/api/articles', { ...schema }, asyn
             .code(STATUSES.NOT_FOUND)
             .send({
                 success: false,
-                error: 'Нет постов'
+                error: 'Посты не найдены'
             });
     } catch (error) {
         throw new Error(error);

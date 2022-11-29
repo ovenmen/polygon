@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { API_URL } from '../../__data__/constant';
 import { RootState } from '../store';
 
 // Define a service using a base URL and expected endpoints
 export const articlesApi = createApi({
     reducerPath: 'articlesApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/',
+        baseUrl: API_URL,
         prepareHeaders: (headers, { getState }) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const token = (getState() as RootState).app.accessToken;

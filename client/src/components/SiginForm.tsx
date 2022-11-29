@@ -17,12 +17,18 @@ interface IResponseMutation {
         success: boolean
         title: string
         token: string
+    },
+    isLoading: boolean,
+    error?: {
+        data: {
+            error: string
+        }
     }
 }
 
 const SiginForm: FC = () => {
     const dispatch = useDispatch();
-    const [setAuth, { isLoading, error }] = useSiginMutation();
+    const [setAuth, { isLoading, error }] = useSiginMutation<IResponseMutation>();
 
     const validationSchema = Yup.object({
         login: Yup
@@ -60,18 +66,18 @@ const SiginForm: FC = () => {
     return (
         <form className="w-[400px] bg-gray-100 p-5 rounded-lg" onSubmit={handleSubmit(onSubmit)}>
             {error && (
-                <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">Ошибка загрузки данных</p>
+                <p className="text-white text-center text-lg mb-6 p-3 bg-rose-500 rounded-md">{error?.data?.error || 'Ошибка запроса'}</p>
             )}
             <div className="mb-3">
-                <input type="text" className="block border border-gray-600 w-full p-2 rounded outline-none focus:border-cyan-600" placeholder="login" autoComplete="login" {...register('login')} />
+                <input type="text" className="block border border-gray-600 w-full p-2 rounded outline-none focus:border-cyan-600 focus:ring-2" placeholder="login" autoComplete="login" {...register('login')} />
                 <p className="text-rose-500">{errors.login?.message}</p>
             </div>
             <div className="mb-3">
-                <input type="password" className="block border border-gray-600 w-full p-2 rounded focus:outline-none focus:border-cyan-600" placeholder="Password" autoComplete="current-password" {...register('password')} />
+                <input type="password" className="block border border-gray-600 w-full p-2 rounded focus:outline-none focus:border-cyan-600 focus:ring-2" placeholder="Password" autoComplete="current-password" {...register('password')} />
                 <p className="text-rose-500">{errors.password?.message}</p>
             </div>
-            <button type="submit" className="w-full bg-sky-600 rounded p-2 text-white mt-5 disabled:bg-sky-200">
-                {isLoading ? 'Processing...' : 'Sign in'}
+            <button type="submit" className="w-full bg-sky-600 rounded p-2 text-white mt-5 disabled:bg-sky-200 focus:ring-2">
+                {isLoading ? 'Отправка данных...' : 'Sign in'}
             </button>
         </form>
     );

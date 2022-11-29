@@ -9,8 +9,8 @@ interface IArticle {
     header: string
     shortDescription: string
     mdContent: string
-    createdDate: string,
-    modifiedData: string,
+    createdDate: string
+    modifiedData: string
     user: [
         {
             login: string
@@ -21,8 +21,21 @@ interface IArticle {
     ]
 }
 
+interface IHookData {
+    isLoading: boolean,
+    data: {
+        count: number
+        articles: IArticle[]
+    }
+    error?: {
+        data: {
+            error: string
+        }
+    }
+}
+
 const ArticlesPage: FC = () => {
-    const { data, error, isLoading } = useGetArticlesQuery({});
+    const { data, error, isLoading } = useGetArticlesQuery<IHookData>({});
 
     return (
         <MainLayout>
@@ -30,7 +43,7 @@ const ArticlesPage: FC = () => {
                 <p className="w-1/2 mx-auto text-center">Загрузка постов...</p>
             )}
             {error && (
-                <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">Ошибка загрузки данных</p>
+                <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">{error?.data?.error || 'Ошибка загрузки данных'}</p>
             )}
             {data && (
                 <section className="container">

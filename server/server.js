@@ -35,7 +35,7 @@ import {
     uploadMultipart
 } from './services/uploads/index.js';
 
-env.config({ path: '.config.env' });
+env.config({ path: '.env' });
 
 const plugins = [
     dbConnection,

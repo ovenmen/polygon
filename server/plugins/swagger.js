@@ -6,7 +6,7 @@ import fastifyswagger from '@fastify/swagger';
 const swagger = async (server) => {
     server.register(fastifyswagger, {
         exposeRoute: true,
-        routePrefix: '/docs',
+        routePrefix: '/api/docs',
         swagger: {
             info: {
                 title: 'Polygon-api',

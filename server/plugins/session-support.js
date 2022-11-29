@@ -6,7 +6,7 @@ import fastifySession from '@fastify/session';
 const sessionSupport = async (server) => {
     server.register(fastifySession, {
         cookieName: 'sessionId',
-        secret: process.env.COOKIE_SECRET,
+        secret: process.env.SECRET,
         cookie: { secure: false },
         expires: 1800000
     });

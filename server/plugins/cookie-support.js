@@ -5,7 +5,7 @@ import fastifyCookie from '@fastify/cookie';
 
 const cookieSupport = async (server) => {
     server.register(fastifyCookie, {
-        secret: process.env.COOKIE_SECRET
+        secret: process.env.SECRET
     });
 };
 

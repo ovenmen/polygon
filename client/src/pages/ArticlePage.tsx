@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-import MarkdownReact from '../components/MarkdownReact';
 import MainLayout from '../layouts/MainLayout';
 import { useGetArticleQuery } from '../__data__/services/articles';
 
@@ -25,7 +24,7 @@ const ArticlePage: FC = () => {
                     </button>
                     <h1 className="text-5xl text-center mb-5 mt-5">{data.article.header}</h1>
                     <p className="text-slate-500 text-lg">{data.article.fullDescription}</p>
-                    <MarkdownReact>{data.article.mdContent}</MarkdownReact>
+                    <div dangerouslySetInnerHTML={{ __html: data.article.mdContent }} />
                 </section>
             )}
         </MainLayout>
