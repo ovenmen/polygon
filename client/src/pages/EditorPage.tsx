@@ -19,7 +19,8 @@ const EditorPage: FC = () => {
             )}
             {data && (
                 <section className="article container px-3 mx-auto">
-                    <TinyEditor content={data.article.mdContent} />
+                    <h1 className="text-4xl m-auto text-center mb-7">Edit article</h1>
+                    <TinyEditor {...data.article} />
                 </section>
             )}
         </MainLayout>

@@ -5,12 +5,11 @@ export default {
         tags: ['article'],
         body: {
             type: 'object',
-            required: ['title'],
             properties: {
                 header: { type: 'string', minLength: 1 },
                 shortDescription: { type: 'string' },
                 fullDescription: { type: 'string' },
-                mdContent: { type: 'string' },
+                content: { type: 'string' },
                 category: { type: 'string' },
                 tags: { type: 'array' }
             }

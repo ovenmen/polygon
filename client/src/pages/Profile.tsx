@@ -42,12 +42,14 @@ const ProfilePage: FC = () => {
         <MainLayout>
             <section className="container mx-auto">
                 {isLoading && <p>Загрузка профиля...</p>}
-                {error && <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">{error?.data?.error || 'Не удалось получить информацию о профиле'}</p>}
+                {error && <p className="bg-rose-500 text-white w-1/2 mx-auto p-4 rounded-md text-center">
+                    {error?.data?.error || 'Не удалось получить информацию о профиле'}
+                </p>}
                 {data && (
                     <div className="flex">
                         <div className="mr-5">
                             <figure>
-                                <img src={data.user.avatar} alt="Avatar" className=" w-[200px] mb-5 rounded-md" />
+                                <img src={data.user.avatar} alt="Avatar" className="w-[200px] mb-5 rounded-md shadow-md shadow-slate-900" />
                             </figure>
                         </div>
                         <div>

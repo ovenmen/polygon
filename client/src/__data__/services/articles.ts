@@ -26,9 +26,28 @@ export const articlesApi = createApi({
         getArticle: builder.query({
             query: (id) => `articles/${id}`,
         }),
+        createArticle: builder.mutation({
+            query: (formData) => ({
+                url: 'articles',
+                method: 'POST',
+                body: formData
+            })
+        }),
+        updateArticle: builder.mutation({
+            query: ({ id, formData }) => ({
+                url: `articles/${id}`,
+                method: 'PATCH',
+                body: formData
+            })
+        }),
     }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetArticlesQuery, useGetArticleQuery } = articlesApi;
+export const {
+    useGetArticlesQuery,
+    useGetArticleQuery,
+    useCreateArticleMutation,
+    useUpdateArticleMutation
+} = articlesApi;

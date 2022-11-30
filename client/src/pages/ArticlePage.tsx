@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -7,7 +7,11 @@ import { useGetArticleQuery } from '../__data__/services/articles';
 
 const ArticlePage: FC = () => {
     const params = useParams();
-    const { data, error, isLoading } = useGetArticleQuery(params.id);
+    const { data, error, isLoading, refetch } = useGetArticleQuery(params.id);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     return (
         <MainLayout>
@@ -24,7 +28,7 @@ const ArticlePage: FC = () => {
                     </button>
                     <h1 className="text-5xl text-center mb-5 mt-5">{data.article.header}</h1>
                     <p className="text-slate-500 text-lg">{data.article.fullDescription}</p>
-                    <div dangerouslySetInnerHTML={{ __html: data.article.mdContent }} />
+                    <div dangerouslySetInnerHTML={{ __html: data.article.content }} />
                 </section>
             )}
         </MainLayout>

@@ -18,7 +18,7 @@ export default {
                                 header: { type: 'string' },
                                 shortDescription: { type: 'string' },
                                 fullDescription: { type: 'string' },
-                                mdContent: { type: 'string' },
+                                content: { type: 'string' },
                                 category: { type: 'string' },
                                 tags: { type: 'array' },
                                 createdDate: { type: 'string', format: 'date-time' },
