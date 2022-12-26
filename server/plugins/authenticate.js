@@ -7,7 +7,7 @@ const authenticate = async (server) => {
     server.register(jwt, {
         secret: process.env.SECRET,
         cookie: {
-            cookieName: 'token',
+            cookieName: 'accessToken',
             signed: true
         },
         verify: { maxAge: '15m' }

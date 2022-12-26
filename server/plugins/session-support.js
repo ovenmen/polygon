@@ -5,14 +5,13 @@ import fastifySession from '@fastify/session';
 
 const sessionSupport = async (server) => {
     server.register(fastifySession, {
-        cookieName: 'sessionId',
         secret: process.env.SECRET,
         cookie: { secure: false },
         expires: 1800000
     });
     server.addHook('preHandler', (request, reply, next) => {
         if (request.user) {
-            request.session.user = request.user.login;
+            request.session.authenticate = true;
         }
         
         next();

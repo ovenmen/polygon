@@ -13,7 +13,7 @@ export default async (server) => server.get('/api/users/:id', { ...schema, onReq
             return reply
                 .code(STATUSES.OK)
                 .send({
-                    success: false,
+                    success: true,
                     user
                 });
         }
