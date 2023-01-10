@@ -15,7 +15,14 @@ export default async (server) => server.post('/api/users/sigin', { ...schema }, 
             const isValidPassword = await bcrypt.compare(body.password, user.password);
 
             if (isValidPassword) {
-                const token = server.jwt.sign({ ...body, id: user._id }, { expiresIn: '15m' });
+                const token = server.jwt.sign({
+                    ...body,
+                    id: user._id,
+                    name: user.name,
+                    avatar: user.avatar
+                }, {
+                    expiresIn: '15m'
+                });
 
                 return reply
                     .code(STATUSES.OK)
