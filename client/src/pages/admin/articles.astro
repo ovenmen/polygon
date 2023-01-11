@@ -1,0 +1,15 @@
+---
+import Articles from "@components/Articles";
+import MainLayout from "@layouts/mainLayout.astro";
+
+const accessToken = Astro.cookies.get('accessToken').value
+
+if (!accessToken) {
+   return Astro.redirect('/admin/sigin')
+}
+---
+
+<MainLayout title="Polygon Admin CMS | Articles">
+    <h1 class="text-3xl text-center my-5">Articles</h1>
+    <Articles client:load />
+</MainLayout>

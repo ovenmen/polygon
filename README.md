@@ -1,4 +1,4 @@
-# Polygon headless CMS
+# Polygon CMS
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/ovenmen/polygon?style=flat)
 
