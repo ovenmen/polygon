@@ -4,10 +4,14 @@ export interface IFetch {
 }
 
 export interface IUser {
-    id: string
+    _id: string
+    login: string
     name: string
-    role: string,
+    role: string
     avatar: string
+    about: string
+    createdDate: Date
+    modifiedDate: Date
 }
 
 export interface IArticle {
@@ -26,7 +30,8 @@ export interface IFetchData {
     success: boolean
     count: number
     token: string
-    articles: IArticle[]
+    articles: IArticle[],
+    users: IUser[]
 }
 
 class Fetcher implements IFetch {

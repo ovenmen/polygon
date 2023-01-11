@@ -1,19 +1,19 @@
 import type { FC} from 'react';
 import React, { useEffect, useState } from 'react';
 import { formatDate } from 'src/utils/dates';
-import type { IArticle } from 'src/utils/fetcher';
+import type { IUser } from 'src/utils/fetcher';
 import { fetcher } from 'src/utils/fetcher';
 
-interface IArticles {
-    articles: IArticle[]
+interface IUsers {
+    users: IUser[]
 }
 
-const Articles: FC = () => {
-    const [data, setData] = useState<IArticles>(null);
+const Users: FC = () => {
+    const [data, setData] = useState<IUsers>(null);
 
     useEffect(() => {
         fetcher
-            .get('http://localhost:5000/api/articles')
+            .get('http://localhost:5000/api/users')
             .then((data) => setData(data))
             .catch((error) => console.log(error));
     }, []);
@@ -25,27 +25,25 @@ const Articles: FC = () => {
                     <tr>
                         <th className="border border-slate-300 p-3 text-center">№</th>
                         <th className="border border-slate-300 p-3 text-center">Id</th>
-                        <th className="border border-slate-300 p-3 text-center">Header</th>
-                        <th className="border border-slate-300 p-3 text-center">Category</th>
-                        <th className="border border-slate-300 p-3 text-center">Creator</th>
+                        <th className="border border-slate-300 p-3 text-center">Login</th>
+                        <th className="border border-slate-300 p-3 text-center">Name</th>
+                        <th className="border border-slate-300 p-3 text-center">Role</th>
                         <th className="border border-slate-300 p-3 text-center">Created date</th>
                         <th className="border border-slate-300 p-3 text-center">Modified date</th>
                         <th className="border border-slate-300 p-3 text-center">Operations</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.articles.map((article, index) => {
-                        const { _id, header, category, user, createdDate, modifiedDate } = article;
-                        const author = user.at(0);
-                        const { name } = author;
+                    {data && data.users.map((user, index) => {
+                        const { _id, login, name, role, createdDate, modifiedDate } = user;
 
                         return (
                             <tr key={_id}>
                                 <td className="border border-slate-300 p-3 text-center">{index + 1}</td>
                                 <td className="border border-slate-300 p-3 text-center">{_id}</td>
-                                <td className="border border-slate-300 p-3 text-center">{header}</td>
-                                <td className="border border-slate-300 p-3 text-center">{category}</td>
+                                <td className="border border-slate-300 p-3 text-center">{login}</td>
                                 <td className="border border-slate-300 p-3 text-center">{name}</td>
+                                <td className="border border-slate-300 p-3 text-center">{role}</td>
                                 <td className="border border-slate-300 p-3 text-center">{createdDate && formatDate.toLocalDate(createdDate)}</td>
                                 <td className="border border-slate-300 p-3 text-center">{modifiedDate && formatDate.toLocalDate(modifiedDate)}</td>
                                 <td className="border border-slate-300 p-3 text-center"></td>
@@ -58,4 +56,4 @@ const Articles: FC = () => {
     );
 };
 
-export default Articles;
+export default Users;
