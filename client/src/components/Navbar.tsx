@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import React from 'react';
 
 interface INavbar {
-    login: string
     name: string
     avatar: string,
     pathname: string

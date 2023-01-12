@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken';
 import env from 'dotenv';
 import Navbar from "@components/Navbar";
+import { IUser } from 'src/utils/fetcher';
 
 env.config({ path: '.env' });
 
@@ -9,7 +10,7 @@ const { title } = Astro.props
 const { pathname } = Astro.url
 const accessToken = Astro.cookies.get('accessToken').value
 
-const user = jwt.verify(accessToken, process.env.SECRET);
+const user = jwt.verify(accessToken, process.env.SECRET) as IUser;
 ---
 
 <!DOCTYPE html>
@@ -22,7 +23,7 @@ const user = jwt.verify(accessToken, process.env.SECRET);
 </head>
 <body>
     <header>
-        <Navbar { ...user } pathname={pathname} />
+        <Navbar {...user} pathname={pathname} />
     </header>
     <main class="container mx-auto">
         <slot />

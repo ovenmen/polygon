@@ -1,6 +1,9 @@
+import { cookie } from "./cookies";
+
 export interface IFetch {
     get: (url: string) => Promise<IFetchData>
     post: (url: string, data) => Promise<IFetchData>
+    delete: (url: string, id: string) => Promise<IFetchData>
 }
 
 export interface IUser {
@@ -29,6 +32,7 @@ export interface IArticle {
 export interface IFetchData {
     success: boolean
     count: number
+    title: string
     token: string
     articles: IArticle[],
     users: IUser[]
@@ -41,7 +45,13 @@ class Fetcher implements IFetch {
     async get(url) {
         try {
             this.isLoading = true;
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookie.get('accessToken')}`
+                }
+            });
             const fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
@@ -61,6 +71,26 @@ class Fetcher implements IFetch {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
+            });
+            const fetchData = await response.json() as IFetchData;
+            this.isLoading = false;
+
+            return fetchData;
+        } catch (error) {
+            this.isLoading = false;
+            this.error = error.message;
+        }
+    }
+
+    async delete(url, id) {
+        try {
+            this.isLoading = true;
+            const response = await fetch(`${url}/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookie.get('accessToken')}`
+                }
             });
             const fetchData = await response.json() as IFetchData;
             this.isLoading = false;

@@ -9,7 +9,8 @@
     "dev:client": "npx astro dev --root ./client",
     "dev:server": "npx fastify start -l info -P -w -V -p 5000 server/server.js",
     "dev": "npx concurrently npm:dev:*",
-    "start:server": "npx fastify start -p 5000 server/server.js"
+    "start:server": "npx fastify start -p 5000 server/server.js",
+    "preview": "npx astro preview"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
     "@fastify/session": "10.1.1",
     "@fastify/static": "6.6.1",
     "@fastify/swagger": "8.2.1",
+    "@fortawesome/fontawesome-free": "6.2.1",
     "@hookform/resolvers": "2.9.10",
     "@tailwindcss/forms": "0.5.3",
     "astro": "1.9.1",
@@ -40,6 +42,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "9.0.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
