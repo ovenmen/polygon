@@ -1,31 +1,29 @@
 import type { FC } from 'react';
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
+import useFetch from 'src/hooks/useFetch';
 import { formatDate } from 'src/utils/dates';
-import type { IArticle } from 'src/utils/fetcher';
-import { fetcher } from 'src/utils/fetcher';
-
-interface IArticles {
-    articles: IArticle[]
-}
 
 const Articles: FC = () => {
-    const [data, setData] = useState<IArticles>(null);
+    const { isLoading, error, data, remove } = useFetch('http://localhost:5000/api/articles');
 
-    useEffect(() => {
-        fetcher
-            .get('http://localhost:5000/api/articles')
-            .then((data) => setData(data))
-            .catch((error) => console.log(error));
-    }, []);
+    const handleClickRemoveArticle = (e) => {
+        const { id } = e.target.dataset;
+        remove(`http://localhost:5000/api/articles`, id);
+    };
 
-    const handleClickRemoveArticle = useCallback((e) => {
-        console.log(e.target);
-        // console.log(e.target.parentNode.parentNode)
-        // fetcher
-        //     .delete('http://localhost:5000/api/articles', )
-        //     .then((data) => setData(data))
-        //     .catch((error) => console.log(error));
-    }, []);
+    if (isLoading) {
+        return (
+            <div className="text-lg text-center">Loading...</div>
+        );
+    }
+
+    if (error) {
+        return (
+            <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2 w-96 mx-auto">
+                Ошибка запроса
+            </p>
+        );
+    }
 
     return (
         <div>
@@ -59,7 +57,7 @@ const Articles: FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.articles.map((article, index) => {
+                    {data?.articles.map((article, index) => {
                         const { _id, header, category, user, createdDate, modifiedDate } = article;
                         const author = user.at(0);
                         const { name } = author;
@@ -88,7 +86,9 @@ const Articles: FC = () => {
                                     {modifiedDate && formatDate.toLocalDate(modifiedDate)}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    
+                                    <button onClick={handleClickRemoveArticle}>
+                                        <i className="fa-solid fa-trash text-red-600" data-id={_id}></i> 
+                                    </button>
                                 </td>
                             </tr>
                         );

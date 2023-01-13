@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { FC } from 'react';
 import type { SubmitHandler} from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -26,20 +26,22 @@ const validationSchema = Yup.object({
 }).required();
 
 const Sigin: FC = () => {
-    const [localFetcher] = useState(fetcher);
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
 
     const onSubmit: SubmitHandler<Inputs> = async ({ login, password }) => {
         const data = await fetcher.post('http://localhost:5000/api/users/sigin', { login, password });
-        cookie.set('accessToken', data.token);
-        window.location.replace('/admin');
+
+        if (data) {
+            cookie.set('accessToken', data.token);
+            window.location.replace('/admin');
+        }
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            {localFetcher.error && (
+            {fetcher.error && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
                     Ошибка запроса
                 </p>

@@ -7,7 +7,7 @@ const dbConnection = async (server) => {
     await server.register(fastifyMongodb, {
         forceClose: true,
         url: process.env.DB_CONNECTION_URL
-    });
+    });    
 };
 
 export default fastifyPlugin(dbConnection);

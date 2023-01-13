@@ -3,7 +3,7 @@ import { cookie } from "./cookies";
 export interface IFetch {
     get: (url: string) => Promise<IFetchData>
     post: (url: string, data) => Promise<IFetchData>
-    delete: (url: string, id: string) => Promise<IFetchData>
+    delete: (url: string) => Promise<IFetchData>
 }
 
 export interface IUser {
@@ -40,11 +40,13 @@ export interface IFetchData {
 
 class Fetcher implements IFetch {
     isLoading = false;
-    error;
+    error = '';
+    fetchData = null;
 
     async get(url) {
+        this.isLoading = true;
+
         try {
-            this.isLoading = true;
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -52,53 +54,53 @@ class Fetcher implements IFetch {
                     'Authorization': `Bearer ${cookie.get('accessToken')}`
                 }
             });
-            const fetchData = await response.json() as IFetchData;
+            this.fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
-            return fetchData;
+            return this.fetchData;
         } catch (error) {
-            this.isLoading = false;
-            this.error = error.message;
+            this.error = error;
         }
     }
 
     async post(url, data) {
+        this.isLoading = true;
+
         try {
-            this.isLoading = true;
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookie.get('accessToken')}`
                 },
                 body: JSON.stringify(data)
             });
-            const fetchData = await response.json() as IFetchData;
+            this.fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
-            return fetchData;
+            return this.fetchData;
         } catch (error) {
-            this.isLoading = false;
-            this.error = error.message;
+            this.error = error;
         }
     }
 
-    async delete(url, id) {
+    async delete(url) {
+        this.isLoading = true;
+
         try {
-            this.isLoading = true;
-            const response = await fetch(`${url}/${id}`, {
-                method: 'POST',
+            const response = await fetch(url, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${cookie.get('accessToken')}`
                 }
             });
-            const fetchData = await response.json() as IFetchData;
+            this.fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
-            return fetchData;
+            return this.fetchData;
         } catch (error) {
-            this.isLoading = false;
-            this.error = error.message;
+            this.error = error;
         }
     }
 }
