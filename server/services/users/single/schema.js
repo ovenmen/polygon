@@ -14,7 +14,9 @@ export default {
                             _id: { type: 'string' },
                             login: { type: 'string', format: 'email' },
                             name: { type: 'string', format: 'password' },
-                            role: { type: 'string', pattern: 'admin|editor' },
+                            roles: { type: 'array',
+                                items: { type: 'string', minLength: 1 }
+                            },
                             createdDate: { type: 'string', format: 'date-time' },
                             modifiedDate: { type: 'string', format: 'date-time' },
                             about: { type: 'string' },

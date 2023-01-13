@@ -16,7 +16,9 @@ export default {
                 modifiedDate: { type: 'string', format: 'date-time' },
                 login: { type: 'string', minLength: 1, format: 'email' },
                 password: { type: 'string', minLength: 1, format: 'password' },
-                role: { type: 'string', minLength: 1, pattern: 'admin|editor' },
+                roles: { type: 'array',
+                    items: { type: 'string', minLength: 1 }
+                },
                 name: { type: 'string', minLength: 1 },
                 about: { type: 'string' },
                 avatar: { type: 'string', format: 'url' }

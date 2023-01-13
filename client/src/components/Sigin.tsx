@@ -41,7 +41,7 @@ const Sigin: FC = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            {fetcher.error && (
+            {fetcher.fetchError && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
                     Ошибка запроса
                 </p>

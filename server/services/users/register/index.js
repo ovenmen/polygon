@@ -10,7 +10,9 @@ export default async (server) => server.post('/api/users/register', { ...schema 
         const { body } = request;
         const users = this.mongo.db.collection('users');
         const user = await users.findOne({ login: body.login });
+        const userSuperAdmin = await users.findOne({ roles: 'superAdmin' });
         const createdDate = new Date();
+        const isSuperAdmin = userSuperAdmin && body.roles.find(role => role === 'superAdmin');
 
         if (user) {
             return reply
@@ -18,6 +20,15 @@ export default async (server) => server.post('/api/users/register', { ...schema 
                 .send({
                     success: false,
                     error: 'Пользователь уже существует'
+                });
+        }
+
+        if (isSuperAdmin) {
+            return reply
+                .code(STATUSES.BAD_REQUEST)
+                .send({
+                    success: false,
+                    error: 'Пользователь с правами супер-админа уже сужествует'
                 });
         }
 

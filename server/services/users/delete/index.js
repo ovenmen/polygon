@@ -8,6 +8,16 @@ export default async (server) => server.delete('/api/users/:id', { ...schema, on
         const id = this.mongo.ObjectId(request.params.id);
         const users = this.mongo.db.collection('users');
         const user = await users.findOne({ _id: id });
+        const isSuperAdmin = user.roles.find(role => role === 'superAdmin');
+
+        if (isSuperAdmin) {
+            return reply
+                .code(STATUSES.BAD_REQUEST)
+                .send({
+                    success: false,
+                    error: 'Пользователя с правами супер-админ удалить нельзя'
+                });
+        }
         
         if (user) {
             await users.findOneAndDelete({ _id: id });

@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 import React from 'react';
-import useFetch from 'src/hooks/useFetch';
+import useFetchArticles from 'src/hooks/useFetchArticles';
 import { formatDate } from 'src/utils/dates';
 
 const Articles: FC = () => {
-    const { isLoading, error, data, remove } = useFetch('http://localhost:5000/api/articles');
+    const { isLoading, fetchError, data, remove } = useFetchArticles();
 
     const handleClickRemoveArticle = (e) => {
         const { id } = e.target.dataset;
-        remove(`http://localhost:5000/api/articles`, id);
+        remove(id);
     };
 
     if (isLoading) {
@@ -17,7 +17,7 @@ const Articles: FC = () => {
         );
     }
 
-    if (error) {
+    if (fetchError) {
         return (
             <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2 w-96 mx-auto">
                 Ошибка запроса

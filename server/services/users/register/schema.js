@@ -5,12 +5,14 @@ export default {
         tags: ['user'],
         body: {
             type: 'object',
-            required: ['login', 'password', 'role', 'name'],
+            required: ['login', 'password', 'roles', 'name'],
             properties: {
                 createdDate: { type: 'string', format: 'date-time' },
                 login: { type: 'string', minLength: 6, format: 'email' },
                 password: { type: 'string', minLength: 8, format: 'password' },
-                role: { type: 'string', minLength: 1, pattern: 'admin|editor' },
+                roles: { type: 'array',
+                    items: { type: 'string', minLength: 1 }
+                },
                 name: { type: 'string', minLength: 1 },
                 about: { type: 'string' },
                 avatar: { type: 'string', format: 'url'}

@@ -36,11 +36,13 @@ export interface IFetchData {
     token: string
     articles: IArticle[],
     users: IUser[]
+    error: string
 }
 
 class Fetcher implements IFetch {
     isLoading = false;
-    error = '';
+    messageError = '';
+    fetchError = '';
     fetchData = null;
 
     async get(url) {
@@ -57,9 +59,15 @@ class Fetcher implements IFetch {
             this.fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
-            return this.fetchData;
+            if (this.fetchData.success) {
+                return this.fetchData;
+            }
+
+            this.messageError = this.fetchData.error;
+
+            return this.messageError;
         } catch (error) {
-            this.error = error;
+            this.fetchError = error;
         }
     }
 
@@ -78,9 +86,15 @@ class Fetcher implements IFetch {
             this.fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
-            return this.fetchData;
+            if (this.fetchData.success) {
+                return this.fetchData;
+            }
+
+            this.messageError = this.fetchData.error;
+
+            return this.messageError;
         } catch (error) {
-            this.error = error;
+            this.fetchError = error;
         }
     }
 
@@ -98,9 +112,15 @@ class Fetcher implements IFetch {
             this.fetchData = await response.json() as IFetchData;
             this.isLoading = false;
 
-            return this.fetchData;
+            if (this.fetchData.success) {
+                return this.fetchData;
+            }
+
+            this.messageError = this.fetchData.error;
+
+            return this.messageError;
         } catch (error) {
-            this.error = error;
+            this.fetchError = error;
         }
     }
 }
