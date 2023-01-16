@@ -1,4 +1,5 @@
-import { FC, useState} from 'react';
+import type { FC} from 'react';
+import { useState} from 'react';
 import React from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
@@ -76,12 +77,14 @@ const Users: FC = () => {
                         const { _id, login, name, roles, createdDate, modifiedDate } = user;
 
                         return (
-                            <tr key={_id}>
+                            <tr key={_id} className={`${roles.includes('superAdmin') && "bg-rose-100"}`}>
                                 <td className="border border-slate-300 p-3 text-center">
                                     {index + 1}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {_id}
+                                    <a href={`/admin/users/${_id}`} className="text-gray-500 hover:underline">
+                                        {_id}
+                                    </a>
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
                                     {login}

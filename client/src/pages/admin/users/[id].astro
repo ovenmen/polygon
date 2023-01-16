@@ -1,0 +1,16 @@
+---
+import User from "@components/User";
+import MainLayout from "@layouts/mainLayout.astro";
+
+const accessToken = Astro.cookies.get('accessToken').value;
+
+if (!accessToken) {
+   return Astro.redirect('/admin/sigin');
+}
+
+const { id } = Astro.params;
+---
+
+<MainLayout title="Polygon Admin CMS | Articles">
+    <User client:load id={id} />
+</MainLayout>

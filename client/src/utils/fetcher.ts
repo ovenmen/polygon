@@ -31,6 +31,7 @@ export interface IFetchData {
     articles: IArticle[]
     article: IArticle
     users: IUser[]
+    user: IUser
     error: string
 }
 
@@ -54,6 +55,19 @@ class Fetcher {
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             },
             body: JSON.stringify(arg)
+        });
+        return await response.json() as IFetchData;
+    }
+
+    async change(url, { arg }) {
+        const { id, ...props } = arg;
+        const response = await fetch(`${url}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${cookie.get('accessToken')}`
+            },
+            body: JSON.stringify({ ...props })
         });
         return await response.json() as IFetchData;
     }
