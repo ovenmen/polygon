@@ -1,14 +1,22 @@
 import type { FC } from 'react';
 import React from 'react';
-import useFetchArticles from 'src/hooks/useFetchArticles';
+import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
+
+import { fetcher } from 'src/utils/fetcher';
 import { formatDate } from 'src/utils/dates';
 
 const Articles: FC = () => {
-    const { isLoading, fetchError, data, remove } = useFetchArticles();
+    const { data, error, isLoading } = useSWR('http://localhost:5000/api/articles', fetcher.get);
+    const { trigger } = useSWRMutation('http://localhost:5000/api/articles', fetcher.delete);
 
-    const handleClickRemoveArticle = (e) => {
-        const { id } = e.target.dataset;
-        remove(id);
+    const handleClickRemoveArticle = async (e) => {
+        try {
+            const { id } = e.target.dataset;
+            trigger({ id });
+        } catch (error) {
+            throw new Error(error);
+        }
     };
 
     if (isLoading) {
@@ -17,7 +25,7 @@ const Articles: FC = () => {
         );
     }
 
-    if (fetchError) {
+    if (error) {
         return (
             <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2 w-96 mx-auto">
                 Ошибка запроса
@@ -68,7 +76,9 @@ const Articles: FC = () => {
                                     {index + 1}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {_id}
+                                    <a href={`/admin/articles/${_id}`} className="text-gray-500 hover:underline">
+                                        {_id}
+                                    </a>
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
                                     {header}

@@ -1,14 +1,24 @@
-import type { FC} from 'react';
+import { FC, useState} from 'react';
 import React from 'react';
-import useFetchUsers from 'src/hooks/useFetchUsers';
+import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
+
 import { formatDate } from 'src/utils/dates';
+import { fetcher } from 'src/utils/fetcher';
 
 const Users: FC = () => {
-    const { isLoading, messageError, fetchError, data, remove } = useFetchUsers();
+    const [errorMutation, setErrorMutation] = useState('');
+    const { data, error, isLoading } = useSWR('http://localhost:5000/api/users', fetcher.get);
+    const { trigger } = useSWRMutation('http://localhost:5000/api/users', fetcher.delete);
 
-    const handleClickRemoveArticle = (e) => {
-        const { id } = e.target.dataset;
-        remove(id);
+    const handleClickRemoveArticle = async (e) => {
+        try {
+            const { id } = e.target.dataset;
+            const result = await trigger({ id });
+            setErrorMutation(result.error);
+        } catch (error) {
+            throw new Error(error);
+        }
     };
 
     if (isLoading) {
@@ -17,7 +27,7 @@ const Users: FC = () => {
         );
     }
 
-    if (fetchError) {
+    if (error) {
         return (
             <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2 w-96 mx-auto">
                 Ошибка запроса
@@ -27,9 +37,9 @@ const Users: FC = () => {
 
     return (
         <div>
-            {messageError && (
+            {errorMutation && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
-                    {messageError}
+                    {errorMutation}
                 </p>
             )}
             <table className="border-collapse border border-slate-300 w-[100%]">

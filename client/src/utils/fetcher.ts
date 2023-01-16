@@ -1,16 +1,10 @@
 import { cookie } from "./cookies";
 
-export interface IFetch {
-    get: (url: string) => Promise<IFetchData>
-    post: (url: string, data) => Promise<IFetchData>
-    delete: (url: string) => Promise<IFetchData>
-}
-
 export interface IUser {
     _id: string
     login: string
     name: string
-    role: string
+    roles: string[]
     avatar: string
     about: string
     createdDate: Date
@@ -34,94 +28,45 @@ export interface IFetchData {
     count: number
     title: string
     token: string
-    articles: IArticle[],
+    articles: IArticle[]
+    article: IArticle
     users: IUser[]
     error: string
 }
 
-class Fetcher implements IFetch {
-    isLoading = false;
-    messageError = '';
-    fetchError = '';
-    fetchData = null;
-
+class Fetcher {
     async get(url) {
-        this.isLoading = true;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookie.get('accessToken')}`
-                }
-            });
-            this.fetchData = await response.json() as IFetchData;
-            this.isLoading = false;
-
-            if (this.fetchData.success) {
-                return this.fetchData;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${cookie.get('accessToken')}`
             }
-
-            this.messageError = this.fetchData.error;
-
-            return this.messageError;
-        } catch (error) {
-            this.fetchError = error;
-        }
+        });
+        return await response.json() as IFetchData;
     }
 
-    async post(url, data) {
-        this.isLoading = true;
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookie.get('accessToken')}`
-                },
-                body: JSON.stringify(data)
-            });
-            this.fetchData = await response.json() as IFetchData;
-            this.isLoading = false;
-
-            if (this.fetchData.success) {
-                return this.fetchData;
-            }
-
-            this.messageError = this.fetchData.error;
-
-            return this.messageError;
-        } catch (error) {
-            this.fetchError = error;
-        }
+    async post(url, { arg }) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${cookie.get('accessToken')}`
+            },
+            body: JSON.stringify(arg)
+        });
+        return await response.json() as IFetchData;
     }
 
-    async delete(url) {
-        this.isLoading = true;
-
-        try {
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookie.get('accessToken')}`
-                }
-            });
-            this.fetchData = await response.json() as IFetchData;
-            this.isLoading = false;
-
-            if (this.fetchData.success) {
-                return this.fetchData;
+    async delete(url, { arg }) {
+        const response = await fetch(`${url}/${arg.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${cookie.get('accessToken')}`
             }
-
-            this.messageError = this.fetchData.error;
-
-            return this.messageError;
-        } catch (error) {
-            this.fetchError = error;
-        }
+        });
+        return await response.json() as IFetchData;
     }
 }
 

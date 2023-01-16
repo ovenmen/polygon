@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { FC } from 'react';
 import type { SubmitHandler} from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
+import useSWRMutation from 'swr/mutation';
 
 import { fetcher } from 'src/utils/fetcher';
 import { cookie } from 'src/utils/cookies';
@@ -26,27 +27,33 @@ const validationSchema = Yup.object({
 }).required();
 
 const Sigin: FC = () => {
+    const [errorMutation, setErrorMutation] = useState('');
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
+    const { trigger, error, isMutating } = useSWRMutation('http://localhost:5000/api/users/sigin', fetcher.post);
 
     const onSubmit: SubmitHandler<Inputs> = async ({ login, password }) => {
-        const data = await fetcher.post('http://localhost:5000/api/users/sigin', { login, password });
-
-        if (data) {
-            cookie.set('accessToken', data.token);
-            window.location.replace('/admin');
+        try {
+            const result = await trigger({ login, password });
+            setErrorMutation(result.error);
+            if (result.token) {
+                cookie.set('accessToken', result.token);
+                window.location.replace('/admin');
+            }
+        } catch (error) {
+            throw new Error(error);
         }
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            {fetcher.fetchError && (
+            {error && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
                     Ошибка запроса
                 </p>
             )}
-            {(errors.login || errors.password) && (
+            {(errors.login || errors.password || errorMutation) && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
                     Неверный логин или пароль
                 </p>
@@ -73,7 +80,7 @@ const Sigin: FC = () => {
             </p>
             
             <button type="submit" className="block bg-sky-500 text-white uppercase w-full rounded-md p-2">
-                {fetcher.isLoading ? 'Отправка данных...' : 'Войти'}
+                {isMutating ? 'Отправка данных...' : 'Войти'}
             </button>
         </form>
     );

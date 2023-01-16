@@ -3,10 +3,10 @@
 import Users from "@components/Users";
 import MainLayout from "@layouts/mainLayout.astro";
 
-const accessToken = Astro.cookies.get('accessToken').value
+const accessToken = Astro.cookies.get('accessToken').value;
 
 if (!accessToken) {
-   return Astro.redirect('/admin/sigin')
+   return Astro.redirect('/admin/sigin');
 }
 ---
 

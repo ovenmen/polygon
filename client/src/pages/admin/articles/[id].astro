@@ -1,4 +1,5 @@
 ---
+import Article from "@components/Article";
 import MainLayout from "@layouts/mainLayout.astro";
 
 const accessToken = Astro.cookies.get('accessToken').value;
@@ -6,8 +7,10 @@ const accessToken = Astro.cookies.get('accessToken').value;
 if (!accessToken) {
    return Astro.redirect('/admin/sigin');
 }
+
+const { id } = Astro.params;
 ---
 
-<MainLayout title="Polygon Admin CMS | Home">
-   <h1 class="text-3xl text-center my-5">Astro</h1>
+<MainLayout title="Polygon Admin CMS | Articles">
+    <Article client:load id={id} />
 </MainLayout>
