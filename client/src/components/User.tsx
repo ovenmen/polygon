@@ -1,7 +1,7 @@
-import type { FC} from 'react';
+import type { FC } from 'react';
 import React from 'react';
-
 import useSWR from 'swr';
+
 import { fetcher } from 'src/utils/fetcher';
 
 interface IProps {

@@ -1,6 +1,6 @@
 ---
-import Article from "@components/Article";
-import MainLayout from "@layouts/mainLayout.astro";
+import Article from "components/Article";
+import MainLayout from "layouts/mainLayout.astro";
 
 const accessToken = Astro.cookies.get('accessToken').value;
 
@@ -11,6 +11,6 @@ if (!accessToken) {
 const { id } = Astro.params;
 ---
 
-<MainLayout title="Polygon Admin CMS | Articles">
-    <Article client:load id={id} />
+<MainLayout title={`Polygon Admin CMS | Article ${id}`}>
+    <Article client:only id={id} />
 </MainLayout>

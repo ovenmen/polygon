@@ -5,6 +5,7 @@ import useSWRMutation from 'swr/mutation';
 
 import { fetcher } from 'src/utils/fetcher';
 import { formatDate } from 'src/utils/dates';
+import ButtonAdd from './ButtonAdd';
 
 const Articles: FC = () => {
     const { data, error, isLoading } = useSWR('http://localhost:5000/api/articles', fetcher.get);
@@ -33,8 +34,21 @@ const Articles: FC = () => {
         );
     }
 
+    if (!data.articles) {
+        return (
+            <>
+                <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2 w-96 mx-auto">
+                    Нет статей
+                </p>
+                <footer className="absolute bottom-5 right-5">
+                    <ButtonAdd url="/admin/articles/create" />
+                </footer>
+            </>
+        );
+    }
+
     return (
-        <div>
+        <section className="px-5 mx-auto">
             <table className="border-collapse border border-slate-300 w-[100%]">
                 <thead className="bg-slate-100">
                     <tr>
@@ -65,8 +79,8 @@ const Articles: FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.articles.map((article, index) => {
-                        const { _id, header, category, user, createdDate, modifiedDate } = article;
+                    {data.articles.map((article, index) => {
+                        const { _id, category, user, createdDate, modifiedDate } = article;
                         const author = user.at(0);
                         const { name } = author;
 
@@ -76,12 +90,12 @@ const Articles: FC = () => {
                                     {index + 1}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    <a href={`/admin/articles/${_id}`} className="text-gray-500 hover:underline">
+                                    <a href={`/admin/articles/${_id}`} className="text-blue-500 hover:underline">
                                         {_id}
                                     </a>
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {header}
+                                    {}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
                                     {category}
@@ -105,7 +119,10 @@ const Articles: FC = () => {
                     })}
                 </tbody>
             </table>
-        </div>
+            <footer className="absolute bottom-5 right-5">
+                <ButtonAdd url="/admin/articles/create" />
+            </footer>
+        </section>
     );
 };
 

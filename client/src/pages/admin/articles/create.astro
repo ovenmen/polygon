@@ -1,5 +1,6 @@
 ---
-import Users from "components/Users";
+import Articles from "components/Articles";
+import CreateArticle from "components/CreateArticle";
 import MainLayout from "layouts/mainLayout.astro";
 
 const accessToken = Astro.cookies.get('accessToken').value;
@@ -10,6 +11,11 @@ if (!accessToken) {
 ---
 
 <MainLayout title="Polygon Admin CMS | Articles">
-    <h1 class="text-3xl text-center my-5">Users</h1>
-    <Users client:load />
+    <CreateArticle client:only />
 </MainLayout>
+
+<style is:global>
+    .ce-header h2 {
+        @apply text-3xl;
+    }
+</style>

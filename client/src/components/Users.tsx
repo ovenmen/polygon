@@ -1,11 +1,11 @@
-import type { FC} from 'react';
-import { useState} from 'react';
-import React from 'react';
+import type { FC } from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { formatDate } from 'src/utils/dates';
 import { fetcher } from 'src/utils/fetcher';
+import ButtonAdd from './ButtonAdd';
 
 const Users: FC = () => {
     const [errorMutation, setErrorMutation] = useState('');
@@ -37,7 +37,7 @@ const Users: FC = () => {
     }
 
     return (
-        <div>
+        <section className="px-5 mx-auto">
             {errorMutation && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
                     {errorMutation}
@@ -82,7 +82,7 @@ const Users: FC = () => {
                                     {index + 1}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    <a href={`/admin/users/${_id}`} className="text-gray-500 hover:underline">
+                                    <a href={`/admin/users/${_id}`} className="text-blue-500 hover:underline">
                                         {_id}
                                     </a>
                                 </td>
@@ -111,7 +111,10 @@ const Users: FC = () => {
                     })}
                 </tbody>
             </table>
-        </div>
+            <footer className="absolute bottom-5 right-5">
+                <ButtonAdd url="/admin/users/create" />
+            </footer>
+        </section>
     );
 };
 

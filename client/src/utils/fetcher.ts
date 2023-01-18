@@ -1,14 +1,23 @@
 import { cookie } from "./cookies";
 
+export interface IContent {
+    id: string
+    type: string
+    data: {
+        text: string
+        level: number
+    }
+} 
+
 export interface IUser {
     _id: string
     login: string
     name: string
     roles: string[]
-    avatar: string
-    about: string
-    createdDate: Date
-    modifiedDate: Date
+    avatar?: string
+    about?: string
+    createdDate?: Date
+    modifiedDate?: Date
 }
 
 export interface IArticle {
@@ -16,7 +25,7 @@ export interface IArticle {
     header: string
     shortDescription: string
     fullDescription: string
-    content: string
+    content: IContent[]
     category: string[]
     createdDate: Date
     modifiedDate: Date
@@ -67,7 +76,7 @@ class Fetcher {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             },
-            body: JSON.stringify({ ...props })
+            body: JSON.stringify({ content: props.content })
         });
         return await response.json() as IFetchData;
     }
@@ -79,6 +88,18 @@ class Fetcher {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             }
+        });
+        return await response.json() as IFetchData;
+    }
+
+    async upload(url, arg) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${cookie.get('accessToken')}`
+            },
+            body: JSON.stringify(arg)
         });
         return await response.json() as IFetchData;
     }

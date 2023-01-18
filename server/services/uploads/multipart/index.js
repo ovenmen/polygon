@@ -1,6 +1,6 @@
 'use strict';
 
-import fs from 'fs';
+import { createWriteStream, readFileSync } from 'fs';
 import util from 'util';
 import { pipeline } from 'stream';
 
@@ -9,13 +9,21 @@ import schema from './schema.js';
 
 const pump = util.promisify(pipeline);
 
+function base64Encode(file) {
+    const base64encode = readFileSync(file, { encoding: 'base64' });
+
+    return `data:image/jpeg;base64,${base64encode}`;
+}
+
 export default async (server) => server.post('/api/upload/files', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
         const parts = request.parts();
+        let fileName = '';
 
         for await (const part of parts) {
             if (part.file) {
-                await pump(part.file, fs.createWriteStream(`public/${part.filename}`));
+                await pump(part.file, createWriteStream(`server/public/${part.filename}`));
+                fileName = part.filename;console.log(part)
             } else {
                 console.log({ field: part.fieldname, value: part.value });
             }
@@ -25,7 +33,9 @@ export default async (server) => server.post('/api/upload/files', { ...schema, o
             .code(STATUSES.OK)
             .send({
                 success: true,
-                title: 'Файлы загружены, данные получены'
+                file: {
+                    url: base64Encode(`server/public/${fileName}`)
+                }
             });
     } catch (error) {
         throw new Error(error);

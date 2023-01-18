@@ -17,7 +17,13 @@ export default {
                 type: 'object',
                 properties: {
                     success: { type: 'boolean' },
-                    title: { type: 'string' }
+                    title: { type: 'string' },
+                    file: {
+                        type: 'object',
+                        properties: {
+                            url: { type: 'string' }
+                        }
+                    }
                 }
             }
         }

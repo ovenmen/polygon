@@ -1,7 +1,7 @@
 ---
 import jwt from 'jsonwebtoken';
 import env from 'dotenv';
-import Navbar from "@components/Navbar";
+import Navbar from "components/Navbar";
 import { IUser } from 'src/utils/fetcher';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -24,9 +24,12 @@ const user = jwt.verify(accessToken, process.env.SECRET) as IUser;
 </head>
 <body>
     <header>
-        <Navbar {...user} pathname={pathname} />
+        <Navbar
+            user={user}
+            pathname={pathname}
+        />
     </header>
-    <main class="container mx-auto">
+    <main>
         <slot />
     </main>
 </body>
