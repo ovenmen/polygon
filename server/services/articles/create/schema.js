@@ -5,7 +5,7 @@ export default {
         tags: ['article'],
         body: {
             type: 'object',
-            required: ['content'],
+            required: ['header'],
             properties: {
                 header: { type: 'string', minLength: 1 },
                 shortDescription: { type: 'string' },
@@ -13,9 +13,7 @@ export default {
                 content: { type: 'array' },
                 category: { type: 'string' },
                 tags: { type: 'array' },
-                createdDate: { type: 'string', format: 'date-time' },
-                modifiedDate: { type: 'string', format: 'date-time' },
-                user: { type: 'string', format: 'url' }
+                createdDate: { type: 'string', format: 'date-time' }
             }
         },
         response: {

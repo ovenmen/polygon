@@ -76,7 +76,7 @@ class Fetcher {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             },
-            body: JSON.stringify({ content: props.content })
+            body: JSON.stringify({ ...props })
         });
         return await response.json() as IFetchData;
     }

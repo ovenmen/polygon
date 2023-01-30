@@ -1,5 +1,6 @@
 ---
 import Article from "components/Article";
+import EditArticle from "components/EditArticle";
 import MainLayout from "layouts/mainLayout.astro";
 
 const accessToken = Astro.cookies.get('accessToken').value;
@@ -12,5 +13,5 @@ const { id } = Astro.params;
 ---
 
 <MainLayout title={`Polygon Admin CMS | Article ${id}`}>
-    <Article client:only id={id} />
+    <EditArticle client:only id={id} />
 </MainLayout>

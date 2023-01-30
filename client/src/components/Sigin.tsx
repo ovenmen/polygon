@@ -61,17 +61,17 @@ const Sigin: FC = () => {
             <p className="mb-3">
                 <input
                     type="text"
-                    className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4"
+                    className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2"
                     placeholder="Login"
                     {...register("login")}
                     defaultValue="det-anton@yandex.ru"
                 />
                 {errors.login && <span className="text-white">{errors.login.message}</span>}
             </p>
-            <p className="mb-3">
+            <p className="mb-8">
                 <input
                     type="password"
-                    className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4"
+                    className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2"
                     placeholder="Password"
                     {...register("password")}
                     defaultValue="I71&fyh5"
@@ -79,7 +79,7 @@ const Sigin: FC = () => {
                 {errors.password && <span className="text-white">{errors.password.message}</span>}
             </p>
             
-            <button type="submit" className="block bg-sky-500 text-white uppercase w-full rounded-md p-2">
+            <button type="submit" className="block bg-yellow-500 text-white uppercase w-full rounded-md p-2">
                 {isMutating ? 'Отправка данных...' : 'Войти'}
             </button>
         </form>

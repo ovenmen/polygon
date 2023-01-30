@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import type { FC } from 'react';
 import React from 'react';
 import useSWR from 'swr';
@@ -11,14 +12,19 @@ const Articles: FC = () => {
     const { data, error, isLoading } = useSWR('http://localhost:5000/api/articles', fetcher.get);
     const { trigger } = useSWRMutation('http://localhost:5000/api/articles', fetcher.delete);
 
-    const handleClickRemoveArticle = async (e) => {
+    const handleClickRemoveArticle = useCallback(async (e) => {
         try {
             const { id } = e.target.dataset;
             trigger({ id });
         } catch (error) {
             throw new Error(error);
         }
-    };
+    }, [trigger]);
+
+    const handleClickEditArticle = useCallback((e) => {
+        const { id } = e.target.dataset;
+        location.href = `/admin/articles/edit/${id}`;
+    }, []);
 
     if (isLoading) {
         return (
@@ -80,9 +86,9 @@ const Articles: FC = () => {
                 </thead>
                 <tbody>
                     {data.articles.map((article, index) => {
-                        const { _id, category, user, createdDate, modifiedDate } = article;
+                        const { _id, header, content, category, user, createdDate, modifiedDate } = article;
                         const author = user.at(0);
-                        const { name } = author;
+                        const { login } = author;
 
                         return (
                             <tr key={_id} data-id={_id}>
@@ -95,24 +101,29 @@ const Articles: FC = () => {
                                     </a>
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {}
+                                    {header}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
                                     {category}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {name}
+                                    {login}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {createdDate && formatDate.toLocalDate(createdDate)}
+                                    {createdDate && formatDate.toFullLocalDate(createdDate)}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    {modifiedDate && formatDate.toLocalDate(modifiedDate)}
+                                    {modifiedDate && formatDate.toFullLocalDate(modifiedDate)}
                                 </td>
-                                <td className="border border-slate-300 p-3 text-center">
-                                    <button onClick={handleClickRemoveArticle}>
-                                        <i className="fa-solid fa-trash text-red-600" data-id={_id}></i> 
-                                    </button>
+                                <td className="p-3 border border-slate-300 text-center">
+                                    <div className="flex justify-around items-center">
+                                        <button onClick={handleClickRemoveArticle}>
+                                            <i className="fa-solid fa-trash text-red-600" data-id={_id}></i> 
+                                        </button>
+                                        <button onClick={handleClickEditArticle}>
+                                            <i className="fa-solid fa-pen-to-square text-green-600" data-id={_id}></i> 
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         );
