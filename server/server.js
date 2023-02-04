@@ -33,6 +33,10 @@ import {
     uploadMultipart
 } from './services/uploads/index.js';
 
+import {
+    getAllMedia
+} from './services/media/index.js';
+
 dotenv.config({ path: '.env' });
 
 const plugins = [
@@ -52,6 +56,7 @@ const publicRoutes = [
     getArticle,
     getUsers,
     getUser,
+    getAllMedia,
     registerUser,
     siginUser
 ];

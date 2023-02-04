@@ -1,25 +1,28 @@
-import type { FC} from 'react';
+import type { FC } from 'react';
 import React from 'react';
 
 import { formatDate } from 'src/utils/dates';
 import type { IUser } from 'src/utils/fetcher';
+import FileLoader from './FileLoader';
 
 interface IAside {
     title: string
     user?: IUser
     createdDate?: Date
     modifiedDate?: Date
-    isMutation?: boolean,
+    isMutating?: boolean
     form?: string
+    operations?: string[]
 }
 
 const Aside: FC<IAside> = ({
     title,
     user,
-    isMutation,
+    isMutating,
     createdDate,
     modifiedDate,
-    form
+    form,
+    operations
 }) => (
     <aside className="bg-gray-50 p-5">
         <h3 className="text-center text-lg font-semibold mb-5">{title}</h3>
@@ -56,12 +59,21 @@ const Aside: FC<IAside> = ({
                 )}
             </div>
         )}
-        {form && (
+        {operations && (
             <div className="border-t border-b border-grey-500 pt-3 pb-3">
                 <h4 className="font-semibold mb-3">Operations:</h4>
-                <button className="block bg-green-500 text-white w-full rounded-md p-2" type="submit" form={form}>
-                    {isMutation ? 'Saving...' : 'Save'}
-                </button>
+                {operations.includes('add') && (
+                    <FileLoader form={form} />
+                )}
+                {operations.includes('save') && (
+                    <button
+                        className="block bg-green-500 hover:bg-green-600 transition ease-in-out duration-300 text-white w-full rounded-md p-2 mt-3"
+                        type="submit"
+                        form={form}
+                    >
+                        {isMutating ? 'Saving...' : 'Save'}
+                    </button>
+                )}
             </div>
         )}
     </aside>

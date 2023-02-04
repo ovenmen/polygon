@@ -80,12 +80,12 @@ const EditArticle: FC<IEditArticle> = ({
     const author = user.at(0);
 
     return (
-        <div className="grid grid-cols-[1fr_300px] h-[calc(100vh-52px)]">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_300px] h-[calc(100vh-52px)]">
             <article className="p-5 w-full mx-auto">
                 <h1 className="text-3xl text-center my-5">Edit article</h1>
                 <form onSubmit={handleSubmit(onSubmit)} id="edit-article-form">
                     <p className="mb-3">
-                        <label htmlFor="header">Header:</label>
+                        <label htmlFor="header" className="after:content-['*'] after:ml-0.5 after:text-red-500">Header: </label>
                         <input
                             type="text"
                             className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1"
@@ -102,7 +102,7 @@ const EditArticle: FC<IEditArticle> = ({
                             placeholder="Header article"
                             {...register("shortDescription")}
                             defaultValue={shortDescription}
-                            rows={2}
+                            rows={3}
                         ></textarea>
                         {errors.shortDescription && <span className="text-red-500">{errors.shortDescription.message}</span>}
                     </p>
@@ -113,8 +113,9 @@ const EditArticle: FC<IEditArticle> = ({
                 user={author}
                 modifiedDate={modifiedDate}
                 createdDate={createdDate}
-                isMutation={isMutating}
+                isMutating={isMutating}
                 form="edit-article-form"
+                operations={['save']}
             />
         </div>
     );

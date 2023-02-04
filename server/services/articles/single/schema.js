@@ -15,6 +15,7 @@ export default {
                             header: { type: 'string', minLength: 1 },
                             shortDescription: { type: 'string' },
                             fullDescription: { type: 'string' },
+                            cover: { type: 'string' },
                             content: { type: 'array' },
                             category: { type: 'string' },
                             tags: { type: 'array' },

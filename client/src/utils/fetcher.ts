@@ -25,11 +25,19 @@ export interface IArticle {
     header: string
     shortDescription: string
     fullDescription: string
+    cover: string
     content: IContent[]
     category: string[]
     createdDate: Date
     modifiedDate: Date
     user: IUser[]
+}
+
+export interface IMedia {
+    _id: string
+    fileName: string
+    url: string
+    createdDate: Date
 }
 
 export interface IFetchData {
@@ -41,6 +49,7 @@ export interface IFetchData {
     article: IArticle
     users: IUser[]
     user: IUser
+    media: IMedia[]
     error: string
 }
 
@@ -92,14 +101,17 @@ class Fetcher {
         return await response.json() as IFetchData;
     }
 
-    async upload(url, arg) {
+    async upload(url, { arg }) {
+        const formData = new FormData();
+        formData.append('file', arg.file);
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             },
-            body: JSON.stringify(arg)
+            body: formData
         });
         return await response.json() as IFetchData;
     }

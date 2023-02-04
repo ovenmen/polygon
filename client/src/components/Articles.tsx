@@ -55,7 +55,7 @@ const Articles: FC = () => {
 
     return (
         <section className="px-5 mx-auto">
-            <table className="border-collapse border border-slate-300 w-[100%]">
+            <table className="border-collapse border border-slate-300 w-[100%] table-auto">
                 <thead className="bg-slate-100">
                     <tr>
                         <th className="border border-slate-300 p-3 text-center">

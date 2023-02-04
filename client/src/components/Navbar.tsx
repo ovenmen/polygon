@@ -28,6 +28,11 @@ const Navbar: FC<INavbar> = ({
                     Users
                 </a>
             </li>
+            <li className={`py-3 px-4 ${pathname === '/admin/media' && 'bg-sky-600'} hover:bg-sky-600 transition duration-300 ease-out`}>
+                <a href="/admin/media" className="text-white block">
+                    Media
+                </a>
+            </li>
             <li className="relative py-3 px-4 flex ml-auto group/item">
                 {user.avatar && (
                     <img src={user.avatar} alt="avatar" className="w-7 h-7 rounded-2xl mr-2" />

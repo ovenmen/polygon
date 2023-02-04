@@ -17,6 +17,7 @@ export default {
                                 _id: { type: 'string' },
                                 header: { type: 'string' },
                                 shortDescription: { type: 'string' },
+                                cover: { type: 'string' },
                                 fullDescription: { type: 'string' },
                                 content: { type: 'string' },
                                 category: { type: 'string' },

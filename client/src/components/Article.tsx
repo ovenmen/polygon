@@ -33,6 +33,7 @@ const Article: FC<IProps> = ({
         header,
         shortDescription,
         fullDescription,
+        cover,
         content,
         modifiedDate,
         createdDate,
@@ -41,8 +42,8 @@ const Article: FC<IProps> = ({
     const author = user.at(0);
 
     return (
-        <div className="grid grid-cols-[1fr_300px] h-[calc(100vh-52px)]">
-            <article className="m-5 prose prose-md prose-slate w-full mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_300px] h-[calc(100vh-52px)]">
+            <article className="m-5 px-5 prose prose-md prose-slate w-full mx-auto">
                 {header && (
                     <h1 className="text-3xl text-center my-5">{header}</h1>
                 )}
@@ -51,6 +52,9 @@ const Article: FC<IProps> = ({
                 )}
                 {fullDescription && (
                     <div>{fullDescription}</div>
+                )}
+                {cover && (
+                    <img src={cover} alt="cover" />
                 )}
             </article>
             <Aside

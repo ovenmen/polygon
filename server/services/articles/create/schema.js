@@ -8,6 +8,7 @@ export default {
             required: ['header'],
             properties: {
                 header: { type: 'string', minLength: 1 },
+                cover: { type: 'string' },
                 shortDescription: { type: 'string' },
                 fullDescription: { type: 'string' },
                 content: { type: 'array' },

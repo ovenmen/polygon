@@ -20,24 +20,33 @@ const validationSchema = Yup.object({
     header: Yup
         .string()
         .required('Обязательное поле'),
+    shortDescription: Yup
+        .string(),
+    fullDescription: Yup
+        .string(),
+    cover: Yup
+        .string()
 }).required();
 
 const CreateArticle: FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
+
     const { trigger, isMutating } = useSWRMutation('http://localhost:5000/api/articles', fetcher.post);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
         header,
         shortDescription,
-        fullDescription
+        fullDescription,
+        cover
     }) => {
         try {
             await trigger({
                 header,
                 shortDescription,
-                fullDescription
+                fullDescription,
+                cover
             });
         } catch (error) {
             throw new Error(error);
@@ -45,12 +54,12 @@ const CreateArticle: FC = () => {
     };
 
     return (
-        <div className="grid grid-cols-[1fr_300px] h-[calc(100vh-52px)]">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_300px] h-[calc(100vh-52px)]">
             <article className="p-5 w-full mx-auto">
                 <h1 className="text-3xl text-center my-5">Create article</h1>
                 <form onSubmit={handleSubmit(onSubmit)} id="create-article-form">
                     <p className="mb-3">
-                        <label htmlFor="header">Header:</label>
+                        <label htmlFor="header" className="after:content-['*'] after:ml-0.5 after:text-red-500">Header: </label>
                         <input
                             type="text"
                             className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1"
@@ -64,19 +73,41 @@ const CreateArticle: FC = () => {
                         <label htmlFor="shortDescription">Short description:</label>
                         <textarea
                             className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1"
-                            placeholder="Header article"
+                            placeholder="Short description"
                             {...register("shortDescription")}
                             defaultValue=""
-                            rows={2}
+                            rows={3}
                         ></textarea>
                         {errors.shortDescription && <span className="text-red-500">{errors.shortDescription.message}</span>}
+                    </p>
+                    <p className="mb-3">
+                        <label htmlFor="fullDescription">Full description:</label>
+                        <textarea
+                            className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1"
+                            placeholder="Full description"
+                            {...register("fullDescription")}
+                            defaultValue=""
+                            rows={6}
+                        ></textarea>
+                        {errors.fullDescription && <span className="text-red-500">{errors.fullDescription.message}</span>}
+                    </p>
+                    <p>
+                        <label htmlFor="cover">Cover: </label>
+                        <input
+                            type="text"
+                            className="bg-slate-100 w-full rounded-md p-2 block focus:ring-sky-500 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1"
+                            placeholder="Url image"
+                            {...register("cover")}
+                        />
+                        {errors.cover && <span className="text-red-500">{errors.cover.message}</span>}
                     </p>
                 </form>
             </article>
             <Aside
                 title="Article data"
-                isMutation={isMutating}
+                isMutating={isMutating}
                 form="create-article-form"
+                operations={['save']}
             />
         </div>
     );
