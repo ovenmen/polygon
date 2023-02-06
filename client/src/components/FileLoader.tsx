@@ -1,5 +1,7 @@
 import type { FC } from 'react';
+import { useEffect } from 'react';
 import React from 'react';
+import { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -21,11 +23,12 @@ const validationSchema = Yup.object().required();
 const FileLoader: FC<IFileLoader> = ({
     form
 }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
+    const { mutate } = useSWRConfig();
+    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
 
-    const { trigger, data } = useSWRMutation('http://localhost:5000/api/upload/files', fetcher.upload);
+    const { trigger } = useSWRMutation('http://localhost:5000/api/upload/files', fetcher.upload);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
         file
@@ -33,10 +36,15 @@ const FileLoader: FC<IFileLoader> = ({
         try {
             const image = file[0];
             await trigger({ file: image });
+            mutate('http://localhost:5000/api/media');
         } catch (error) {
             throw new Error(error);
         }
     };
+
+    useEffect(() => {
+        reset({ file: '' });
+    }, [isSubmitSuccessful, reset]);
 
     return (
         <form id={form} onSubmit={handleSubmit(onSubmit)}>
@@ -44,6 +52,7 @@ const FileLoader: FC<IFileLoader> = ({
                 type="file"
                 {...register("file")}
                 className="block w-full text-sm file:transition file:ease-in-out file:duration-300 file:mr-4 file:rounded-md file:p-3 file:bg-sky-500 file:hover:bg-sky-600 file:hover:cursor-pointer file:text-white file:border-0"
+                multiple
             />
             {errors.file && <span className="text-red-500">{errors.file.message}</span>}
         </form>
