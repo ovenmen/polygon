@@ -5,14 +5,15 @@ import useSWRMutation from 'swr/mutation';
 
 import { formatDate } from 'src/utils/dates';
 import { fetcher } from 'src/utils/fetcher';
-import ButtonAdd from './ButtonAdd';
+import { API_HOST } from 'src/utils/constants';
+import ButtonAdd from './buttons/AddButton';
 
 const Users: FC = () => {
     const [errorMutation, setErrorMutation] = useState('');
-    const { data, error, isLoading } = useSWR('http://localhost:5000/api/users', fetcher.get);
-    const { trigger } = useSWRMutation('http://localhost:5000/api/users', fetcher.delete);
+    const { data, error, isLoading } = useSWR(`${API_HOST}/api/users`, fetcher.get);
+    const { trigger } = useSWRMutation(`${API_HOST}/api/users`, fetcher.delete);
 
-    const handleClickRemoveArticle = async (e) => {
+    const handleClickRemoveUser = async (e) => {
         try {
             const { id } = e.target.dataset;
             const result = await trigger({ id });
@@ -102,7 +103,7 @@ const Users: FC = () => {
                                     {modifiedDate && formatDate.toLocalDate(modifiedDate)}
                                 </td>
                                 <td className="border border-slate-300 p-3 text-center">
-                                    <button onClick={handleClickRemoveArticle}>
+                                    <button onClick={handleClickRemoveUser}>
                                         <i className="fa-solid fa-trash text-red-600" data-id={_id}></i> 
                                     </button>
                                 </td>

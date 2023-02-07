@@ -3,14 +3,14 @@
 import fastifyPlugin from 'fastify-plugin';
 import fastifyStatic from '@fastify/static';
 import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import { join, dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const staticSupport = async (server) => {
     server.register(fastifyStatic, {
-        root: path.join(__dirname, '../public'),
+        root: join(__dirname, '../public'),
         prefix: '/public/'
     });
 };

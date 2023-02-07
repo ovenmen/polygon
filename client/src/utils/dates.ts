@@ -1,5 +1,6 @@
 interface IFormatDate {
-    toLocalDate: (date: string) => string,
+    toLocalDate: (date: string) => string
+    toShortLocalDate: (date: string) => string
     toFullLocalDate: (date: string) => string
 }
 
@@ -13,15 +14,22 @@ class FormatDate implements IFormatDate {
         });
     }
 
-    toFullLocalDate(date) {
-        const localDate = new Date(date);
+    toShortLocalDate(date) {
+        return new Intl.DateTimeFormat('ru-RU', {
+            year: 'numeric', month: 'numeric', day: 'numeric',
+            hour: 'numeric', minute: 'numeric', second: 'numeric',
+            hour12: false,
+            timeZoneName: 'short'
+        }).format(new Date(date));
+    }
 
+    toFullLocalDate(date) {
         return new Intl.DateTimeFormat('ru-RU', {
             year: 'numeric', month: 'numeric', day: 'numeric',
             hour: 'numeric', minute: 'numeric', second: 'numeric',
             hour12: false,
             timeZoneName: 'long'
-        }).format(localDate);
+        }).format(new Date(date));
     }
 }
 

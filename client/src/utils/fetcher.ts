@@ -1,44 +1,5 @@
 import { cookie } from "./cookies";
-
-export interface IContent {
-    id: string
-    type: string
-    data: {
-        text: string
-        level: number
-    }
-} 
-
-export interface IUser {
-    _id: string
-    login: string
-    name: string
-    roles: string[]
-    avatar?: string
-    about?: string
-    createdDate?: Date
-    modifiedDate?: Date
-}
-
-export interface IArticle {
-    _id: string
-    header: string
-    shortDescription: string
-    fullDescription: string
-    cover: string
-    content: IContent[]
-    category: string[]
-    createdDate: Date
-    modifiedDate: Date
-    user: IUser[]
-}
-
-export interface IMedia {
-    _id: string
-    fileName: string
-    url: string
-    createdDate: Date
-}
+import type { IArticle, IMedia, IUser } from "./interfaces";
 
 export interface IFetchData {
     success: boolean
@@ -62,6 +23,7 @@ class Fetcher {
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             }
         });
+
         return await response.json() as IFetchData;
     }
 
@@ -74,6 +36,7 @@ class Fetcher {
             },
             body: JSON.stringify(arg)
         });
+
         return await response.json() as IFetchData;
     }
 
@@ -87,6 +50,7 @@ class Fetcher {
             },
             body: JSON.stringify({ ...props })
         });
+
         return await response.json() as IFetchData;
     }
 
@@ -98,21 +62,20 @@ class Fetcher {
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             }
         });
+
         return await response.json() as IFetchData;
     }
 
     async upload(url, { arg }) {
-        const formData = new FormData();
-        formData.append('file', arg.file);
-
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${cookie.get('accessToken')}`
             },
-            body: formData
+            body: arg
         });
+
         return await response.json() as IFetchData;
     }
 }

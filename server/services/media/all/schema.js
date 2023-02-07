@@ -17,6 +17,7 @@ export default {
                                 _id: { type: 'string' },
                                 fileName: { type: 'string' },
                                 url: { type: 'string' },
+                                mimeType: { type: 'string' },
                                 createdDate: { type: 'string', format: 'date-time' }
                             }
                         }

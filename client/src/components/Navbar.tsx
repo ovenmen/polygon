@@ -1,13 +1,14 @@
 import type { FC } from 'react';
 import React from 'react';
-import type { IUser } from 'src/utils/fetcher';
 
-interface INavbar {
+import type { IUser } from 'src/utils/interfaces';
+
+interface IProps {
     user: IUser
     pathname: string
 }
 
-const Navbar: FC<INavbar> = ({
+const Navbar: FC<IProps> = ({
     user,
     pathname
 }) => (

@@ -7,13 +7,11 @@ import { useForm } from 'react-hook-form';
 import * as Yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import type { IArticle } from 'src/utils/fetcher';
-import { fetcher } from 'src/utils/fetcher';
-import Aside from './Aside';
 
-interface IEditArticle {
-    id: string
-}
+import { fetcher } from 'src/utils/fetcher';
+import { API_HOST } from 'src/utils/constants';
+import type { IArticle } from 'src/utils/interfaces';
+import Aside from './Aside';
 
 interface Inputs {
     header: string
@@ -22,20 +20,24 @@ interface Inputs {
     cover: string
 }
 
+interface IProps {
+    id: string
+}
+
 const validationSchema = Yup.object({
     header: Yup
         .string()
         .required('Обязательное поле'),
 }).required();
 
-const EditArticle: FC<IEditArticle> = ({
+const EditArticle: FC<IProps> = ({
     id
 }) => {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
-    const { data, error, isLoading } = useSWR(`http://localhost:5000/api/articles/${id}`, fetcher.get);
-    const { trigger, isMutating } = useSWRMutation(`http://localhost:5000/api/articles`, fetcher.change);
+    const { data, error, isLoading } = useSWR(`${API_HOST}/api/articles/${id}`, fetcher.get);
+    const { trigger, isMutating } = useSWRMutation(`${API_HOST}/api/articles`, fetcher.change);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
         header,

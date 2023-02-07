@@ -2,10 +2,12 @@ import type { FC } from 'react';
 import React from 'react';
 
 import { formatDate } from 'src/utils/dates';
-import type { IUser } from 'src/utils/fetcher';
+import type { IFileMetaData, IUser } from 'src/utils/interfaces';
+import RemoveButton from './buttons/RemoveButton';
+import SubmitButton from './buttons/SubmitButton';
 import FileLoader from './FileLoader';
 
-interface IAside {
+interface IProps {
     title: string
     user?: IUser
     createdDate?: Date
@@ -13,10 +15,11 @@ interface IAside {
     isMutating?: boolean
     form?: string
     operations?: string[],
-    fileMetaInfo: string
+    fileMetaData?: IFileMetaData,
+    onClickRemoveFile?: (arg: string) => void
 }
 
-const Aside: FC<IAside> = ({
+const Aside: FC<IProps> = ({
     title,
     user,
     isMutating,
@@ -24,7 +27,8 @@ const Aside: FC<IAside> = ({
     modifiedDate,
     form,
     operations,
-    fileMetaInfo
+    fileMetaData,
+    onClickRemoveFile
 }) => {
     return (
         <aside className="bg-gray-50 p-5">
@@ -69,26 +73,41 @@ const Aside: FC<IAside> = ({
                         <FileLoader form={form} />
                     )}
                     {operations.includes('save') && (
-                        <button
-                            className="block bg-green-500 hover:bg-green-600 transition ease-in-out duration-300 text-white w-full rounded-md p-2 mt-3"
-                            type="submit"
+                        <SubmitButton
                             form={form}
-                        >
-                            {isMutating ? 'Saving...' : 'Save'}
-                        </button>
+                            isMutating={isMutating}
+                        />
                     )}
                 </div>
             )}
-            {fileMetaInfo && (
+            {fileMetaData && (
                 <div>
                     <h4 className="text-md font-semibold my-3">File meta info:</h4>
-                    <p>
-                        <span className="font-semibold">Filename: </span>
-                        {fileMetaInfo.fileName}
-                    </p><p>
-                        <span className="font-semibold">Create date: </span>
-                        {fileMetaInfo.createdDate && formatDate.toLocalDate(fileMetaInfo.createdDate)}
-                    </p>
+                    {fileMetaData && (
+                        <p className="mb-1">
+                            <span className="font-semibold">Filename: </span>
+                            {fileMetaData.fileName}
+                        </p>
+                    )}
+                    {fileMetaData.createdDate && (
+                        <p className="mb-1">
+                            <span className="font-semibold">Create date: </span>
+                            {formatDate.toShortLocalDate(fileMetaData.createdDate)}
+                        </p>
+                    )}
+                    {fileMetaData.url && (
+                        <div>
+                            <p className="mb-1">
+                                <span className="font-semibold">Url: </span>
+                                {fileMetaData.url}
+                            </p>
+                            <RemoveButton
+                                isMutating={isMutating}
+                                onClick={() => onClickRemoveFile(fileMetaData._id)}
+                            />
+                        </div>
+                        
+                    )}
                 </div>
             )}
         </aside>

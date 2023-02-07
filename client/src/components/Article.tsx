@@ -2,8 +2,9 @@ import type { FC } from 'react';
 import React from 'react';
 import useSWR from 'swr';
 
-import type { IArticle } from 'src/utils/fetcher';
 import { fetcher } from 'src/utils/fetcher';
+import { API_HOST } from 'src/utils/constants';
+import type { IArticle } from 'src/utils/interfaces';
 import Aside from './Aside';
 
 interface IProps {
@@ -13,7 +14,7 @@ interface IProps {
 const Article: FC<IProps> = ({
     id
 }) => {
-    const { data, error, isLoading } = useSWR(`http://localhost:5000/api/articles/${id}`, fetcher.get);
+    const { data, error, isLoading } = useSWR(`${API_HOST}/api/articles/${id}`, fetcher.get);
 
     if (isLoading) {
         return (

@@ -9,18 +9,20 @@ import * as Yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { fetcher } from 'src/utils/fetcher';
-
-interface IFileLoader {
-    form?: string
-}
+import { API_HOST } from 'src/utils/constants';
+import SubmitButton from './buttons/SubmitButton';
 
 interface Inputs {
-    file: FormDataEntryValue
+    files: FormDataEntryValue
+}
+
+interface IProps {
+    form?: string
 }
 
 const validationSchema = Yup.object().required();
 
-const FileLoader: FC<IFileLoader> = ({
+const FileLoader: FC<IProps> = ({
     form
 }) => {
     const { mutate } = useSWRConfig();
@@ -28,33 +30,43 @@ const FileLoader: FC<IFileLoader> = ({
         resolver: yupResolver(validationSchema)
     });
 
-    const { trigger } = useSWRMutation('http://localhost:5000/api/upload/files', fetcher.upload);
+    const { trigger, isMutating } = useSWRMutation(`${API_HOST}/api/upload/files`, fetcher.upload);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
-        file
+        files
     }) => {
         try {
-            const image = file[0];
-            await trigger({ file: image });
-            mutate('http://localhost:5000/api/media');
+            const formData = new FormData();
+            formData.append('file_0', files[0]);
+            formData.append('file_1', files[1]);
+            formData.append('file_2', files[2]);
+            formData.append('file_3', files[3]);
+            formData.append('file_4', files[4]);
+
+            await trigger(formData);
+            mutate(`${API_HOST}/api/media`);
         } catch (error) {
             throw new Error(error);
         }
     };
 
     useEffect(() => {
-        reset({ file: '' });
+        reset({ files: '' });
     }, [isSubmitSuccessful, reset]);
 
     return (
         <form id={form} onSubmit={handleSubmit(onSubmit)}>
             <input
                 type="file"
-                {...register("file")}
-                className="block w-full text-sm file:transition file:ease-in-out file:duration-300 file:mr-4 file:rounded-md file:p-3 file:bg-sky-500 file:hover:bg-sky-600 file:hover:cursor-pointer file:text-white file:border-0"
+                {...register("files")}
+                className="block w-full file:transition file:ease-in-out file:duration-300 file:mr-4 file:rounded-md file:px-3 file:py-2 file:bg-sky-500 file:hover:bg-sky-600 file:hover:cursor-pointer file:text-white file:border-0"
                 multiple
             />
-            {errors.file && <span className="text-red-500">{errors.file.message}</span>}
+            {errors.files && <span className="text-red-500">{errors.files.message}</span>}
+            <SubmitButton
+                form={form}
+                isMutating={isMutating}
+            />
         </form>
     );
 };

@@ -9,6 +9,16 @@ export default async (server) => server.delete('/api/users/:id', { ...schema, on
         const users = this.mongo.db.collection('users');
         const user = await users.findOne({ _id: id });
         const isSuperAdmin = user.roles.find(role => role === 'superAdmin');
+        const isCurrentUser = request.session.user.id === user._id.toString();
+
+        if (isCurrentUser) {
+            return reply
+                .code(STATUSES.BAD_REQUEST)
+                .send({
+                    success: false,
+                    error: 'Текущего пользователя удать нельзя'
+                });
+        }
 
         if (isSuperAdmin) {
             return reply

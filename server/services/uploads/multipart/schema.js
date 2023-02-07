@@ -18,10 +18,12 @@ export default {
                 properties: {
                     success: { type: 'boolean' },
                     title: { type: 'string' },
-                    file: {
-                        type: 'object',
-                        properties: {
-                            url: { type: 'string' }
+                    files: {
+                        type: 'array',
+                        items: {
+                            fileName: { type: 'string' },
+                            url: { type: 'string' },
+                            mimeType: { type: 'string' }
                         }
                     }
                 }

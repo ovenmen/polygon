@@ -12,6 +12,7 @@ const sessionSupport = async (server) => {
     server.addHook('preHandler', (request, reply, next) => {
         if (request.user) {
             request.session.authenticate = true;
+            request.session.user = request.user;
         }
         
         next();

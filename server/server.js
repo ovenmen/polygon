@@ -34,7 +34,8 @@ import {
 } from './services/uploads/index.js';
 
 import {
-    getAllMedia
+    getAllMedia,
+    deleteMedia
 } from './services/media/index.js';
 
 dotenv.config({ path: '.env' });
@@ -67,7 +68,8 @@ const protectedRoutes = [
     createArticle,
     changeUser,
     deleteUser,
-    uploadMultipart
+    uploadMultipart,
+    deleteMedia
 ];
 
 export default async (server, opts) => {

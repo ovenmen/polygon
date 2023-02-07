@@ -8,6 +8,8 @@ import useSWRMutation from 'swr/mutation';
 
 import { fetcher } from 'src/utils/fetcher';
 import { cookie } from 'src/utils/cookies';
+import { API_HOST } from 'src/utils/constants';
+import SubmitSiginButton from './buttons/SubmitLoginButton';
 
 interface Inputs {
     login: string
@@ -31,7 +33,7 @@ const Sigin: FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
-    const { trigger, error, isMutating } = useSWRMutation('http://localhost:5000/api/users/sigin', fetcher.post);
+    const { trigger, error, isMutating } = useSWRMutation(`${API_HOST}/api/users/sigin`, fetcher.post);
 
     const onSubmit: SubmitHandler<Inputs> = async ({ login, password }) => {
         try {
@@ -47,7 +49,7 @@ const Sigin: FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} id="sigin-form">
             {error && (
                 <p className="text-lg text-center font-bold text-white bg-rose-500 mb-5 rounded-md p-2">
                     Ошибка запроса
@@ -79,9 +81,10 @@ const Sigin: FC = () => {
                 {errors.password && <span className="text-white">{errors.password.message}</span>}
             </p>
             
-            <button type="submit" className="block bg-yellow-500 text-white uppercase w-full rounded-md p-2">
-                {isMutating ? 'Отправка данных...' : 'Войти'}
-            </button>
+            <SubmitSiginButton
+                form="sigin-form"
+                isMutating={isMutating}
+            />
         </form>
     );
 };

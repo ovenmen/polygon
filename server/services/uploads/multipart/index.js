@@ -19,14 +19,23 @@ export default async (server) => server.post('/api/upload/files', { ...schema, o
     try {
         const parts = request.parts();
         const media = this.mongo.db.collection('media');
-        let fileName = '';
+        const files = [];
 
         for await (const part of parts) {
             if (part.file) {
-                fileName = part.filename;
+                const fileName = part.filename;
+                const mimeType = part.mimetype;
+                const file = {
+                    fileName,
+                    mimeType,
+                    url: `public/${fileName}`,
+                    createdDate: new Date()
+                };
+
+                files.push(file);
+
                 await pump(part.file, createWriteStream(`server/public/${fileName}`));
-                // await media.insertOne({ fileName, url: base64Encode(`server/public/${fileName}`), createdDate: new Date() });
-                await media.insertOne({ fileName, url: `public/${fileName}`, createdDate: new Date() });
+                await media.insertOne(file);
             } else {
                 console.log({ field: part.fieldname, value: part.value });
             }
@@ -36,9 +45,7 @@ export default async (server) => server.post('/api/upload/files', { ...schema, o
             .code(STATUSES.OK)
             .send({
                 success: true,
-                file: {
-                    url: fileName && base64Encode(`server/public/${fileName}`)
-                }
+                files
             });
     } catch (error) {
         throw new Error(error);

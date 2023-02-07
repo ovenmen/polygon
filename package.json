@@ -10,7 +10,7 @@
     "dev:server": "npx fastify start -l info -P -w -V -p 5000 server/server.js",
     "dev": "npx concurrently npm:dev:*",
     "start": "npx concurrently npm:start:*",
-    "start:client": "npx npx astro dev --root ./client",
+    "start:client": "npm run preview",
     "start:server": "npx fastify start -p 5000 server/server.js",
     "preview": "npx astro preview --root ./client"
   },
