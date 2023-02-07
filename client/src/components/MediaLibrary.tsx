@@ -60,6 +60,7 @@ const MediaLibrary: FC = () => {
                         const isActive = media._id === fileMetaData?._id;
                         const isImage = media.mimeType.match(/image/);
                         const isApplication = media.mimeType.match(/application/);
+                        const isVideo = media.mimeType.match(/video/);
 
                         if (isImage) {
                             return (
@@ -88,6 +89,21 @@ const MediaLibrary: FC = () => {
                                 >
                                     <i className="fa-sharp fa-solid fa-file-pdf fa-3x text-red-600"></i>
                                 </div>
+                            );
+                        }
+
+                        if (isVideo) {
+                            return (
+                                <video
+                                    key={media._id}
+                                    className={`mb-5 p-1 rounded-md bg-gray-100 hover:cursor-pointer hover:scale-105 hover:shadow-lg transition duration-300 ease-in-out ${isActive && "bg-sky-500"}`}
+                                    src={media.url}
+                                    width="100%"
+                                    height="100"
+                                    controls
+                                    onClick={() => handleClickFile(media, isActive)}
+                                >
+                                </video>
                             );
                         }
                     })}
