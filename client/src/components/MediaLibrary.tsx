@@ -22,6 +22,7 @@ const MediaLibrary: FC = () => {
 
     const handleClickRemoveFile = useCallback((id) => {
         trigger({ id });
+        setFileMetaData(null);
         mutate(`${API_HOST}/media`);
     }, [mutate, trigger]);
 

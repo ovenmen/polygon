@@ -1,6 +1,6 @@
 'use strict';
 
-import { createWriteStream, readFileSync } from 'fs';
+import { createWriteStream } from 'fs';
 import util from 'util';
 import { pipeline } from 'stream';
 
@@ -8,12 +8,6 @@ import { STATUSES } from '../../../constants.js';
 import schema from './schema.js';
 
 const pump = util.promisify(pipeline);
-
-function base64Encode(file) {
-    const base64encode = readFileSync(file, { encoding: 'base64' });
-
-    return `data:image/jpeg;base64,${base64encode}`;
-}
 
 export default async (server) => server.post('/api/upload/files', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
