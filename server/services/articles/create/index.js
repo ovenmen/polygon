@@ -8,7 +8,7 @@ export default async (server) => server.post('/api/articles', { ...schema, onReq
         const { body } = request;
         const posts = this.mongo.db.collection('articles');
 
-        await posts.insertOne({ ...body, user: this.mongo.ObjectId(request.user.id), createdDate: new Date() });
+        await posts.insertOne({ ...body, user: new this.mongo.ObjectId(request.user.id), createdDate: new Date() });
     
         return reply
             .code(STATUSES.CREATED)

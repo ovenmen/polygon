@@ -1,12 +1,12 @@
 'use strict';
 
 import fastifyPlugin from 'fastify-plugin';
-import fastifyswagger from '@fastify/swagger';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from '@fastify/swagger-ui';
 
 const swagger = async (server) => {
-    server.register(fastifyswagger, {
-        exposeRoute: true,
-        routePrefix: '/api/docs',
+    await server.register(fastifySwagger, {
+        mode: 'dynamic',
         swagger: {
             info: {
                 title: 'Polygon-api',
@@ -23,6 +23,16 @@ const swagger = async (server) => {
             consumes: ['application/json'],
             produces: ['application/json']
         }
+    });
+
+    await server.register(fastifySwaggerUi, {
+        routePrefix: '/docs',
+        uiConfig: {
+            docExpansion: 'full',
+            deepLinking: false
+        },
+        staticCSP: true,
+        transformStaticCSP: (header) => header
     });
 };
 

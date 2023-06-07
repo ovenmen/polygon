@@ -5,7 +5,7 @@ import schema from './schema.js';
 
 export default async (server) => server.delete('/api/articles/:id',  { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
-        const id = this.mongo.ObjectId(request.params.id);
+        const id = new this.mongo.ObjectId(request.params.id);
         const articles = this.mongo.db.collection('articles');
         const article = await articles.findOne({ _id: id });
 

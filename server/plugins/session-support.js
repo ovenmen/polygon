@@ -4,12 +4,13 @@ import fastifyPlugin from 'fastify-plugin';
 import fastifySession from '@fastify/session';
 
 const sessionSupport = async (server) => {
-    server.register(fastifySession, {
+    await server.register(fastifySession, {
         secret: process.env.SECRET,
         cookie: { secure: false },
         expires: 1800000
     });
-    server.addHook('preHandler', (request, reply, next) => {
+
+    await server.addHook('preHandler', (request, reply, next) => {
         if (request.user) {
             request.session.authenticate = true;
             request.session.user = request.user;

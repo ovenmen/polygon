@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin';
 import jwt from '@fastify/jwt';
 
 const authenticate = async (server) => {
-    server.register(jwt, {
+    await server.register(jwt, {
         secret: process.env.SECRET,
         cookie: {
             cookieName: 'accessToken',

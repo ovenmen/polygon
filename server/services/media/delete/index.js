@@ -12,7 +12,7 @@ const __dirname = dirname(__filename);
 
 export default async (server) => server.delete('/api/media/:id', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
-        const id = this.mongo.ObjectId(request.params.id);
+        const id = new this.mongo.ObjectId(request.params.id);
         const media = this.mongo.db.collection('media');
         const file = await media.findOne({ _id: id });
 

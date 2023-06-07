@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin';
 import fastifyCors from '@fastify/cors';
 
 const corsSupport = async (server) => {
-    server.register(fastifyCors, () => (req, callback) => {
+    await server.register(fastifyCors, () => (req, callback) => {
         const corsOptions = {
             optionsSuccessStatus: 200
         };

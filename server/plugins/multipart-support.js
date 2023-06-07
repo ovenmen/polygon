@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin';
 import fastifyMultipart from '@fastify/multipart';
 
 const multipartSupport = async (server) => {
-    server.register(fastifyMultipart, {
+    await server.register(fastifyMultipart, {
         limits: {
         //     fieldNameSize: 100, // Max field name size in bytes
         //     fieldSize: 100,     // Max field value size in bytes

@@ -5,7 +5,7 @@ import schema from './schema.js';
 
 export default async (server) => server.delete('/api/users/:id', { ...schema, onRequest: [server.authenticate] }, async function (request, reply) {
     try {
-        const id = this.mongo.ObjectId(request.params.id);
+        const id = new this.mongo.ObjectId(request.params.id);
         const users = this.mongo.db.collection('users');
         const user = await users.findOne({ _id: id });
         const isSuperAdmin = user.roles.find(role => role === 'superAdmin');

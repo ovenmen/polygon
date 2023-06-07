@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const staticSupport = async (server) => {
-    server.register(fastifyStatic, {
+    await server.register(fastifyStatic, {
         root: join(__dirname, '../public'),
         prefix: '/public/'
     });

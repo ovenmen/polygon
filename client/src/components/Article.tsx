@@ -55,7 +55,7 @@ const Article: FC<IProps> = ({
                     <div>{fullDescription}</div>
                 )}
                 {cover && (
-                    <img src={cover} alt="cover" />
+                    <img src={`http://localhost:5000/${cover}`} alt="cover" crossOrigin="anonymous" />
                 )}
             </article>
             <Aside
