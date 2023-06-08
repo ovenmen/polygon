@@ -6,14 +6,15 @@ import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { API_HOST } from 'src/utils/constants';
 import { fetcher } from 'src/utils/fetcher';
-import Aside from './Aside';
+import Aside from './aside';
+import { apiUrls } from 'src/utils/api-urls';
+import { API_URL, HOST, PORT } from 'src/utils/constants';
 
 const MediaLibrary: FC = () => {
     const [fileMetaData, setFileMetaData] = useState(null);
-    const { data, error, isLoading } = useSWR(`${API_HOST}/api/media`, fetcher.get);
-    const { trigger, isMutating } = useSWRMutation(`${API_HOST}/api/media`, fetcher.delete);
+    const { data, error, isLoading } = useSWR(apiUrls.media, fetcher.get);
+    const { trigger, isMutating } = useSWRMutation(apiUrls.media, fetcher.delete);
     const { mutate } = useSWRConfig();
 
     const handleClickFile = useCallback((media, isActive) => {
@@ -23,7 +24,7 @@ const MediaLibrary: FC = () => {
     const handleClickRemoveFile = useCallback((id) => {
         trigger({ id });
         setFileMetaData(null);
-        mutate(`${API_HOST}/media`);
+        mutate(apiUrls.media);
     }, [mutate, trigger]);
 
     useEffect(() => {
@@ -72,7 +73,7 @@ const MediaLibrary: FC = () => {
                                     <img
                                         data-media={media}
                                         crossOrigin="anonymous"
-                                        src={`${API_HOST}/${media.url}`}
+                                        src={`${HOST}:${PORT}/${media.url}`}
                                         alt="image"
                                         className="w-full aspect-auto"
                                     />

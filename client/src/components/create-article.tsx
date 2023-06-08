@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import * as Yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { API_HOST } from 'src/utils/constants';
 import { fetcher } from 'src/utils/fetcher';
-import Aside from './Aside';
+import Aside from './aside';
+import { apiUrls } from 'src/utils/api-urls';
 
 interface Inputs {
     header: string
@@ -34,7 +34,7 @@ const CreateArticle: FC = () => {
         resolver: yupResolver(validationSchema)
     });
 
-    const { trigger, isMutating } = useSWRMutation(`${API_HOST}/api/articles`, fetcher.post);
+    const { trigger, isMutating } = useSWRMutation(apiUrls.articles, fetcher.post);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
         header,

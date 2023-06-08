@@ -3,7 +3,7 @@ import React from 'react';
 import useSWR from 'swr';
 
 import { fetcher } from 'src/utils/fetcher';
-import { API_HOST } from 'src/utils/constants';
+import { apiUrls } from 'src/utils/api-urls';
 
 interface IProps {
     id: string
@@ -12,7 +12,7 @@ interface IProps {
 const User: FC<IProps> = ({
     id
 }) => {
-    const { data, error, isLoading } = useSWR(`${API_HOST}/api/users/${id}`, fetcher.get);
+    const { data, error, isLoading } = useSWR(`${apiUrls.users}/${id}`, fetcher.get);
 
     if (isLoading) {
         return (

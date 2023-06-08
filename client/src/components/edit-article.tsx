@@ -9,9 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 
 import { fetcher } from 'src/utils/fetcher';
-import { API_HOST } from 'src/utils/constants';
 import type { IArticle } from 'src/utils/interfaces';
-import Aside from './Aside';
+import Aside from './aside';
+import { apiUrls } from 'src/utils/api-urls';
 
 interface Inputs {
     header: string
@@ -36,8 +36,8 @@ const EditArticle: FC<IProps> = ({
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
-    const { data, error, isLoading } = useSWR(`${API_HOST}/api/articles/${id}`, fetcher.get);
-    const { trigger, isMutating } = useSWRMutation(`${API_HOST}/api/articles`, fetcher.change);
+    const { data, error, isLoading } = useSWR(`${apiUrls.articles}/${id}`, fetcher.get);
+    const { trigger, isMutating } = useSWRMutation(apiUrls.articles, fetcher.change);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
         header,

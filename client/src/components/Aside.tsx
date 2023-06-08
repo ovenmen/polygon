@@ -3,9 +3,9 @@ import React from 'react';
 
 import { formatDate } from 'src/utils/dates';
 import type { IFileMetaData, IUser } from 'src/utils/interfaces';
-import RemoveButton from './buttons/RemoveButton';
-import SubmitButton from './buttons/SubmitButton';
-import FileLoader from './FileLoader';
+import RemoveButton from './buttons/remove-button';
+import SubmitButton from './buttons/submit-button';
+import FileLoader from './file-loader';
 
 interface IProps {
     title: string

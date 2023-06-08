@@ -5,13 +5,13 @@ import useSWRMutation from 'swr/mutation';
 
 import { formatDate } from 'src/utils/dates';
 import { fetcher } from 'src/utils/fetcher';
-import { API_HOST } from 'src/utils/constants';
-import ButtonAdd from './buttons/AddButton';
+import ButtonAdd from './buttons/add-button';
+import { apiUrls } from 'src/utils/api-urls';
 
 const Users: FC = () => {
     const [errorMutation, setErrorMutation] = useState('');
-    const { data, error, isLoading } = useSWR(`${API_HOST}/api/users`, fetcher.get);
-    const { trigger } = useSWRMutation(`${API_HOST}/api/users`, fetcher.delete);
+    const { data, error, isLoading } = useSWR(apiUrls.users, fetcher.get);
+    const { trigger } = useSWRMutation(apiUrls.users, fetcher.delete);
 
     const handleClickRemoveUser = async (e) => {
         try {

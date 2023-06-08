@@ -4,14 +4,14 @@ import React from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { API_HOST } from 'src/utils/constants';
 import { fetcher } from 'src/utils/fetcher';
 import { formatDate } from 'src/utils/dates';
-import ButtonAdd from './buttons/AddButton';
+import ButtonAdd from './buttons/add-button';
+import { apiUrls } from 'src/utils/api-urls';
 
 const Articles: FC = () => {
-    const { data, error, isLoading } = useSWR(`${API_HOST}/api/articles`, fetcher.get);
-    const { trigger } = useSWRMutation(`${API_HOST}/api/articles`, fetcher.delete);
+    const { data, error, isLoading } = useSWR(apiUrls.articles, fetcher.get);
+    const { trigger } = useSWRMutation(apiUrls.articles, fetcher.delete);
 
     const handleClickRemoveArticle = useCallback(async (e) => {
         try {

@@ -8,8 +8,8 @@ import useSWRMutation from 'swr/mutation';
 
 import { fetcher } from 'src/utils/fetcher';
 import { cookie } from 'src/utils/cookies';
-import { API_HOST } from 'src/utils/constants';
-import SubmitSiginButton from './buttons/SubmitLoginButton';
+import SubmitSiginButton from './buttons/submit-login-button';
+import { apiUrls } from 'src/utils/api-urls';
 
 interface Inputs {
     login: string
@@ -33,7 +33,7 @@ const Sigin: FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(validationSchema)
     });
-    const { trigger, error, isMutating } = useSWRMutation(`${API_HOST}/api/users/sigin`, fetcher.post);
+    const { trigger, error, isMutating } = useSWRMutation(apiUrls.sigin, fetcher.post);
 
     const onSubmit: SubmitHandler<Inputs> = async ({ login, password }) => {
         try {

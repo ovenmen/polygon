@@ -9,8 +9,8 @@ import * as Yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { fetcher } from 'src/utils/fetcher';
-import { API_HOST } from 'src/utils/constants';
-import SubmitButton from './buttons/SubmitButton';
+import SubmitButton from './buttons/submit-button';
+import { apiUrls } from 'src/utils/api-urls';
 
 interface Inputs {
     files: FormDataEntryValue
@@ -30,7 +30,7 @@ const FileLoader: FC<IProps> = ({
         resolver: yupResolver(validationSchema)
     });
 
-    const { trigger, isMutating } = useSWRMutation(`${API_HOST}/api/upload/files`, fetcher.upload);
+    const { trigger, isMutating } = useSWRMutation(apiUrls.uploads, fetcher.upload);
 
     const onSubmit: SubmitHandler<Inputs> = async ({
         files
@@ -44,7 +44,7 @@ const FileLoader: FC<IProps> = ({
             formData.append('file_4', files[4]);
 
             await trigger(formData);
-            mutate(`${API_HOST}/api/media`);
+            mutate(apiUrls.media);
         } catch (error) {
             throw new Error(error);
         }

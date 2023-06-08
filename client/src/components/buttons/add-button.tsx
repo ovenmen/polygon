@@ -10,7 +10,7 @@ const AddButton: FC<IProps> = ({
 }) => (
     <a
         href={url}
-        className="block bg-green-600 rounded-full hover:origin-center hover:rotate-180 hover:bg-green-500 transition duration-300 ease-in-out"
+        className="block bg-green-600 rounded-full hover:origin-center hover:rotate-180 hover:bg-green-500 transition duration-300 ease-in-out fixed bottom-3 right-3"
     >
         <i className="fa-regular fa-plus text-white text-lg px-[21px] py-[20px]"></i>
     </a>
